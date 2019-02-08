@@ -1,0 +1,42 @@
+<div 
+  class="navBarContainer" 
+  [ngClass]="collapsibleNav ? (utilService.scrollDirection === 'down' ? 'hidden' : null) : null" 
+  id="navBar"
+>
+  <div class="navBarWrapper">
+    <div class="barWrapper">
+      <div class="mobilePrompt" (click)="openMobileNav()">
+        <div><mat-icon>menu</mat-icon></div>
+      </div>
+      EDM
+      <!-- <div class="sectionsWrapper">
+        <div 
+          *ngFor="let section of sectionOptions;" 
+          class="section" 
+          (mouseenter)="navHover($event, i)" 
+          [ngClass]="section.value === activeSection?.value ? 'active' : ''"
+        >
+          <div (click)="routerService.navigateToPage(section.value)">{{section.label}}</div>
+          <div class="dropdown" *ngIf="section.subSections.length" [ngClass]="section.value">
+            <div *ngFor="let subSection of section.subSections" (click)="navigate(subSection.path)">{{subSection.label}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="logoWrapper" (click)="routerService.navigateToPage('/')">
+        <img class="logoImg" src="../../../assets/dino.svg" />
+        <span class="boldFont gradientText">Decorasaurus</span>
+      </div>
+      <div class="cartWrapper">
+        <div class="account" (click)="goToAccount()">Account</div>
+        <div>
+          <mat-icon 
+            (click)="routerService.navigateToPage('/cart')" 
+            [matBadge]="cartNumber" 
+            matBadgePosition="below after"
+            matBadgeSize="small"
+          >shopping_cart</mat-icon>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

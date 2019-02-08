@@ -1,6 +1,24 @@
-# Edm
+# EDM
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+## Todos
+
+## Feature Ideas
+- Map view the world over. Would be for a certain date and a user can modify the date to refresh map
+- List view for a region on a per day basis
+- PWA available with push notifications for followed artists or venues.
+- Email alerts on a weekly / semi weekly / monthly basis
+- Featured / hot / lifted events up top
+- Filter by genre, venue, region, artist
+- Tour information for artists + bios and shit. Maybe can scrape from spotify or wikipedia or something.
+
+## Monetization
+- Lifted results for venues who want to promote something
+- Affiliate links for eventbrite, ticketfly, ticketmaster, seetickets, etix, etc (Ticketfly is $.25 per purchase)
+- Affiliate links to albums on amazon or something
+- Affiliate links for accomodation https://www.stay22.com/
+
+### Name Ideas
+
 
 ## Development server
 
@@ -22,6 +40,26 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+### Updating Production
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Web app uses a service worked so we need to break the cache when we update. Change the cache version in service-worker.js to do this and prompt users to do the same.
+- Run `$ ng build --prod` to run an AoT build
+- Use SFTP (cyber duck) to replace the www folder in /var/www/decorasaurus.com/html on the server
+
+#### Analytics
+
+- Wire in Google analytics for page views
+- Wire in analytics for events
+
+## Graphql / Apollo
+
+### Code Generation
+
+#### Run
+`$ npm run generate`
+
+#### Setup
+- Make sure both graphql-code-generator and graphql are installed globally for this to work.
+- Can run `$ gql-gen init` to get it working which will install some things and setup an npm script and codegen.yml file
+- Create schemas in the src/app/graphql folder for each and the script will pull from there and generate code in src/app/generated/graphql.ts
+

@@ -1,0 +1,26 @@
+<div class="footerContainer">
+  <div class="footerWrapper">
+    <div class="logoWrapper">
+      <span class="boldFont">EDM</span>
+    </div>
+    <div class="socialWrapper">
+      <div *ngFor="let option of socialOptions;">
+        <a 
+           
+          [href]="option.url" 
+          target="_blank"
+          class="hover boldFont"
+          rel="noopener" 
+        >
+          <mat-icon>{{option.icon}}</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="linksWrapper">
+      <div *ngFor="let link of links;" class="hover link" (click)="navigateTo(link)">{{link}}</div>
+    </div>
+    <div class="infoWrapper">
+      <div>©{{year | date:'y'}} EDM All rights reserved.</div>
+    </div>
+  </div>
+</div>

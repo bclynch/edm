@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/theme.scss';
+@import '../node_modules/ngx-sharebuttons/styles/share-buttons.scss';
+@import '../node_modules/ngx-sharebuttons/styles/themes/material/material-dark-theme.scss';
+
+
+// global css4 vars
+:root {
+  --color-primary: #4CAF50;
+  --color-secondary: #92e89e;
+  --color-tertiary: #8dd2c0;
+  --color-white: white;
+  --color-black: black;
+  --color-border: #ddd;
+  --height-navbar: 54px;
+}
+
+.boldFont {
+  font-weight: 500;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+app-pagewrapper {
+  position: fixed;
+  top:        0;
+  bottom:     0;
+  left:       0;
+  right:      0;
+  overflow:   scroll;
+  -ms-overflow-style: none;
+  font-family: 'Helvetica Neue', 'RobotoLight', sans-serif;
+}
+
+app-footer {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+app-navbar {
+  width: 100%;
+}
