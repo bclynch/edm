@@ -1,0 +1,56 @@
+.homeContainer {
+
+  .headerContainer {
+    position: relative;
+    height: 75vh;
+    width: 100vw;
+
+    .headerBackground {
+      background-image: url('../../../../assets/images/splash.jpg');
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      form {
+        display: flex;
+        width: calc(100vw - 10%);
+        position: absolute;
+        bottom: 10%;
+        left: 5%;
+
+        .section {
+          background: var(--color-primary);
+          color: white;
+          padding: 16px;
+          flex: 2;
+
+          .label {
+            font-size: 13px;
+            margin-bottom: 15px;
+          }
+          mat-form-field {
+            width: 100%;
+          }
+          &.btnSection {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+
+            .searchBtn {
+              background: var(--color-accent);
+            }
+          }
+        }
+        .section:first-child {
+          border-right: solid 1px white;
+        }
+      }
+    }
+  }
+}

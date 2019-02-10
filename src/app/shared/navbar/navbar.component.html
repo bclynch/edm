@@ -5,38 +5,17 @@
 >
   <div class="navBarWrapper">
     <div class="barWrapper">
-      <div class="mobilePrompt" (click)="openMobileNav()">
-        <div><mat-icon>menu</mat-icon></div>
+      <div class="left">
+        <a class="logo" [routerLink]="['/']"><div>EDM</div></a>
       </div>
-      EDM
-      <!-- <div class="sectionsWrapper">
-        <div 
-          *ngFor="let section of sectionOptions;" 
-          class="section" 
-          (mouseenter)="navHover($event, i)" 
-          [ngClass]="section.value === activeSection?.value ? 'active' : ''"
-        >
-          <div (click)="routerService.navigateToPage(section.value)">{{section.label}}</div>
-          <div class="dropdown" *ngIf="section.subSections.length" [ngClass]="section.value">
-            <div *ngFor="let subSection of section.subSections" (click)="navigate(subSection.path)">{{subSection.label}}</div>
-          </div>
-        </div>
+      <div class="right">
+        <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Account Settings</button>
+          <button mat-menu-item>Starred Events</button>
+          <button mat-menu-item>Log out</button>
+        </mat-menu>
       </div>
-      <div class="logoWrapper" (click)="routerService.navigateToPage('/')">
-        <img class="logoImg" src="../../../assets/dino.svg" />
-        <span class="boldFont gradientText">Decorasaurus</span>
-      </div>
-      <div class="cartWrapper">
-        <div class="account" (click)="goToAccount()">Account</div>
-        <div>
-          <mat-icon 
-            (click)="routerService.navigateToPage('/cart')" 
-            [matBadge]="cartNumber" 
-            matBadgePosition="below after"
-            matBadgeSize="small"
-          >shopping_cart</mat-icon>
-        </div>
-      </div> -->
     </div>
   </div>
 </div>

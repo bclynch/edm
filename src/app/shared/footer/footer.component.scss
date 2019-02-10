@@ -1,5 +1,5 @@
 .footerContainer {
-  background: var(--color-black);
+  background: black;
   padding: 40px 0;
   display: flex;
   justify-content: center;
@@ -12,14 +12,14 @@
     color: white;
   }
   .hover:hover {
-    color: var(--color-secondary);
+    color: var(--color-accent);
   }
   .footerWrapper {
     display: flex;
     align-items: center;
     flex-direction: column;
     max-width: 80%;
-    color: var(--color-white);
+    color: white;
     min-width: 320px;
     text-align: center;
 

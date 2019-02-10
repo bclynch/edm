@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import {
   MatButtonModule,
@@ -16,7 +17,10 @@ import {
   MatRadioModule,
   MatButtonToggleModule,
   MatTabsModule,
-  MatExpansionModule
+  MatMenuModule,
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 // components
@@ -52,8 +56,12 @@ import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dia
     MatRadioModule,
     MatButtonToggleModule,
     MatTabsModule,
+    MatMenuModule,
     MatExpansionModule,
-    DirectivesModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DirectivesModule,
+    RouterModule
   ],
   exports: [
     MatButtonModule,
@@ -70,7 +78,10 @@ import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dia
     MatRadioModule,
     MatButtonToggleModule,
     MatTabsModule,
+    MatMenuModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent

@@ -88,7 +88,7 @@ export class NavbarComponent {
   constructor(
     private utilService: UtilService,
     private routerService: RouterService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
 
   }

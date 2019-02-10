@@ -1,5 +1,36 @@
 <app-pagewrapper>
   <div class="homeContainer">
-    Homeeee
+    <div class="headerContainer">
+      <div class="headerBackground">
+        <form class="searchContainer">
+          <div class="section">
+            <div class="label">Looking for shows in</div>
+            <div>
+              <mat-form-field color="accent">
+                <input
+                  matInput
+                  placeholder="City" 
+                  formControlName="city"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="section">
+            <div class="label">On</div>
+            <div>
+              <mat-form-field color="accent">
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker color="accent"></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="section btnSection">
+            <button mat-button class="searchBtn"><mat-icon>search</mat-icon></button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </app-pagewrapper>
