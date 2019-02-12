@@ -12,10 +12,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { GraphQLModule } from './graphql.module';
 
 // Services
+import { CookieService } from 'ngx-cookie-service';
 import { RoleGuardService } from './services/roleGuard.service';
 import { UtilService } from './services/util.service';
 import { RouterService } from './services/router.service';
-import { CookieService } from 'ngx-cookie-service';
+import { AppService } from './services/app.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CookieService } from 'ngx-cookie-service';
     RoleGuardService,
     UtilService,
     RouterService,
-    CookieService
+    CookieService,
+    AppService
   ],
   bootstrap: [AppComponent]
 })

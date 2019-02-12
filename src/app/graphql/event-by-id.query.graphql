@@ -1,0 +1,23 @@
+query eventById($eventId: String!) {
+  eventById(id: $eventId) {
+    id,
+    name,
+    startDate,
+    endDate,
+    ticketproviderurl,
+    venueByVenue {
+      name,
+      lat,
+      lon,
+      city,
+      address
+    },
+    artistToEventsByEventId {
+      nodes {
+        artistByArtistId {
+          name
+        }
+      }
+    }
+  }
+}

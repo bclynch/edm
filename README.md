@@ -1,6 +1,29 @@
 # EDM
 
 ## Todos
+- Home page
+  - Search box in header with location / date
+  - Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there
+    - Featured shows should probably be eventbrite so they can purchase ticket there
+- Search results page
+  - Can share show
+  - Can favorite show (prompt to signin if not)
+  - Can buy ticket if eventbrite
+  - Can follow link to show page
+  - Can filter by date
+  - Can search for word (artist, venue)
+  - List and map view
+- Show page
+  - Can buy ticket
+  - General info about show
+  - Map where it's at
+  - Links to artist page and venue page
+  - Disqus comments for people to ask things
+- Artist page
+  - Display their shows
+  - Maybe spotify / soundcloud plugin
+- Venue page
+  - General info + photo + map
 
 ## Feature Ideas
 - Map view the world over. Would be for a certain date and a user can modify the date to refresh map

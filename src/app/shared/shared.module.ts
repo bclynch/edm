@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import {
   MatButtonModule,
@@ -20,7 +21,8 @@ import {
   MatMenuModule,
   MatExpansionModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatAutocompleteModule
 } from '@angular/material';
 
 // components
@@ -29,6 +31,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dialogue.component';
+import { LocationSearchComponent } from './location-search/location-search.component';
 
 @NgModule({
   entryComponents: [
@@ -39,6 +42,7 @@ import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dia
     FooterComponent,
     NavbarComponent,
     MobileNavDialogueComponent,
+    LocationSearchComponent,
   ],
   imports: [
     CommonModule,
@@ -60,8 +64,11 @@ import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dia
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     DirectivesModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     MatButtonModule,
@@ -82,9 +89,11 @@ import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dia
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     PagewrapperComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    LocationSearchComponent
   ]
 })
 export class SharedModule { }

@@ -84,8 +84,8 @@ export class RouterService implements OnDestroy {
     this.router.navigate([currentURL], navigationExtras);
   }
 
-  navigateToPage(path: string, query?: string) {
-    const queryParams = {queryParams: query ? {q: query} : null};
+  navigateToPage(path: string, query?: {}) {
+    const queryParams = {queryParams: query ? query : null};
 
     this.router.navigate([path], queryParams);
   }

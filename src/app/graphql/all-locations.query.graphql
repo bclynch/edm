@@ -1,0 +1,9 @@
+query allLocations {
+  allCities {
+    nodes {
+      id,
+      name,
+      region
+    }
+  }
+}

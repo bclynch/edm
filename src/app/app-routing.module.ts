@@ -12,6 +12,22 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './modules/home/home.module#HomeModule',
   },
+  {
+    path: 'artist',
+    loadChildren: './modules/artist/artist.module#ArtistModule',
+  },
+  {
+    path: 'venue',
+    loadChildren: './modules/venue/venue.module#HomeModule',
+  },
+  {
+    path: 'events',
+    loadChildren: './modules/events/events.module#EventsModule',
+  },
+  {
+    path: 'event',
+    loadChildren: './modules/event/event.module#EventModule',
+  },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];
 
