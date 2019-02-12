@@ -13,6 +13,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   @Input() autocomplete = 'on';
   @Input() placeholder = '';
   @Input() value = '';
+  @Input() floatLabel = true;
   @Output() selected: EventEmitter<string> = new EventEmitter<string>();
 
   myControl = new FormControl();
@@ -28,6 +29,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.value) this.myControl.setValue(this.value);
   }
 
   ngOnDestroy() {
@@ -54,5 +56,11 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     }
     filteredArr.unshift('📍 Use my current location');
     return filteredArr;
+  }
+
+  resetInput(e) {
+    // this is being triggered by the enter button for some reason so checking to see if this prop is there
+    // if so it was a real mouse click otherwise we ignore
+    if (e.detail) this.myControl.reset();
   }
 }

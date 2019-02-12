@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  searchShows(e: Event) {
+  searchShows(e) {
     e.preventDefault();
 
     this.routerService.navigateToPage('/events', { location: this.selectedLocation });

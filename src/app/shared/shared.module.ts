@@ -32,6 +32,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dialogue.component';
 import { LocationSearchComponent } from './location-search/location-search.component';
+import { EventCardComponent } from './event-card/event-card.component';
 
 @NgModule({
   entryComponents: [
@@ -43,6 +44,7 @@ import { LocationSearchComponent } from './location-search/location-search.compo
     NavbarComponent,
     MobileNavDialogueComponent,
     LocationSearchComponent,
+    EventCardComponent,
   ],
   imports: [
     CommonModule,
@@ -93,7 +95,8 @@ import { LocationSearchComponent } from './location-search/location-search.compo
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent,
-    LocationSearchComponent
+    LocationSearchComponent,
+    EventCardComponent
   ]
 })
 export class SharedModule { }

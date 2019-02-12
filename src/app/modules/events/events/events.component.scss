@@ -1,0 +1,58 @@
+.eventsContainer {
+  width: 100%;
+
+  .searchContainer {
+    width: 100%;
+    padding: 24px;
+
+    form {
+      display: flex;
+      align-items: center;
+
+      .searchWrapper {
+        font-size: 2em;
+        flex: 1;
+        
+        .locationWrapper {
+          display: flex;
+
+          .in {
+            color: #c2c2cc;
+            margin-right: 15px;
+          }
+        }
+        mat-form-field {
+          width: 100%;
+
+          .mat-form-field-infix {
+            padding-top: 0;
+            border-top: 0;
+          }
+        }
+        app-location-search {
+          display: inline-block;
+          width: 100%;
+        }
+      }
+      .searchBtn {
+        background: var(--color-accent);
+        color: white;
+        font-size: 16px;
+        margin: 0 15px;
+      }
+    }
+  }
+  .eventsWrapper {
+    height: calc(100vh - 54px);
+    width: 100vw;
+  }
+  @media (min-width: 768px) {
+
+    .searchContainer {
+      width: 50vw;
+    }
+    .eventsWrapper {
+      width: 50vw;
+    }
+  }
+}

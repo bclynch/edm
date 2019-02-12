@@ -63,6 +63,36 @@ export class EventByIdGQL extends Apollo.Query<
     }
   `;
 }
+@Injectable({
+  providedIn: "root"
+})
+export class EventsByCityGQL extends Apollo.Query<
+  EventsByCity.Query,
+  EventsByCity.Variables
+> {
+  document: any = gql`
+    query eventsByCity($city: String!) {
+      allCities(filter: { name: { equalTo: $city } }) {
+        nodes {
+          name
+          venuesByCity {
+            nodes {
+              name
+              eventsByVenue {
+                nodes {
+                  id
+                  name
+                  startDate
+                  ticketproviderurl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+}
 
 // ====================================================
 // END: Apollo Angular template
@@ -2214,5 +2244,63 @@ export namespace EventById {
     __typename?: "Artist";
 
     name: string;
+  };
+}
+
+export namespace EventsByCity {
+  export type Variables = {
+    city: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    allCities: Maybe<AllCities>;
+  };
+
+  export type AllCities = {
+    __typename?: "CitiesConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "City";
+
+    name: Maybe<string>;
+
+    venuesByCity: VenuesByCity;
+  };
+
+  export type VenuesByCity = {
+    __typename?: "VenuesConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
+    __typename?: "Venue";
+
+    name: string;
+
+    eventsByVenue: EventsByVenue;
+  };
+
+  export type EventsByVenue = {
+    __typename?: "EventsConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "Event";
+
+    id: string;
+
+    name: Maybe<string>;
+
+    startDate: BigInt;
+
+    ticketproviderurl: Maybe<string>;
   };
 }

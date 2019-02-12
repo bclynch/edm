@@ -1,3 +1,37 @@
-<app-pagewrapper>
-  <div class="eventsContainer">{{location}} Events</div>
+<app-pagewrapper [collapsibleNav]="false">
+  <div class="eventsContainer">
+    <div class="searchContainer">
+      <form (submit)="searchEvents($event)">
+        <div class="searchWrapper">
+          <mat-form-field color="accent" floatLabel="never">
+            <input
+              matInput
+              placeholder="Search"
+              autocomplete="off"
+            />
+          </mat-form-field>
+          <div class="locationWrapper">
+            <span class="in">in</span>
+            <app-location-search
+              placeholder="City"
+              autocomplete="off"
+              (selected)="abc($event)"
+              [value]="selectedLocation"
+              [floatLabel]="false"
+            ></app-location-search>
+          </div>
+        </div>
+        <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>
+      </form>
+    </div>
+    <div *ngIf="!location">Select a city to search for shows in to get started</div>
+    <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="50">
+      <app-event-card
+        *cdkVirtualFor="let event of eventsObservable | async"
+        [name]="event.name"
+        [location]="event.venue"
+        [date]="event.startDate"
+      ></app-event-card>
+    </cdk-virtual-scroll-viewport>
+  </div>
 </app-pagewrapper>

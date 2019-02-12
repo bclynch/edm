@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EventsComponent } from './events/events.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    ScrollDispatchModule
   ]
 })
 export class EventsModule { }
