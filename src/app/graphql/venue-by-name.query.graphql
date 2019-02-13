@@ -1,0 +1,18 @@
+query venueByName($name: String!) {
+  venueByName(name: $name) {
+    name,
+    description,
+    lat,
+    lon,
+    city,
+    address,
+    photo,
+    logo,
+    eventsByVenue {
+      nodes {
+        name,
+        startDate
+      }
+    }
+  }
+}

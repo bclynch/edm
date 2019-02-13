@@ -24,27 +24,28 @@ import {
   MatNativeDateModule,
   MatAutocompleteModule
 } from '@angular/material';
+import { ShareButtonsModule } from '@ngx-share/buttons';
 
 // components
 import { PagewrapperComponent } from './pagewrapper/pagewrapper.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DirectivesModule } from '../directives/directives.module';
-import { MobileNavDialogueComponent } from './mobile-nav-dialogue/mobile-nav-dialogue.component';
 import { LocationSearchComponent } from './location-search/location-search.component';
 import { EventCardComponent } from './event-card/event-card.component';
+import { ShareDialogueComponent } from './share-dialogue/share-dialogue.component';
 
 @NgModule({
   entryComponents: [
-    MobileNavDialogueComponent
+    ShareDialogueComponent
   ],
   declarations: [
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent,
-    MobileNavDialogueComponent,
     LocationSearchComponent,
     EventCardComponent,
+    ShareDialogueComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +71,8 @@ import { EventCardComponent } from './event-card/event-card.component';
     DirectivesModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ShareButtonsModule,
   ],
   exports: [
     MatButtonModule,

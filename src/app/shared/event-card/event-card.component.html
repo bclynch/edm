@@ -1,15 +1,15 @@
 <div class="cardContainer">
   <div class="imageWrapper">
-    <div class="img"></div>
+    <a [routerLink]="['/event/' + id]"><div class="img"></div></a>
   </div>
   <div class="eventInfo">
-    <h3 class="eventName">{{name}}</h3>
+    <a [routerLink]="['/event/' + id]"><h3 class="eventName">{{name}}</h3></a>
     <div class="eventDate">{{date | date: 'EEE, MMMM d'}}</div>
     <div class="eventLocation">{{location}}</div>
     <div class="eventOptions">
-      <mat-icon>share</mat-icon>
-      <mat-icon>star_border</mat-icon>
-      <mat-icon>loyalty</mat-icon>
+      <mat-icon (click)="share()" matTooltip="Share">share</mat-icon>
+      <mat-icon matTooltip="Add to Watched">star_border</mat-icon>
+      <mat-icon matTooltip="Buy Tickets">loyalty</mat-icon>
     </div>
   </div>
 </div>

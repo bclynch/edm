@@ -2,9 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { UtilService } from '../../services/util.service';
 import { RouterService } from '../../services/router.service';
-import { MobileNavDialogueComponent } from '../mobile-nav-dialogue/mobile-nav-dialogue.component';
 import { SubscriptionLike } from 'rxjs';
-import { MatDialog } from '@angular/material';
 
 interface Section {
   label: string;
@@ -87,53 +85,8 @@ export class NavbarComponent {
 
   constructor(
     private utilService: UtilService,
-    private routerService: RouterService,
-    public dialog: MatDialog
+    private routerService: RouterService
   ) {
 
   }
-
-  openMobileNav() {
-    const dialogRef = this.dialog.open(MobileNavDialogueComponent, {
-      panelClass: 'mobiledialog-panel'
-    });
-
-    this.dialogueSubscription = dialogRef.afterClosed().subscribe(result => {
-
-      console.log(result);
-      if (result) {
-        switch (result) {
-          case 'About':
-            this.routerService.navigateToPage('/about');
-            break;
-          case 'Custom Fusion Posters':
-            this.routerService.navigateToPage('/create/poster-generator/fusion-poster');
-            break;
-          case 'City Map Posters':
-            this.routerService.navigateToPage('/create/poster-generator/map-poster');
-            break;
-          case 'Patent Posters':
-            this.routerService.navigateToPage('/create/poster-generator/patent-poster');
-            break;
-          case 'Custom Trace Posters':
-            this.routerService.navigateToPage('/create/poster-generator/trace-poster');
-            break;
-          case 'FAQs':
-            this.routerService.modifyFragment('faqs', '/help');
-            break;
-          case 'Contact':
-            this.routerService.modifyFragment('contact', '/help');
-            break;
-        }
-      }
-    });
-  }
-
-  // navigate(path) {
-  //   if (path === 'faqs' || path === 'contact') {
-  //     this.routerService.modifyFragment(path, '/help');
-  //   } else {
-  //     this.routerService.navigateToPage(path);
-  //   }
-  // }
 }

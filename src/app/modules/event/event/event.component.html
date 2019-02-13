@@ -1,3 +1,20 @@
 <app-pagewrapper>
-  <div class="eventContainer">Event</div>
+  <div class="eventContainer">
+    <div class="header">
+      <div class="topWrapper">
+        <div class="bannerImage"></div>
+        <div class="eventInfo">
+          <div>{{event?.name}}</div>
+          <div>{{event?.startDate | date:'MMM d'}}</div>
+        </div>
+      </div>
+      <div class="bottomWrapper">
+        <div class="optionsWrapper">
+          <mat-icon (click)="share()" matTooltip="Share">share</mat-icon>
+          <mat-icon matTooltip="Add to Watched">star_border</mat-icon>
+        </div>
+        <button mat-button>Tickets</button>
+      </div>
+    </div>
+  </div>
 </app-pagewrapper>

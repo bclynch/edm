@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { VenueByNameGQL } from 'src/app/generated/graphql';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-venue',
@@ -7,7 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VenueComponent implements OnInit {
 
-  constructor() { }
+  venue;
+
+  constructor(
+    private venueByNameGQL: VenueByNameGQL,
+    private activatedRoute: ActivatedRoute
+  ) {
+    console.log(this.activatedRoute.snapshot.paramMap.get('venueName'));
+    this.venueByNameGQL.fetch({ name: this.activatedRoute.snapshot.paramMap.get('venueName') }).subscribe(
+      (result) => {
+        this.venue = result.data.venueByName;
+        console.log(this.venue);
+      }
+    );
+  }
 
   ngOnInit() {
   }

@@ -1,0 +1,28 @@
+query artistByName($name: String!) {
+  artistByName(name: $name) {
+    name,
+    description,
+    photo,
+    twitterUsername,
+    twitterUrl,
+    facebookUsername,
+    facebookUrl,
+    instagramUsername,
+    instagramUrl,
+    soundcloudUsername,
+    soundcloudUrl,
+    youtubeUsername,
+    youtubeUrl,
+    spotifyUrl, 
+    homepage,
+    artistToEventsByArtistId {
+      nodes {
+        eventByEventId {
+          name,
+          venue,
+          startDate
+        }
+      }
+    }
+  }
+}

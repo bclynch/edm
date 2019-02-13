@@ -19,6 +19,15 @@
     margin-left: 24px;
     flex: 1;
 
+    a {
+      text-decoration: none;
+      transition: .2s;
+    }
+    a:hover {
+      h3 {
+        color: var(--color-primary);
+      }
+    }
     > div {
       font-size: 13px;
       color: #6f7287;

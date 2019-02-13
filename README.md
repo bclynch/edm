@@ -5,6 +5,7 @@
   - Search box in header with location / date
   - Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there
     - Featured shows should probably be eventbrite so they can purchase ticket there
+    - Maybe a nice little display of features like discuss shows with others, save for future, etc
 - Search results page
   - Can share show
   - Can favorite show (prompt to signin if not)
@@ -21,7 +22,9 @@
   - Disqus comments for people to ask things
 - Artist page
   - Display their shows
-  - Maybe spotify / soundcloud plugin
+  - Maybe soundcloud plugin
+    - https://github.com/Cloud-Player/web/tree/163bd9e140b26713a78f7de6ee5c4a092a3c057e/src/app/modules/player/components/soundcloud-player
+    - https://scotch.io/tutorials/build-a-music-player-with-angular-electron-iii-bringing-it-all-together
 - Venue page
   - General info + photo + map
 

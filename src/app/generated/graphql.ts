@@ -33,6 +33,44 @@ export class AllLocationsGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class ArtistByNameGQL extends Apollo.Query<
+  ArtistByName.Query,
+  ArtistByName.Variables
+> {
+  document: any = gql`
+    query artistByName($name: String!) {
+      artistByName(name: $name) {
+        name
+        description
+        photo
+        twitterUsername
+        twitterUrl
+        facebookUsername
+        facebookUrl
+        instagramUsername
+        instagramUrl
+        soundcloudUsername
+        soundcloudUrl
+        youtubeUsername
+        youtubeUrl
+        spotifyUrl
+        homepage
+        artistToEventsByArtistId {
+          nodes {
+            eventByEventId {
+              name
+              venue
+              startDate
+            }
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class EventByIdGQL extends Apollo.Query<
   EventById.Query,
   EventById.Variables
@@ -45,6 +83,7 @@ export class EventByIdGQL extends Apollo.Query<
         startDate
         endDate
         ticketproviderurl
+        description
         venueByVenue {
           name
           lat
@@ -87,6 +126,34 @@ export class EventsByCityGQL extends Apollo.Query<
                 }
               }
             }
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class VenueByNameGQL extends Apollo.Query<
+  VenueByName.Query,
+  VenueByName.Variables
+> {
+  document: any = gql`
+    query venueByName($name: String!) {
+      venueByName(name: $name) {
+        name
+        description
+        lat
+        lon
+        city
+        address
+        photo
+        logo
+        eventsByVenue {
+          nodes {
+            name
+            startDate
           }
         }
       }
@@ -2185,6 +2252,76 @@ export namespace AllLocations {
   };
 }
 
+export namespace ArtistByName {
+  export type Variables = {
+    name: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    artistByName: Maybe<ArtistByName>;
+  };
+
+  export type ArtistByName = {
+    __typename?: "Artist";
+
+    name: string;
+
+    description: Maybe<string>;
+
+    photo: Maybe<string>;
+
+    twitterUsername: Maybe<string>;
+
+    twitterUrl: Maybe<string>;
+
+    facebookUsername: Maybe<string>;
+
+    facebookUrl: Maybe<string>;
+
+    instagramUsername: Maybe<string>;
+
+    instagramUrl: Maybe<string>;
+
+    soundcloudUsername: Maybe<string>;
+
+    soundcloudUrl: Maybe<string>;
+
+    youtubeUsername: Maybe<string>;
+
+    youtubeUrl: Maybe<string>;
+
+    spotifyUrl: Maybe<string>;
+
+    homepage: Maybe<string>;
+
+    artistToEventsByArtistId: ArtistToEventsByArtistId;
+  };
+
+  export type ArtistToEventsByArtistId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "ArtistToEvent";
+
+    eventByEventId: Maybe<EventByEventId>;
+  };
+
+  export type EventByEventId = {
+    __typename?: "Event";
+
+    name: Maybe<string>;
+
+    venue: string;
+
+    startDate: BigInt;
+  };
+}
+
 export namespace EventById {
   export type Variables = {
     eventId: string;
@@ -2208,6 +2345,8 @@ export namespace EventById {
     endDate: Maybe<BigInt>;
 
     ticketproviderurl: Maybe<string>;
+
+    description: Maybe<string>;
 
     venueByVenue: Maybe<VenueByVenue>;
 
@@ -2302,5 +2441,53 @@ export namespace EventsByCity {
     startDate: BigInt;
 
     ticketproviderurl: Maybe<string>;
+  };
+}
+
+export namespace VenueByName {
+  export type Variables = {
+    name: string;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    venueByName: Maybe<VenueByName>;
+  };
+
+  export type VenueByName = {
+    __typename?: "Venue";
+
+    name: string;
+
+    description: Maybe<string>;
+
+    lat: Maybe<BigFloat>;
+
+    lon: Maybe<BigFloat>;
+
+    city: number;
+
+    address: Maybe<string>;
+
+    photo: Maybe<string>;
+
+    logo: Maybe<string>;
+
+    eventsByVenue: EventsByVenue;
+  };
+
+  export type EventsByVenue = {
+    __typename?: "EventsConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "Event";
+
+    name: Maybe<string>;
+
+    startDate: BigInt;
   };
 }

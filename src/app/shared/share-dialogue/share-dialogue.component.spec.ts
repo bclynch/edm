@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MobileNavDialogueComponent } from './mobile-nav-dialogue.component';
+import { ShareDialogueComponent } from './share-dialogue.component';
 
-describe('MobileNavComponent', () => {
-  let component: MobileNavDialogueComponent;
-  let fixture: ComponentFixture<MobileNavDialogueComponent>;
+describe('ShareDialogueComponent', () => {
+  let component: ShareDialogueComponent;
+  let fixture: ComponentFixture<ShareDialogueComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileNavDialogueComponent ]
+      declarations: [ ShareDialogueComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MobileNavDialogueComponent);
+    fixture = TestBed.createComponent(ShareDialogueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
