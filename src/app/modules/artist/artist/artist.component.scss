@@ -1,0 +1,19 @@
+.artistContainer {
+  width: 100vw;
+
+  .header {
+    height: 35vh;
+    background: var(--color-primary);
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      font-size: 3em;
+      color: white;
+    }
+  }
+  @media (min-width: 768px) {
+
+  }
+}

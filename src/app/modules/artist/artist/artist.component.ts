@@ -10,6 +10,7 @@ import { ArtistByNameGQL } from 'src/app/generated/graphql';
 export class ArtistComponent implements OnInit {
 
   artist;
+  events;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -19,6 +20,7 @@ export class ArtistComponent implements OnInit {
       (result) => {
         this.artist = result.data.artistByName;
         console.log(this.artist);
+        this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId);
       }
     );
   }

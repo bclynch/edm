@@ -35,6 +35,7 @@
 - Email alerts on a weekly / semi weekly / monthly basis
 - Featured / hot / lifted events up top
 - Filter by genre, venue, region, artist
+- Follow feature. Would be adding a table for adding artists or venues and linking with a user. Can have a chronological feed of followed items with new things and maybe notification / email updates every some period of time.
 - Tour information for artists + bios and shit. Maybe can scrape from spotify or wikipedia or something.
 
 ## Monetization

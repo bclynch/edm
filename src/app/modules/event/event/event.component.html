@@ -16,5 +16,43 @@
         <button mat-button>Tickets</button>
       </div>
     </div>
+    <div class="infoContainer" *ngIf="event">
+      <div class="generalInfo">
+        <div class="section">
+          <h3 class="sectionHeader">Artists</h3>
+          <a 
+            [routerLink]="['/artist/' + artist.artistByArtistId.name]"
+            *ngFor="let artist of event.artistToEventsByEventId.nodes; let i = index;" 
+            class="artist"  
+          >{{artist.artistByArtistId.name}}{{i + 1 < event.artistToEventsByEventId.nodes.length ? ',' : ''}}</a>
+        </div>
+        <div class="section">
+          <h3 class="sectionHeader">Date And Time</h3>
+          <div>{{event.startDate | date:'EEE, MMM d'}}</div>
+          <a [href]="addToCalendar()" target="_blank" rel="nofollow">Add to Google Calendar</a>
+        </div>
+        <div class="section">
+          <h3 class="sectionHeader">Location</h3>
+          <div>{{event.venueByVenue.name.split('-'[0])}}</div>
+          <div>{{event.venueByVenue.address}}</div>
+          <a>View Map</a>
+        </div>
+      </div>
+      <div class="description">
+        <div class="section">
+          <h3 class="sectionHeader">Description</h3>
+        </div>
+      </div>
+    </div>
+    <div class="mapContainer">
+      <app-venue-map 
+        *ngIf="event" 
+        [lat]="+event.venueByVenue.lat" 
+        [lon]="+event.venueByVenue.lon"
+        [venueName]="event.venueByVenue.name.split('-')[0]"
+        [address]="event.venueByVenue.address"
+        [eventName]="event.name"
+      ></app-venue-map>
+    </div>
   </div>
 </app-pagewrapper>

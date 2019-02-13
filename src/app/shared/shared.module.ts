@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+// Third party modules
 import {
   MatButtonModule,
   MatProgressSpinnerModule,
@@ -10,14 +11,8 @@ import {
   MatDialogModule,
   MatInputModule,
   MatIconModule,
-  MatBadgeModule,
   MatBottomSheetModule,
   MatSnackBarModule,
-  MatSelectModule,
-  MatCheckboxModule,
-  MatRadioModule,
-  MatButtonToggleModule,
-  MatTabsModule,
   MatMenuModule,
   MatExpansionModule,
   MatDatepickerModule,
@@ -25,6 +20,7 @@ import {
   MatAutocompleteModule
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
+import { AgmCoreModule } from '@agm/core';
 
 // components
 import { PagewrapperComponent } from './pagewrapper/pagewrapper.component';
@@ -34,6 +30,8 @@ import { DirectivesModule } from '../directives/directives.module';
 import { LocationSearchComponent } from './location-search/location-search.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { ShareDialogueComponent } from './share-dialogue/share-dialogue.component';
+import { VenueMapComponent } from './venue-map/venue-map.component';
+import { ENV } from '../../environments/environment';
 
 @NgModule({
   entryComponents: [
@@ -46,6 +44,7 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
     LocationSearchComponent,
     EventCardComponent,
     ShareDialogueComponent,
+    VenueMapComponent,
   ],
   imports: [
     CommonModule,
@@ -55,14 +54,8 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
     MatDialogModule,
     MatInputModule,
     MatIconModule,
-    MatBadgeModule,
     MatBottomSheetModule,
     MatSnackBarModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatButtonToggleModule,
-    MatTabsModule,
     MatMenuModule,
     MatExpansionModule,
     MatDatepickerModule,
@@ -73,6 +66,9 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
     ReactiveFormsModule,
     FormsModule,
     ShareButtonsModule,
+    AgmCoreModule.forRoot({
+      apiKey: ENV.googleAPIKey,
+    }),
   ],
   exports: [
     MatButtonModule,
@@ -81,14 +77,8 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
     MatDialogModule,
     MatInputModule,
     MatIconModule,
-    MatBadgeModule,
     MatBottomSheetModule,
     MatSnackBarModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatButtonToggleModule,
-    MatTabsModule,
     MatMenuModule,
     MatExpansionModule,
     MatDatepickerModule,
@@ -98,7 +88,8 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
     FooterComponent,
     NavbarComponent,
     LocationSearchComponent,
-    EventCardComponent
+    EventCardComponent,
+    VenueMapComponent
   ]
 })
 export class SharedModule { }

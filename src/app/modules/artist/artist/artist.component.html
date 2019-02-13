@@ -1,3 +1,31 @@
 <app-pagewrapper>
-  <div class="artistContainer">Artist</div>
+  <div class="artistContainer">
+    <div class="header">
+      <div>
+        <h1>{{artist?.name}}</h1>
+        <div class="socialOptions">
+  
+        </div>
+      </div>
+      <div>
+        <div class="soundcloudWrapper">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="upcomingContainer">
+    <div class="eventsWrapper" *ngIf="events">
+      <app-event-card
+        *ngFor="let event of events"
+        [name]="event.name"
+        [location]="event.venue"
+        [date]="event.startDate"
+        [id]="event.id"
+      ></app-event-card>
+    </div>
+  </div>
+  <div class="bioContainer">
+    
+  </div>
 </app-pagewrapper>

@@ -20,7 +20,8 @@ query artistByName($name: String!) {
         eventByEventId {
           name,
           venue,
-          startDate
+          startDate,
+          id
         }
       }
     }

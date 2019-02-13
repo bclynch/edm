@@ -32,4 +32,8 @@ export class EventComponent implements OnInit {
   share() {
     this.utilService.share(`${ENV.siteBaseURL}/event/${this.event.id}`);
   }
+
+  addToCalendar() {
+    return this.utilService.addToCalendar(this.event.name, `${ENV.siteBaseURL}/event/${this.event.id}`, this.event.venueByVenue.address, (new Date(+this.event.startDate)).toISOString().replace(/-|:|\.\d\d\d/g, ''));
+  }
 }

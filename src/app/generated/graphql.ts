@@ -61,6 +61,7 @@ export class ArtistByNameGQL extends Apollo.Query<
               name
               venue
               startDate
+              id
             }
           }
         }
@@ -2319,6 +2320,8 @@ export namespace ArtistByName {
     venue: string;
 
     startDate: BigInt;
+
+    id: string;
   };
 }
 
