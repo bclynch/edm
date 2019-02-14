@@ -1,6 +1,15 @@
 .eventContainer {
   width: 100vw;
 
+  a:visited,
+  a { 
+    color:#3659e3;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
   .header {
 
     .topWrapper {
@@ -30,21 +39,13 @@
     display: flex;
     flex-direction: column;
     margin-top: 60px;
+    padding: 0 5%;
 
     .sectionHeader {
 
     }
     .generalInfo {
 
-
-      a:visited,
-      a { 
-        color:#3659e3;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
       .artist {
         margin-right: 5px;
       }
@@ -61,6 +62,9 @@
   }
   .mapContainer {
     margin: 60px 0;
+  }
+  .commentContainer {
+    margin: 0 5%;
   }
   @media (min-width: 768px) {
 

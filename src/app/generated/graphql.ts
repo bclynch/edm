@@ -62,6 +62,7 @@ export class ArtistByNameGQL extends Apollo.Query<
               venue
               startDate
               id
+              ticketproviderurl
             }
           }
         }
@@ -155,6 +156,8 @@ export class VenueByNameGQL extends Apollo.Query<
           nodes {
             name
             startDate
+            ticketproviderurl
+            id
           }
         }
       }
@@ -2322,6 +2325,8 @@ export namespace ArtistByName {
     startDate: BigInt;
 
     id: string;
+
+    ticketproviderurl: Maybe<string>;
   };
 }
 
@@ -2492,5 +2497,9 @@ export namespace VenueByName {
     name: Maybe<string>;
 
     startDate: BigInt;
+
+    ticketproviderurl: Maybe<string>;
+
+    id: string;
   };
 }

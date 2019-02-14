@@ -21,6 +21,7 @@ import {
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AgmCoreModule } from '@agm/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // components
 import { PagewrapperComponent } from './pagewrapper/pagewrapper.component';
@@ -69,6 +70,7 @@ import { ENV } from '../../environments/environment';
     AgmCoreModule.forRoot({
       apiKey: ENV.googleAPIKey,
     }),
+    FontAwesomeModule
   ],
   exports: [
     MatButtonModule,

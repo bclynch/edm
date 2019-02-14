@@ -15,7 +15,6 @@ export class VenueComponent implements OnInit {
     private venueByNameGQL: VenueByNameGQL,
     private activatedRoute: ActivatedRoute
   ) {
-    console.log(this.activatedRoute.snapshot.paramMap.get('venueName'));
     this.venueByNameGQL.fetch({ name: this.activatedRoute.snapshot.paramMap.get('venueName') }).subscribe(
       (result) => {
         this.venue = result.data.venueByName;

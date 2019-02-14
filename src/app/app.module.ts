@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ENV } from '../environments/environment';
 
 // Apollo
 import { GraphQLModule } from './graphql.module';
@@ -17,6 +18,7 @@ import { RoleGuardService } from './services/roleGuard.service';
 import { UtilService } from './services/util.service';
 import { RouterService } from './services/router.service';
 import { AppService } from './services/app.service';
+import { DISQUS_SHORTNAME } from 'ngx-disqus';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { AppService } from './services/app.service';
     UtilService,
     RouterService,
     CookieService,
-    AppService
+    AppService,
+    { provide: DISQUS_SHORTNAME, useValue: ENV.disqusShortname }
   ],
   bootstrap: [AppComponent]
 })

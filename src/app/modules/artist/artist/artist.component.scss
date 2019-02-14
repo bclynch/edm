@@ -6,14 +6,49 @@
     background: var(--color-primary);
     padding: 0 5%;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
     h1 {
       font-size: 3em;
       color: white;
     }
+    .socialOptions {
+      display: flex;
+
+      .socialOption {
+        a {
+          text-decoration: none;
+          color: var(--color-accent);
+
+          button {
+            padding: 0 10px;
+            min-width: auto;
+
+            fa-icon {
+              font-size: 1.5em;
+            }
+          }
+        }
+      }
+    }
+  }
+  .contentWrapper {
+    margin: 0 5%;
   }
   @media (min-width: 768px) {
+    .contentWrapper {
+      display: flex;
+      align-items: center;
+      margin: 100px 5%;
 
+      .infoContainer {
+        flex: 1;
+      }
+      .soundcloudWrapper {
+        width: 300px;
+        margin-left: 50px;
+      }
+    }
   }
 }

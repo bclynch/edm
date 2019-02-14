@@ -1,3 +1,26 @@
 <app-pagewrapper>
-  <div class="venueContainer">Venue</div>
+  <div class="venueContainer">
+    <div class="upcomingContainer">
+      <div class="eventsWrapper" *ngIf="venue?.eventsByVenue.nodes.length">
+        <h2>Upcoming Shows</h2>
+        <app-event-card
+          *ngFor="let event of venue.eventsByVenue.nodes"
+          [name]="event.name"
+          [location]="venue.name"
+          [date]="event.startDate"
+          [id]="event.id"
+          [externalUrl]="event.ticketproviderurl"
+        ></app-event-card>
+      </div>
+    </div>
+    <div class="mapContainer">
+      <app-venue-map 
+        *ngIf="venue" 
+        [lat]="+venue.lat" 
+        [lon]="+venue.lon"
+        [venueName]="venue.name.split('-')[0]"
+        [address]="venue.address"
+      ></app-venue-map>
+    </div>
+  </div>
 </app-pagewrapper>

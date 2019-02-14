@@ -12,6 +12,8 @@ import { ENV } from '../../../../environments/environment';
 export class EventComponent implements OnInit {
 
   event;
+  disqusId: string;
+  calendarLink: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,6 +24,9 @@ export class EventComponent implements OnInit {
       (result) => {
         this.event = result.data.eventById;
         console.log(this.event);
+        this.disqusId = `event/${this.event.id}`;
+        // generate add to calendar link
+        this.calendarLink = this.utilService.addToCalendar(this.event.name, `${ENV.siteBaseURL}/event/${this.event.id}`, this.event.venueByVenue.address, (new Date(+this.event.startDate)).toISOString().replace(/-|:|\.\d\d\d/g, ''));
       }
     );
   }
@@ -33,7 +38,7 @@ export class EventComponent implements OnInit {
     this.utilService.share(`${ENV.siteBaseURL}/event/${this.event.id}`);
   }
 
-  addToCalendar() {
-    return this.utilService.addToCalendar(this.event.name, `${ENV.siteBaseURL}/event/${this.event.id}`, this.event.venueByVenue.address, (new Date(+this.event.startDate)).toISOString().replace(/-|:|\.\d\d\d/g, ''));
+  scrollTo(option: string): void {
+    document.getElementById(option).scrollIntoView({behavior: 'smooth'});
   }
 }

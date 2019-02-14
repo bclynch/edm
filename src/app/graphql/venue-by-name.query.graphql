@@ -11,7 +11,9 @@ query venueByName($name: String!) {
     eventsByVenue {
       nodes {
         name,
-        startDate
+        startDate,
+        ticketproviderurl,
+        id
       }
     }
   }

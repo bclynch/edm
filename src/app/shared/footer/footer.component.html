@@ -6,13 +6,14 @@
     <div class="socialWrapper">
       <div *ngFor="let option of socialOptions;">
         <a 
-           
           [href]="option.url" 
-          target="_blank"
-          class="hover boldFont"
-          rel="noopener" 
+          target="_blank" 
+          rel="nofollow"
+          *ngIf="option.url"
         >
-          <mat-icon>{{option.icon}}</mat-icon>
+          <button mat-button>
+            <fa-icon [icon]="option.icon"></fa-icon>
+          </button>
         </a>
       </div>
     </div>

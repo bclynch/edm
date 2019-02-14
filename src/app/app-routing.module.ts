@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'venue',
-    loadChildren: './modules/venue/venue.module#HomeModule',
+    loadChildren: './modules/venue/venue.module#VenueModule',
   },
   {
     path: 'events',

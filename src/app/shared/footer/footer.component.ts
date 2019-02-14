@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { faFacebook, faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 import { RouterService } from '../../services/router.service';
 
@@ -14,9 +15,9 @@ export class FooterComponent {
 
   links: string[] = ['About', 'Contact', 'Terms', 'Privacy Policy'];
   socialOptions = [
-    { icon: 'favorite', url: 'https://www.instagram.com/bclynch7/', label: 'instagram' },
-    { icon: 'favorite', url: 'https://www.facebook.com/brendan.lynch.90', label: 'facebook' },
-    { icon: 'favorite', url: 'https://github.com/bclynch', label: 'github' },
+    { icon: faInstagram, url: 'https://www.instagram.com/bclynch7/', label: 'instagram' },
+    { icon: faFacebook, url: 'https://www.facebook.com/brendan.lynch.90', label: 'facebook' },
+    { icon: faGithub, url: 'https://github.com/bclynch', label: 'github' },
   ];
 
   constructor(

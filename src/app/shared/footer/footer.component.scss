@@ -35,10 +35,15 @@
       > div { flex: 1; }
       a {
         text-decoration: none;
-        margin: 0 10px;
+        color: var(--color-accent);
 
-        mat-icon {
-          font-size: 32px;
+        button {
+          padding: 0 10px;
+          min-width: auto;
+
+          fa-icon {
+            font-size: 1.75em;
+          }
         }
       }
     }

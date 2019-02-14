@@ -5,6 +5,7 @@
         <div class="bannerImage"></div>
         <div class="eventInfo">
           <div>{{event?.name}}</div>
+          <a [routerLink]="['/venue/' + event?.venueByVenue.name]">{{event?.venueByVenue.name.split('-')[0]}}</a>
           <div>{{event?.startDate | date:'MMM d'}}</div>
         </div>
       </div>
@@ -29,13 +30,13 @@
         <div class="section">
           <h3 class="sectionHeader">Date And Time</h3>
           <div>{{event.startDate | date:'EEE, MMM d'}}</div>
-          <a [href]="addToCalendar()" target="_blank" rel="nofollow">Add to Google Calendar</a>
+          <a [href]="calendarLink" target="_blank" rel="nofollow">Add to Google Calendar</a>
         </div>
         <div class="section">
           <h3 class="sectionHeader">Location</h3>
-          <div>{{event.venueByVenue.name.split('-'[0])}}</div>
+          <div>{{event.venueByVenue.name.split('-')[0]}}</div>
           <div>{{event.venueByVenue.address}}</div>
-          <a>View Map</a>
+          <a (click)="scrollTo('locationAnchor')">View Map</a>
         </div>
       </div>
       <div class="description">
@@ -44,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="mapContainer">
+    <div class="mapContainer" id="locationAnchor">
       <app-venue-map 
         *ngIf="event" 
         [lat]="+event.venueByVenue.lat" 
@@ -53,6 +54,9 @@
         [address]="event.venueByVenue.address"
         [eventName]="event.name"
       ></app-venue-map>
+    </div>
+    <div class="commentContainer">
+      <disqus [identifier]="disqusId" *ngIf="disqusId"></disqus>
     </div>
   </div>
 </app-pagewrapper>

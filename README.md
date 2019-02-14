@@ -1,32 +1,36 @@
 # EDM
 
 ## Todos
+- Fix up scraper to grab edmtrain artist images + google map venue images and dump in s3 + add to front end
+- Grab eventbrite banner images
+
 - Home page
-  - Search box in header with location / date
+  - ~~Search box in header with location / date~~
   - Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there
     - Featured shows should probably be eventbrite so they can purchase ticket there
     - Maybe a nice little display of features like discuss shows with others, save for future, etc
 - Search results page
-  - Can share show
+  - ~~Can share show~~
   - Can favorite show (prompt to signin if not)
   - Can buy ticket if eventbrite
-  - Can follow link to show page
+  - ~~Can follow link to show page~~
   - Can filter by date
   - Can search for word (artist, venue)
   - List and map view
 - Show page
   - Can buy ticket
-  - General info about show
-  - Map where it's at
-  - Links to artist page and venue page
-  - Disqus comments for people to ask things
+  - ~~General info about show~~
+  - ~~Map where it's at~~
+  - ~~Links to artist page and venue page~~
+  - ~~Disqus comments for people to ask things~~
 - Artist page
-  - Display their shows
-  - Maybe soundcloud plugin
-    - https://github.com/Cloud-Player/web/tree/163bd9e140b26713a78f7de6ee5c4a092a3c057e/src/app/modules/player/components/soundcloud-player
-    - https://scotch.io/tutorials/build-a-music-player-with-angular-electron-iii-bringing-it-all-together
+  - ~~Display their shows~~
+  - ~~Soundcloud plugin~~
 - Venue page
-  - General info + photo + map
+  - General info
+  - ~~Upcoming events~~
+  - photo
+  - ~~map~~
 
 ## Feature Ideas
 - Map view the world over. Would be for a certain date and a user can modify the date to refresh map
