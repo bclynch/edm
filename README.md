@@ -1,8 +1,9 @@
 # EDM
 
 ## Todos
-- Fix up scraper to grab edmtrain artist images + google map venue images and dump in s3 + add to front end
 - Grab eventbrite banner images
+- Implement event brite widget for buying tickets
+- Create watching table + functionality for users for an event
 
 - Home page
   - ~~Search box in header with location / date~~
@@ -29,24 +30,25 @@
 - Venue page
   - General info
   - ~~Upcoming events~~
-  - photo
+  - ~~photo~~
   - ~~map~~
 
 ## Feature Ideas
-- Map view the world over. Would be for a certain date and a user can modify the date to refresh map
 - List view for a region on a per day basis
-- PWA available with push notifications for followed artists or venues.
 - Email alerts on a weekly / semi weekly / monthly basis
-- Featured / hot / lifted events up top
 - Filter by genre, venue, region, artist
 - Follow feature. Would be adding a table for adding artists or venues and linking with a user. Can have a chronological feed of followed items with new things and maybe notification / email updates every some period of time.
-- Tour information for artists + bios and shit. Maybe can scrape from spotify or wikipedia or something.
 
 ## Monetization
 - Lifted results for venues who want to promote something
 - Affiliate links for eventbrite, ticketfly, ticketmaster, seetickets, etix, etc (Ticketfly is $.25 per purchase)
 - Affiliate links to albums on amazon or something
 - Affiliate links for accomodation https://www.stay22.com/
+
+## Down the line
+- Map view the world over. Would be for a certain date and a user can modify the date to refresh map
+- PWA available with push notifications for followed artists or venues.
+- Featured / hot / lifted events up top
 
 ### Name Ideas
 

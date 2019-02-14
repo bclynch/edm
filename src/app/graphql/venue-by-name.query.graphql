@@ -8,12 +8,19 @@ query venueByName($name: String!) {
     address,
     photo,
     logo,
-    eventsByVenue {
+    eventsByVenue(orderBy: START_DATE_ASC) {
       nodes {
         name,
         startDate,
         ticketproviderurl,
-        id
+        id,
+        artistToEventsByEventId(first: 1) {
+          nodes {
+            artistByArtistId {
+              photo
+            }
+          }
+        }
       }
     }
   }

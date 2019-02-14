@@ -9,8 +9,12 @@
     .img {
       height: 100px;
       width: 100px;
-      background: purple;
       cursor: pointer;
+      background-size: contain;
+      border-radius: 50%;
+    }
+    .backupImg {
+      background: purple;
     }
   }
   .eventInfo {

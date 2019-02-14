@@ -1,6 +1,20 @@
 .venueContainer {
   width: 100vw;
 
+  .header {
+    background-size: cover;
+    background-position: center;
+    padding: 0 5%;
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h1 {
+      font-size: 3em;
+      color: white;
+    }
+  }
   .upcomingContainer {
     margin: 50px 5%;
   }

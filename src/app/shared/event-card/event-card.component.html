@@ -1,6 +1,9 @@
 <div class="cardContainer">
   <div class="imageWrapper">
-    <a [routerLink]="['/event/' + id]"><div class="img"></div></a>
+    <a [routerLink]="['/event/' + id]">
+      <div *ngIf="image" class="img" [ngStyle]="{ 'background-image': 'url(' + image + ')'}"></div>
+      <div *ngIf="!image" class="backupImg img"></div>
+    </a>
   </div>
   <div class="eventInfo">
     <a [routerLink]="['/event/' + id]"><h3 class="eventName">{{name}}</h3></a>

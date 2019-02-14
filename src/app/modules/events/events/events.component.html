@@ -33,6 +33,7 @@
         [date]="event.startDate"
         [id]="event.id"
         [externalUrl]="event.ticketproviderurl"
+        [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
       ></app-event-card>
     </cdk-virtual-scroll-viewport>
   </div>

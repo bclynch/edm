@@ -125,6 +125,13 @@ export class EventsByCityGQL extends Apollo.Query<
                   name
                   startDate
                   ticketproviderurl
+                  artistToEventsByEventId(first: 1) {
+                    nodes {
+                      artistByArtistId {
+                        photo
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -152,12 +159,19 @@ export class VenueByNameGQL extends Apollo.Query<
         address
         photo
         logo
-        eventsByVenue {
+        eventsByVenue(orderBy: START_DATE_ASC) {
           nodes {
             name
             startDate
             ticketproviderurl
             id
+            artistToEventsByEventId(first: 1) {
+              nodes {
+                artistByArtistId {
+                  photo
+                }
+              }
+            }
           }
         }
       }
@@ -2054,6 +2068,7 @@ export enum EventType {
   Ticketfly = "TICKETFLY",
   Ticketmaster = "TICKETMASTER",
   Seetickets = "SEETICKETS",
+  Etix = "ETIX",
   Other = "OTHER"
 }
 /** Methods to use when ordering `City`. */
@@ -2449,6 +2464,26 @@ export namespace EventsByCity {
     startDate: BigInt;
 
     ticketproviderurl: Maybe<string>;
+
+    artistToEventsByEventId: ArtistToEventsByEventId;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<___Nodes>)[];
+  };
+
+  export type ___Nodes = {
+    __typename?: "ArtistToEvent";
+
+    artistByArtistId: Maybe<ArtistByArtistId>;
+  };
+
+  export type ArtistByArtistId = {
+    __typename?: "Artist";
+
+    photo: Maybe<string>;
   };
 }
 
@@ -2501,5 +2536,25 @@ export namespace VenueByName {
     ticketproviderurl: Maybe<string>;
 
     id: string;
+
+    artistToEventsByEventId: ArtistToEventsByEventId;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
+    __typename?: "ArtistToEvent";
+
+    artistByArtistId: Maybe<ArtistByArtistId>;
+  };
+
+  export type ArtistByArtistId = {
+    __typename?: "Artist";
+
+    photo: Maybe<string>;
   };
 }

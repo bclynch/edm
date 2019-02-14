@@ -14,7 +14,14 @@ query eventsByCity($city: String!) {
               id,
               name,
               startDate,
-              ticketproviderurl
+              ticketproviderurl,
+              artistToEventsByEventId(first: 1) {
+                nodes {
+                  artistByArtistId {
+                    photo
+                  }
+                }
+              }
             }
           }
         }

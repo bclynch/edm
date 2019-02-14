@@ -58,7 +58,9 @@ export class EventsComponent implements OnInit {
         eventsArr.push(event);
       });
     });
-    return eventsArr;
+    // sort based on start date
+    const processedEvents = eventsArr.sort((a, b) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
+    return processedEvents;
   }
 
   searchEvents(e) {
