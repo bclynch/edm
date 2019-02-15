@@ -12,7 +12,14 @@
     <div class="eventOptions">
       <button mat-button matTooltip="Share"><mat-icon (click)="share()">share</mat-icon></button>
       <button mat-button matTooltip="Add to Watched"><mat-icon>star_border</mat-icon></button>
-      <button mat-button matTooltip="Buy Tickets"><mat-icon>loyalty</mat-icon></button>
+      <button 
+        *ngIf="ticketProviderId" 
+        mat-button 
+        matTooltip="Buy Tickets" 
+        (click)="utilService.eventbriteCheckout(ticketProviderId)"
+      >
+        <mat-icon>loyalty</mat-icon>
+      </button>
       <a 
         [href]="externalUrl" 
         target="_blank" 

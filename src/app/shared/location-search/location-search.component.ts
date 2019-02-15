@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, SubscriptionLike } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AppService } from 'src/app/services/app.service';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-location-search',
@@ -23,7 +24,8 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   initSubscription: SubscriptionLike;
 
   constructor(
-    private appService: AppService
+    private appService: AppService,
+    private locationService: LocationService
   ) {
     this.initSubscription = this.appService.appInited.subscribe((inited) =>  { if (inited) this.init(); });
   }
@@ -62,5 +64,32 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
     // this is being triggered by the enter button for some reason so checking to see if this prop is there
     // if so it was a real mouse click otherwise we ignore
     if (e.detail) this.myControl.reset();
+  }
+
+  selectOption() {
+    if (this.myControl.value === '📍 Use my current location') {
+      this.myControl.setValue('Finding Location...');
+      navigator.geolocation.getCurrentPosition(
+        (data) => {
+          console.log(data.coords);
+          // find city based on coords
+          this.locationService.reverseGeocodeCoords(data.coords.latitude, data.coords.longitude).subscribe(
+            result => {
+              console.log(result.results);
+              this.myControl.setValue(result.results[0].formatted_address.split(',')[1]);
+
+              // will need to run an algorithm to find nearest region / city to the location
+              this.selected.emit(this.myControl.value);
+            }
+          );
+        },
+        (err) => {
+          console.log(err);
+          this.myControl.setValue('');
+        }
+      );
+    } else {
+      this.selected.emit(this.myControl.value);
+    }
   }
 }

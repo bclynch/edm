@@ -9,12 +9,15 @@ query eventsByCity($city: String!) {
       venuesByCity {
         nodes {
           name,
+          lat,
+          lon,
           eventsByVenue {
             nodes {
               id,
               name,
               startDate,
               ticketproviderurl,
+              ticketproviderid,
               artistToEventsByEventId(first: 1) {
                 nodes {
                   artistByArtistId {

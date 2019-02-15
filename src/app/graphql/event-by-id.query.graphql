@@ -5,6 +5,7 @@ query eventById($eventId: String!) {
     startDate,
     endDate,
     ticketproviderurl,
+    ticketproviderid
     description,
     venueByVenue {
       name,

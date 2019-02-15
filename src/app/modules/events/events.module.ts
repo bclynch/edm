@@ -4,6 +4,9 @@ import { EventsComponent } from './events/events.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule, ClusterManager } from '@agm/js-marker-clusterer';
+import { ENV } from '../../../environments/environment';
 
 const routes: Routes = [
   {
@@ -18,7 +21,11 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    AgmCoreModule.forRoot({
+      apiKey: ENV.googleAPIKey,
+    }),
+    AgmJsMarkerClustererModule
   ]
 })
 export class EventsModule { }

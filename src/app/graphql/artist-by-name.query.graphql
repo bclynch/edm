@@ -22,7 +22,8 @@ query artistByName($name: String!) {
           venue,
           startDate,
           id,
-          ticketproviderurl
+          ticketproviderurl,
+          ticketproviderid
         }
       }
     }

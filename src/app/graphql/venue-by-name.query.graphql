@@ -13,6 +13,7 @@ query venueByName($name: String!) {
         name,
         startDate,
         ticketproviderurl,
+        ticketproviderid,
         id,
         artistToEventsByEventId(first: 1) {
           nodes {

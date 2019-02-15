@@ -33,10 +33,13 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { ShareDialogueComponent } from './share-dialogue/share-dialogue.component';
 import { VenueMapComponent } from './venue-map/venue-map.component';
 import { ENV } from '../../environments/environment';
+import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
+import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
 
 @NgModule({
   entryComponents: [
-    ShareDialogueComponent
+    ShareDialogueComponent,
+    EventbriteCheckoutComponent
   ],
   declarations: [
     PagewrapperComponent,
@@ -46,6 +49,7 @@ import { ENV } from '../../environments/environment';
     EventCardComponent,
     ShareDialogueComponent,
     VenueMapComponent,
+    EventbriteCheckoutComponent,
   ],
   imports: [
     CommonModule,
@@ -92,6 +96,9 @@ import { ENV } from '../../environments/environment';
     LocationSearchComponent,
     EventCardComponent,
     VenueMapComponent
+  ],
+  providers: [
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer}
   ]
 })
 export class SharedModule { }

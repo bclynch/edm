@@ -1,9 +1,9 @@
 # EDM
 
 ## Todos
-- Grab eventbrite banner images
-- Implement event brite widget for buying tickets
-- Create watching table + functionality for users for an event
+- Create watching table + functionality for users for an event. Only for logged in.
+- Create follow table for artists and venues.
+    - Feed view for new stuff
 
 - Home page
   - ~~Search box in header with location / date~~
@@ -18,8 +18,11 @@
   - Can filter by date
   - Can search for word (artist, venue)
   - List and map view
+  - ~~Implement event brite widget for buying tickets~~
+    - There is a cross origin deal since localhost isn't https. Breaks the methods (like close modal). Once it's live online it should be okay. Need an affiliate link of our own and to put a few things in the env vars
 - Show page
   - Can buy ticket
+  - Grab eventbrite banner images
   - ~~General info about show~~
   - ~~Map where it's at~~
   - ~~Links to artist page and venue page~~
@@ -32,6 +35,10 @@
   - ~~Upcoming events~~
   - ~~photo~~
   - ~~map~~
+- Setup google analytics
+    - ~~For pages~~
+    - For on some clicks (like buy tickets)
+    - Need to swap in correct account in index.html
 
 ## Feature Ideas
 - List view for a region on a per day basis

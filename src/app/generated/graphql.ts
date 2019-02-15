@@ -63,6 +63,7 @@ export class ArtistByNameGQL extends Apollo.Query<
               startDate
               id
               ticketproviderurl
+              ticketproviderid
             }
           }
         }
@@ -85,6 +86,7 @@ export class EventByIdGQL extends Apollo.Query<
         startDate
         endDate
         ticketproviderurl
+        ticketproviderid
         description
         venueByVenue {
           name
@@ -119,12 +121,15 @@ export class EventsByCityGQL extends Apollo.Query<
           venuesByCity {
             nodes {
               name
+              lat
+              lon
               eventsByVenue {
                 nodes {
                   id
                   name
                   startDate
                   ticketproviderurl
+                  ticketproviderid
                   artistToEventsByEventId(first: 1) {
                     nodes {
                       artistByArtistId {
@@ -164,6 +169,7 @@ export class VenueByNameGQL extends Apollo.Query<
             name
             startDate
             ticketproviderurl
+            ticketproviderid
             id
             artistToEventsByEventId(first: 1) {
               nodes {
@@ -2342,6 +2348,8 @@ export namespace ArtistByName {
     id: string;
 
     ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
   };
 }
 
@@ -2368,6 +2376,8 @@ export namespace EventById {
     endDate: Maybe<BigInt>;
 
     ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
 
     description: Maybe<string>;
 
@@ -2445,6 +2455,10 @@ export namespace EventsByCity {
 
     name: string;
 
+    lat: Maybe<BigFloat>;
+
+    lon: Maybe<BigFloat>;
+
     eventsByVenue: EventsByVenue;
   };
 
@@ -2464,6 +2478,8 @@ export namespace EventsByCity {
     startDate: BigInt;
 
     ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
 
     artistToEventsByEventId: ArtistToEventsByEventId;
   };
@@ -2534,6 +2550,8 @@ export namespace VenueByName {
     startDate: BigInt;
 
     ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
 
     id: string;
 

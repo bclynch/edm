@@ -10,7 +10,7 @@
   <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="resetInput($event)">
     <mat-icon>close</mat-icon>
   </button>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected.emit(this.myControl.value)" [autoActiveFirstOption]="true">
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption()" [autoActiveFirstOption]="true">
     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
       {{option}}
     </mat-option>

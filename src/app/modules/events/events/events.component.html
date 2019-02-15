@@ -23,6 +23,34 @@
         </div>
         <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>
       </form>
+      <div class="mapContainer">
+        <div class="mapWrapper" *ngIf="mapInited">
+          <agm-map 
+            [disableDefaultUI]="true"
+            [streetViewControl]="false"
+            [fitBounds]="latlngBounds"
+            [styles]=mapStyle
+            [zoom]="zoomLevel"
+            mapTypeId="terrain"
+            [scrollwheel]="false"
+          >
+            <agm-marker-cluster 
+              [minimumClusterSize]="clusterOptions.minimumClusterSize" 
+              [gridSize]="clusterOptions.gridSize"
+              [averageCenter]="clusterOptions.averageCenter"
+              imagePath="https://googlemaps.github.io/js-marker-clusterer/images/m"
+            >
+              <agm-marker 
+                *ngFor= "let marker of eventMarkers; let i = index;"
+                [latitude]= "marker.lat" 
+                [longitude]= "marker.lon" 
+                (markerClick)="markerClick(i)"
+              ></agm-marker>
+            </agm-marker-cluster>
+          </agm-map>
+        </div>
+        <div class="spinnerWrapper" *ngIf="!mapInited"><mat-spinner></mat-spinner></div>
+      </div>
     </div>
     <div *ngIf="!location">Select a city to search for shows in to get started</div>
     <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="50">
@@ -33,6 +61,7 @@
         [date]="event.startDate"
         [id]="event.id"
         [externalUrl]="event.ticketproviderurl"
+        [ticketProviderId]="event.ticketproviderid"
         [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
       ></app-event-card>
     </cdk-virtual-scroll-viewport>

@@ -19,6 +19,8 @@ import { UtilService } from './services/util.service';
 import { RouterService } from './services/router.service';
 import { AppService } from './services/app.service';
 import { DISQUS_SHORTNAME } from 'ngx-disqus';
+import { AnalyticsService } from './services/analytics.service';
+import { LocationService } from './services/location.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { DISQUS_SHORTNAME } from 'ngx-disqus';
     RouterService,
     CookieService,
     AppService,
+    AnalyticsService,
+    LocationService,
     { provide: DISQUS_SHORTNAME, useValue: ENV.disqusShortname }
   ],
   bootstrap: [AppComponent]

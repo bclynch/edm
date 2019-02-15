@@ -15,6 +15,8 @@ export class EventCardComponent implements OnInit {
   @Input() id: string;
   @Input() externalUrl: string;
   @Input() image: string;
+  @Input() ticketProviderId: number;
+
 
   faExternalLinkAlt = faExternalLinkAlt;
 

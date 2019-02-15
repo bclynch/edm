@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AllLocationsGQL } from '../generated/graphql';
 import { BehaviorSubject, Observable} from 'rxjs';
+import { AnalyticsService } from './analytics.service';
 
 @Injectable()
 export class AppService {
@@ -12,9 +13,13 @@ export class AppService {
 
   constructor(
     private allLocationsGQL: AllLocationsGQL,
+    private analyticsService: AnalyticsService
   ) {
     this._subject = new BehaviorSubject<boolean>(false);
     this.appInited = this._subject;
+
+    // init tracking
+    this.analyticsService.trackViews();
   }
 
   appInit() {
