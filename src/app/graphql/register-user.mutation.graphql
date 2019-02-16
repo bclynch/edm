@@ -1,0 +1,9 @@
+mutation registerUserAccount($username: String!, $email: String!, $password: String!) {
+  registerUserAccount(input:{
+    username: $username,
+    email: $email,
+    password: $password
+  }) {
+    clientMutationId
+  }
+}

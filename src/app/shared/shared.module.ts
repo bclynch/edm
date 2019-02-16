@@ -35,11 +35,13 @@ import { VenueMapComponent } from './venue-map/venue-map.component';
 import { ENV } from '../../environments/environment';
 import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
 import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
+import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.component';
 
 @NgModule({
   entryComponents: [
     ShareDialogueComponent,
-    EventbriteCheckoutComponent
+    EventbriteCheckoutComponent,
+    SigninDialogueComponent
   ],
   declarations: [
     PagewrapperComponent,
@@ -50,6 +52,7 @@ import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overl
     ShareDialogueComponent,
     VenueMapComponent,
     EventbriteCheckoutComponent,
+    SigninDialogueComponent
   ],
   imports: [
     CommonModule,

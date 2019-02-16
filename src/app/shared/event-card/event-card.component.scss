@@ -67,6 +67,14 @@
       }
     }
   }
+  @media (min-width: 768px) {
+
+    &.half {
+      width: 50%;
+      box-sizing: border-box;
+      margin-left: 50vw;
+    }
+  }
 }
 .cardContainer:hover {
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);

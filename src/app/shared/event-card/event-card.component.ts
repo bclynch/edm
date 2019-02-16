@@ -16,6 +16,7 @@ export class EventCardComponent implements OnInit {
   @Input() externalUrl: string;
   @Input() image: string;
   @Input() ticketProviderId: number;
+  @Input() size: 'half' | 'full' = 'full';
 
 
   faExternalLinkAlt = faExternalLinkAlt;

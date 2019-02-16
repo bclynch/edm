@@ -1,10 +1,17 @@
 .eventsContainer {
   width: 100%;
+  position: relative;
 
   .searchContainer {
     width: 100vw;
     padding: 5%;
     box-sizing: border-box;
+    z-index: 999;
+    position: fixed;
+    top: var(--height-navbar);
+    left: 0;
+    height: 20vh;
+    background: white;
 
     .mapContainer {
       height: 55vh;
@@ -60,8 +67,10 @@
     }
   }
   .eventsWrapper {
-    height: 100vh;
+    height: calc(100vh - var(--height-navbar) - 20vh);
     width: 100vw;
+    position: absolute;
+    top: calc(var(--height-navbar) + 20vh)
   }
   @media (min-width: 768px) {
     display: flex;
@@ -78,9 +87,9 @@
       }
     }
     .eventsWrapper {
-      height: calc(100vh - 54px);
-      width: 50vw;
-      margin-left: 30px;
+      height: calc(100vh - var(--height-navbar));
+      width: 100vw;
+      top: 0;
     }
   }
 }

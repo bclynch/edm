@@ -74,6 +74,36 @@ export class ArtistByNameGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class AuthenticateUserAccountGQL extends Apollo.Mutation<
+  AuthenticateUserAccount.Mutation,
+  AuthenticateUserAccount.Variables
+> {
+  document: any = gql`
+    mutation authenticateUserAccount($email: String!, $password: String!) {
+      authenticateUserAccount(input: { email: $email, password: $password }) {
+        jwtToken
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class CurrentAccountGQL extends Apollo.Query<
+  CurrentAccount.Query,
+  CurrentAccount.Variables
+> {
+  document: any = gql`
+    query currentAccount {
+      currentAccount {
+        username
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class EventByIdGQL extends Apollo.Query<
   EventById.Query,
   EventById.Variables
@@ -149,6 +179,27 @@ export class EventsByCityGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class RegisterUserAccountGQL extends Apollo.Mutation<
+  RegisterUserAccount.Mutation,
+  RegisterUserAccount.Variables
+> {
+  document: any = gql`
+    mutation registerUserAccount(
+      $username: String!
+      $email: String!
+      $password: String!
+    ) {
+      registerUserAccount(
+        input: { username: $username, email: $email, password: $password }
+      ) {
+        clientMutationId
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class VenueByNameGQL extends Apollo.Query<
   VenueByName.Query,
   VenueByName.Variables
@@ -199,8 +250,6 @@ export interface AccountCondition {
   username?: Maybe<string>;
   /** Checks for equality with the object’s `profilePhoto` field. */
   profilePhoto?: Maybe<string>;
-  /** Checks for equality with the object’s `userLocation` field. */
-  userLocation?: Maybe<string>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
@@ -214,8 +263,6 @@ export interface AccountFilter {
   username?: Maybe<StringFilter>;
   /** Filter by the object’s `profilePhoto` field. */
   profilePhoto?: Maybe<StringFilter>;
-  /** Filter by the object’s `userLocation` field. */
-  userLocation?: Maybe<StringFilter>;
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
@@ -363,181 +410,29 @@ export interface DatetimeFilter {
   /** Greater than or equal to the specified value. */
   greaterThanOrEqualTo?: Maybe<Datetime>;
 }
-/** A condition to be used against `UserAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface UserAccountCondition {
-  /** Checks for equality with the object’s `accountId` field. */
-  accountId?: Maybe<number>;
-  /** Checks for equality with the object’s `email` field. */
-  email?: Maybe<string>;
-  /** Checks for equality with the object’s `passwordHash` field. */
-  passwordHash?: Maybe<string>;
-}
-/** A filter to be used against `UserAccount` object types. All fields are combined with a logical ‘and.’ */
-export interface UserAccountFilter {
-  /** Filter by the object’s `accountId` field. */
-  accountId?: Maybe<IntFilter>;
-  /** Filter by the object’s `email` field. */
-  email?: Maybe<StringFilter>;
-  /** Filter by the object’s `passwordHash` field. */
-  passwordHash?: Maybe<StringFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<UserAccountFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<UserAccountFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<UserAccountFilter>;
-}
-/** A condition to be used against `AdminAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface AdminAccountCondition {
-  /** Checks for equality with the object’s `accountId` field. */
-  accountId?: Maybe<number>;
-  /** Checks for equality with the object’s `email` field. */
-  email?: Maybe<string>;
-  /** Checks for equality with the object’s `passwordHash` field. */
-  passwordHash?: Maybe<string>;
-}
-/** A filter to be used against `AdminAccount` object types. All fields are combined with a logical ‘and.’ */
-export interface AdminAccountFilter {
-  /** Filter by the object’s `accountId` field. */
-  accountId?: Maybe<IntFilter>;
-  /** Filter by the object’s `email` field. */
-  email?: Maybe<StringFilter>;
-  /** Filter by the object’s `passwordHash` field. */
-  passwordHash?: Maybe<StringFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<AdminAccountFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<AdminAccountFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<AdminAccountFilter>;
-}
-/** A condition to be used against `Artist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface ArtistCondition {
-  /** Checks for equality with the object’s `name` field. */
-  name?: Maybe<string>;
-  /** Checks for equality with the object’s `description` field. */
-  description?: Maybe<string>;
-  /** Checks for equality with the object’s `photo` field. */
-  photo?: Maybe<string>;
-  /** Checks for equality with the object’s `twitterUsername` field. */
-  twitterUsername?: Maybe<string>;
-  /** Checks for equality with the object’s `twitterUrl` field. */
-  twitterUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `facebookUsername` field. */
-  facebookUsername?: Maybe<string>;
-  /** Checks for equality with the object’s `facebookUrl` field. */
-  facebookUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `instagramUsername` field. */
-  instagramUsername?: Maybe<string>;
-  /** Checks for equality with the object’s `instagramUrl` field. */
-  instagramUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `soundcloudUsername` field. */
-  soundcloudUsername?: Maybe<string>;
-  /** Checks for equality with the object’s `soundcloudUrl` field. */
-  soundcloudUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `youtubeUsername` field. */
-  youtubeUsername?: Maybe<string>;
-  /** Checks for equality with the object’s `youtubeUrl` field. */
-  youtubeUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `spotifyUrl` field. */
-  spotifyUrl?: Maybe<string>;
-  /** Checks for equality with the object’s `homepage` field. */
-  homepage?: Maybe<string>;
-  /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: Maybe<BigInt>;
-  /** Checks for equality with the object’s `updatedAt` field. */
-  updatedAt?: Maybe<Datetime>;
-}
-/** A filter to be used against `Artist` object types. All fields are combined with a logical ‘and.’ */
-export interface ArtistFilter {
-  /** Filter by the object’s `name` field. */
-  name?: Maybe<StringFilter>;
-  /** Filter by the object’s `description` field. */
-  description?: Maybe<StringFilter>;
-  /** Filter by the object’s `photo` field. */
-  photo?: Maybe<StringFilter>;
-  /** Filter by the object’s `twitterUsername` field. */
-  twitterUsername?: Maybe<StringFilter>;
-  /** Filter by the object’s `twitterUrl` field. */
-  twitterUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `facebookUsername` field. */
-  facebookUsername?: Maybe<StringFilter>;
-  /** Filter by the object’s `facebookUrl` field. */
-  facebookUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `instagramUsername` field. */
-  instagramUsername?: Maybe<StringFilter>;
-  /** Filter by the object’s `instagramUrl` field. */
-  instagramUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `soundcloudUsername` field. */
-  soundcloudUsername?: Maybe<StringFilter>;
-  /** Filter by the object’s `soundcloudUrl` field. */
-  soundcloudUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `youtubeUsername` field. */
-  youtubeUsername?: Maybe<StringFilter>;
-  /** Filter by the object’s `youtubeUrl` field. */
-  youtubeUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `spotifyUrl` field. */
-  spotifyUrl?: Maybe<StringFilter>;
-  /** Filter by the object’s `homepage` field. */
-  homepage?: Maybe<StringFilter>;
-  /** Filter by the object’s `createdAt` field. */
-  createdAt?: Maybe<BigIntFilter>;
-  /** Filter by the object’s `updatedAt` field. */
-  updatedAt?: Maybe<DatetimeFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<ArtistFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<ArtistFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<ArtistFilter>;
-}
-/** A condition to be used against `GenreToArtist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface GenreToArtistCondition {
+/** A condition to be used against `WatchList` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface WatchListCondition {
   /** Checks for equality with the object’s `id` field. */
   id?: Maybe<number>;
-  /** Checks for equality with the object’s `genreId` field. */
-  genreId?: Maybe<string>;
-  /** Checks for equality with the object’s `artistId` field. */
-  artistId?: Maybe<string>;
-}
-/** A filter to be used against `GenreToArtist` object types. All fields are combined with a logical ‘and.’ */
-export interface GenreToArtistFilter {
-  /** Filter by the object’s `id` field. */
-  id?: Maybe<IntFilter>;
-  /** Filter by the object’s `genreId` field. */
-  genreId?: Maybe<StringFilter>;
-  /** Filter by the object’s `artistId` field. */
-  artistId?: Maybe<StringFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<GenreToArtistFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<GenreToArtistFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<GenreToArtistFilter>;
-}
-/** A condition to be used against `ArtistToEvent` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface ArtistToEventCondition {
-  /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<number>;
-  /** Checks for equality with the object’s `artistId` field. */
-  artistId?: Maybe<string>;
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
   /** Checks for equality with the object’s `eventId` field. */
   eventId?: Maybe<string>;
 }
-/** A filter to be used against `ArtistToEvent` object types. All fields are combined with a logical ‘and.’ */
-export interface ArtistToEventFilter {
+/** A filter to be used against `WatchList` object types. All fields are combined with a logical ‘and.’ */
+export interface WatchListFilter {
   /** Filter by the object’s `id` field. */
   id?: Maybe<IntFilter>;
-  /** Filter by the object’s `artistId` field. */
-  artistId?: Maybe<StringFilter>;
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
   /** Filter by the object’s `eventId` field. */
   eventId?: Maybe<StringFilter>;
   /** Checks for all expressions in this list. */
-  and?: Maybe<ArtistToEventFilter[]>;
+  and?: Maybe<WatchListFilter[]>;
   /** Checks for any expressions in this list. */
-  or?: Maybe<ArtistToEventFilter[]>;
+  or?: Maybe<WatchListFilter[]>;
   /** Negates the expression. */
-  not?: Maybe<ArtistToEventFilter>;
+  not?: Maybe<WatchListFilter>;
 }
 /** A condition to be used against `City` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface CityCondition {
@@ -729,41 +624,209 @@ export interface EventTypeFilter {
   /** Not included in the specified list. */
   notIn?: Maybe<EventType[]>;
 }
-/** A condition to be used against `Config` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface ConfigCondition {
+/** A condition to be used against `FollowList` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface FollowListCondition {
   /** Checks for equality with the object’s `id` field. */
   id?: Maybe<number>;
-  /** Checks for equality with the object’s `primaryColor` field. */
-  primaryColor?: Maybe<string>;
-  /** Checks for equality with the object’s `secondaryColor` field. */
-  secondaryColor?: Maybe<string>;
-  /** Checks for equality with the object’s `tagline` field. */
-  tagline?: Maybe<string>;
-  /** Checks for equality with the object’s `heroBanner` field. */
-  heroBanner?: Maybe<string>;
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
+  /** Checks for equality with the object’s `artistId` field. */
+  artistId?: Maybe<string>;
+  /** Checks for equality with the object’s `venueId` field. */
+  venueId?: Maybe<string>;
+}
+/** A filter to be used against `FollowList` object types. All fields are combined with a logical ‘and.’ */
+export interface FollowListFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
+  /** Filter by the object’s `artistId` field. */
+  artistId?: Maybe<StringFilter>;
+  /** Filter by the object’s `venueId` field. */
+  venueId?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<FollowListFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<FollowListFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<FollowListFilter>;
+}
+/** A condition to be used against `GenreToArtist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface GenreToArtistCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `genreId` field. */
+  genreId?: Maybe<string>;
+  /** Checks for equality with the object’s `artistId` field. */
+  artistId?: Maybe<string>;
+}
+/** A filter to be used against `GenreToArtist` object types. All fields are combined with a logical ‘and.’ */
+export interface GenreToArtistFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `genreId` field. */
+  genreId?: Maybe<StringFilter>;
+  /** Filter by the object’s `artistId` field. */
+  artistId?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<GenreToArtistFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<GenreToArtistFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<GenreToArtistFilter>;
+}
+/** A condition to be used against `ArtistToEvent` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface ArtistToEventCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `artistId` field. */
+  artistId?: Maybe<string>;
+  /** Checks for equality with the object’s `eventId` field. */
+  eventId?: Maybe<string>;
+}
+/** A filter to be used against `ArtistToEvent` object types. All fields are combined with a logical ‘and.’ */
+export interface ArtistToEventFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `artistId` field. */
+  artistId?: Maybe<StringFilter>;
+  /** Filter by the object’s `eventId` field. */
+  eventId?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<ArtistToEventFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<ArtistToEventFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<ArtistToEventFilter>;
+}
+/** A condition to be used against `UserAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface UserAccountCondition {
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
+  /** Checks for equality with the object’s `email` field. */
+  email?: Maybe<string>;
+  /** Checks for equality with the object’s `passwordHash` field. */
+  passwordHash?: Maybe<string>;
+}
+/** A filter to be used against `UserAccount` object types. All fields are combined with a logical ‘and.’ */
+export interface UserAccountFilter {
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
+  /** Filter by the object’s `email` field. */
+  email?: Maybe<StringFilter>;
+  /** Filter by the object’s `passwordHash` field. */
+  passwordHash?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<UserAccountFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<UserAccountFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<UserAccountFilter>;
+}
+/** A condition to be used against `AdminAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface AdminAccountCondition {
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
+  /** Checks for equality with the object’s `email` field. */
+  email?: Maybe<string>;
+  /** Checks for equality with the object’s `passwordHash` field. */
+  passwordHash?: Maybe<string>;
+}
+/** A filter to be used against `AdminAccount` object types. All fields are combined with a logical ‘and.’ */
+export interface AdminAccountFilter {
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
+  /** Filter by the object’s `email` field. */
+  email?: Maybe<StringFilter>;
+  /** Filter by the object’s `passwordHash` field. */
+  passwordHash?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<AdminAccountFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<AdminAccountFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<AdminAccountFilter>;
+}
+/** A condition to be used against `Artist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface ArtistCondition {
+  /** Checks for equality with the object’s `name` field. */
+  name?: Maybe<string>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: Maybe<string>;
+  /** Checks for equality with the object’s `photo` field. */
+  photo?: Maybe<string>;
+  /** Checks for equality with the object’s `twitterUsername` field. */
+  twitterUsername?: Maybe<string>;
+  /** Checks for equality with the object’s `twitterUrl` field. */
+  twitterUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `facebookUsername` field. */
+  facebookUsername?: Maybe<string>;
+  /** Checks for equality with the object’s `facebookUrl` field. */
+  facebookUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `instagramUsername` field. */
+  instagramUsername?: Maybe<string>;
+  /** Checks for equality with the object’s `instagramUrl` field. */
+  instagramUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `soundcloudUsername` field. */
+  soundcloudUsername?: Maybe<string>;
+  /** Checks for equality with the object’s `soundcloudUrl` field. */
+  soundcloudUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `youtubeUsername` field. */
+  youtubeUsername?: Maybe<string>;
+  /** Checks for equality with the object’s `youtubeUrl` field. */
+  youtubeUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `spotifyUrl` field. */
+  spotifyUrl?: Maybe<string>;
+  /** Checks for equality with the object’s `homepage` field. */
+  homepage?: Maybe<string>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
   updatedAt?: Maybe<Datetime>;
 }
-/** A filter to be used against `Config` object types. All fields are combined with a logical ‘and.’ */
-export interface ConfigFilter {
-  /** Filter by the object’s `id` field. */
-  id?: Maybe<IntFilter>;
-  /** Filter by the object’s `primaryColor` field. */
-  primaryColor?: Maybe<StringFilter>;
-  /** Filter by the object’s `secondaryColor` field. */
-  secondaryColor?: Maybe<StringFilter>;
-  /** Filter by the object’s `tagline` field. */
-  tagline?: Maybe<StringFilter>;
-  /** Filter by the object’s `heroBanner` field. */
-  heroBanner?: Maybe<StringFilter>;
+/** A filter to be used against `Artist` object types. All fields are combined with a logical ‘and.’ */
+export interface ArtistFilter {
+  /** Filter by the object’s `name` field. */
+  name?: Maybe<StringFilter>;
+  /** Filter by the object’s `description` field. */
+  description?: Maybe<StringFilter>;
+  /** Filter by the object’s `photo` field. */
+  photo?: Maybe<StringFilter>;
+  /** Filter by the object’s `twitterUsername` field. */
+  twitterUsername?: Maybe<StringFilter>;
+  /** Filter by the object’s `twitterUrl` field. */
+  twitterUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `facebookUsername` field. */
+  facebookUsername?: Maybe<StringFilter>;
+  /** Filter by the object’s `facebookUrl` field. */
+  facebookUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `instagramUsername` field. */
+  instagramUsername?: Maybe<StringFilter>;
+  /** Filter by the object’s `instagramUrl` field. */
+  instagramUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `soundcloudUsername` field. */
+  soundcloudUsername?: Maybe<StringFilter>;
+  /** Filter by the object’s `soundcloudUrl` field. */
+  soundcloudUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `youtubeUsername` field. */
+  youtubeUsername?: Maybe<StringFilter>;
+  /** Filter by the object’s `youtubeUrl` field. */
+  youtubeUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `spotifyUrl` field. */
+  spotifyUrl?: Maybe<StringFilter>;
+  /** Filter by the object’s `homepage` field. */
+  homepage?: Maybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
   updatedAt?: Maybe<DatetimeFilter>;
   /** Checks for all expressions in this list. */
-  and?: Maybe<ConfigFilter[]>;
+  and?: Maybe<ArtistFilter[]>;
   /** Checks for any expressions in this list. */
-  or?: Maybe<ConfigFilter[]>;
+  or?: Maybe<ArtistFilter[]>;
   /** Negates the expression. */
-  not?: Maybe<ConfigFilter>;
+  not?: Maybe<ArtistFilter>;
 }
 /** A condition to be used against `Genre` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface GenreCondition {
@@ -936,8 +999,6 @@ export interface AccountInput {
   username: string;
   /** Profile photo of account */
   profilePhoto?: Maybe<string>;
-  /** Location of user */
-  userLocation?: Maybe<string>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -1027,27 +1088,6 @@ export interface CityInput {
   /** When city last updated */
   updatedAt?: Maybe<Datetime>;
 }
-/** All input for the create `Config` mutation. */
-export interface CreateConfigInput {
-  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
-  clientMutationId?: Maybe<string>;
-  /** The `Config` to be created by this mutation. */
-  config: ConfigInput;
-}
-/** An input for mutations affecting `Config` */
-export interface ConfigInput {
-  id?: Maybe<number>;
-
-  primaryColor: string;
-
-  secondaryColor: string;
-
-  tagline: string;
-
-  heroBanner: string;
-
-  updatedAt?: Maybe<Datetime>;
-}
 /** All input for the create `Event` mutation. */
 export interface CreateEventInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1079,6 +1119,24 @@ export interface EventInput {
   createdAt?: Maybe<BigInt>;
   /** When event last updated */
   updatedAt?: Maybe<Datetime>;
+}
+/** All input for the create `FollowList` mutation. */
+export interface CreateFollowListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The `FollowList` to be created by this mutation. */
+  followList: FollowListInput;
+}
+/** An input for mutations affecting `FollowList` */
+export interface FollowListInput {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId?: Maybe<number>;
+  /** Id of the artist */
+  artistId?: Maybe<string>;
+  /** Id of the venue */
+  venueId?: Maybe<string>;
 }
 /** All input for the create `Genre` mutation. */
 export interface CreateGenreInput {
@@ -1194,6 +1252,22 @@ export interface VenueInput {
   /** When venue last updated */
   updatedAt?: Maybe<Datetime>;
 }
+/** All input for the create `WatchList` mutation. */
+export interface CreateWatchListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The `WatchList` to be created by this mutation. */
+  watchList: WatchListInput;
+}
+/** An input for mutations affecting `WatchList` */
+export interface WatchListInput {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId?: Maybe<number>;
+  /** Id of the event */
+  eventId: string;
+}
 /** All input for the create `AdminAccount` mutation. */
 export interface CreateAdminAccountInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1243,8 +1317,6 @@ export interface AccountPatch {
   username?: Maybe<string>;
   /** Profile photo of account */
   profilePhoto?: Maybe<string>;
-  /** Location of user */
-  userLocation?: Maybe<string>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -1385,38 +1457,6 @@ export interface UpdateCityByIdInput {
   /** Primary key for city */
   id: number;
 }
-/** All input for the `updateConfig` mutation. */
-export interface UpdateConfigInput {
-  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
-  clientMutationId?: Maybe<string>;
-  /** The globally unique `ID` which will identify a single `Config` to be updated. */
-  nodeId: string;
-  /** An object where the defined keys will be set on the `Config` being updated. */
-  configPatch: ConfigPatch;
-}
-/** Represents an update to a `Config`. Fields that are set will be updated. */
-export interface ConfigPatch {
-  id?: Maybe<number>;
-
-  primaryColor?: Maybe<string>;
-
-  secondaryColor?: Maybe<string>;
-
-  tagline?: Maybe<string>;
-
-  heroBanner?: Maybe<string>;
-
-  updatedAt?: Maybe<Datetime>;
-}
-/** All input for the `updateConfigById` mutation. */
-export interface UpdateConfigByIdInput {
-  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
-  clientMutationId?: Maybe<string>;
-  /** An object where the defined keys will be set on the `Config` being updated. */
-  configPatch: ConfigPatch;
-
-  id: number;
-}
 /** All input for the `updateEvent` mutation. */
 export interface UpdateEventInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1459,6 +1499,35 @@ export interface UpdateEventByIdInput {
   eventPatch: EventPatch;
   /** Primary id for event */
   id: string;
+}
+/** All input for the `updateFollowList` mutation. */
+export interface UpdateFollowListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `FollowList` to be updated. */
+  nodeId: string;
+  /** An object where the defined keys will be set on the `FollowList` being updated. */
+  followListPatch: FollowListPatch;
+}
+/** Represents an update to a `FollowList`. Fields that are set will be updated. */
+export interface FollowListPatch {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId?: Maybe<number>;
+  /** Id of the artist */
+  artistId?: Maybe<string>;
+  /** Id of the venue */
+  venueId?: Maybe<string>;
+}
+/** All input for the `updateFollowListById` mutation. */
+export interface UpdateFollowListByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** An object where the defined keys will be set on the `FollowList` being updated. */
+  followListPatch: FollowListPatch;
+  /** Id of the row */
+  id: number;
 }
 /** All input for the `updateGenre` mutation. */
 export interface UpdateGenreInput {
@@ -1629,6 +1698,33 @@ export interface UpdateVenueByNameInput {
   /** Name of venue and primary id */
   name: string;
 }
+/** All input for the `updateWatchList` mutation. */
+export interface UpdateWatchListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `WatchList` to be updated. */
+  nodeId: string;
+  /** An object where the defined keys will be set on the `WatchList` being updated. */
+  watchListPatch: WatchListPatch;
+}
+/** Represents an update to a `WatchList`. Fields that are set will be updated. */
+export interface WatchListPatch {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId?: Maybe<number>;
+  /** Id of the event */
+  eventId?: Maybe<string>;
+}
+/** All input for the `updateWatchListById` mutation. */
+export interface UpdateWatchListByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** An object where the defined keys will be set on the `WatchList` being updated. */
+  watchListPatch: WatchListPatch;
+  /** Id of the row */
+  id: number;
+}
 /** All input for the `updateAdminAccount` mutation. */
 export interface UpdateAdminAccountInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1764,20 +1860,6 @@ export interface DeleteCityByIdInput {
   /** Primary key for city */
   id: number;
 }
-/** All input for the `deleteConfig` mutation. */
-export interface DeleteConfigInput {
-  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
-  clientMutationId?: Maybe<string>;
-  /** The globally unique `ID` which will identify a single `Config` to be deleted. */
-  nodeId: string;
-}
-/** All input for the `deleteConfigById` mutation. */
-export interface DeleteConfigByIdInput {
-  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
-  clientMutationId?: Maybe<string>;
-
-  id: number;
-}
 /** All input for the `deleteEvent` mutation. */
 export interface DeleteEventInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1791,6 +1873,20 @@ export interface DeleteEventByIdInput {
   clientMutationId?: Maybe<string>;
   /** Primary id for event */
   id: string;
+}
+/** All input for the `deleteFollowList` mutation. */
+export interface DeleteFollowListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `FollowList` to be deleted. */
+  nodeId: string;
+}
+/** All input for the `deleteFollowListById` mutation. */
+export interface DeleteFollowListByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** Id of the row */
+  id: number;
 }
 /** All input for the `deleteGenre` mutation. */
 export interface DeleteGenreInput {
@@ -1861,6 +1957,20 @@ export interface DeleteVenueByNameInput {
   clientMutationId?: Maybe<string>;
   /** Name of venue and primary id */
   name: string;
+}
+/** All input for the `deleteWatchList` mutation. */
+export interface DeleteWatchListInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `WatchList` to be deleted. */
+  nodeId: string;
+}
+/** All input for the `deleteWatchListById` mutation. */
+export interface DeleteWatchListByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** Id of the row */
+  id: number;
 }
 /** All input for the `deleteAdminAccount` mutation. */
 export interface DeleteAdminAccountInput {
@@ -1971,8 +2081,6 @@ export enum AccountsOrderBy {
   UsernameDesc = "USERNAME_DESC",
   ProfilePhotoAsc = "PROFILE_PHOTO_ASC",
   ProfilePhotoDesc = "PROFILE_PHOTO_DESC",
-  UserLocationAsc = "USER_LOCATION_ASC",
-  UserLocationDesc = "USER_LOCATION_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -1980,89 +2088,13 @@ export enum AccountsOrderBy {
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
-/** Methods to use when ordering `UserAccount`. */
-export enum UserAccountsOrderBy {
-  Natural = "NATURAL",
-  AccountIdAsc = "ACCOUNT_ID_ASC",
-  AccountIdDesc = "ACCOUNT_ID_DESC",
-  EmailAsc = "EMAIL_ASC",
-  EmailDesc = "EMAIL_DESC",
-  PasswordHashAsc = "PASSWORD_HASH_ASC",
-  PasswordHashDesc = "PASSWORD_HASH_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `AdminAccount`. */
-export enum AdminAccountsOrderBy {
-  Natural = "NATURAL",
-  AccountIdAsc = "ACCOUNT_ID_ASC",
-  AccountIdDesc = "ACCOUNT_ID_DESC",
-  EmailAsc = "EMAIL_ASC",
-  EmailDesc = "EMAIL_DESC",
-  PasswordHashAsc = "PASSWORD_HASH_ASC",
-  PasswordHashDesc = "PASSWORD_HASH_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `Artist`. */
-export enum ArtistsOrderBy {
-  Natural = "NATURAL",
-  NameAsc = "NAME_ASC",
-  NameDesc = "NAME_DESC",
-  DescriptionAsc = "DESCRIPTION_ASC",
-  DescriptionDesc = "DESCRIPTION_DESC",
-  PhotoAsc = "PHOTO_ASC",
-  PhotoDesc = "PHOTO_DESC",
-  TwitterUsernameAsc = "TWITTER_USERNAME_ASC",
-  TwitterUsernameDesc = "TWITTER_USERNAME_DESC",
-  TwitterUrlAsc = "TWITTER_URL_ASC",
-  TwitterUrlDesc = "TWITTER_URL_DESC",
-  FacebookUsernameAsc = "FACEBOOK_USERNAME_ASC",
-  FacebookUsernameDesc = "FACEBOOK_USERNAME_DESC",
-  FacebookUrlAsc = "FACEBOOK_URL_ASC",
-  FacebookUrlDesc = "FACEBOOK_URL_DESC",
-  InstagramUsernameAsc = "INSTAGRAM_USERNAME_ASC",
-  InstagramUsernameDesc = "INSTAGRAM_USERNAME_DESC",
-  InstagramUrlAsc = "INSTAGRAM_URL_ASC",
-  InstagramUrlDesc = "INSTAGRAM_URL_DESC",
-  SoundcloudUsernameAsc = "SOUNDCLOUD_USERNAME_ASC",
-  SoundcloudUsernameDesc = "SOUNDCLOUD_USERNAME_DESC",
-  SoundcloudUrlAsc = "SOUNDCLOUD_URL_ASC",
-  SoundcloudUrlDesc = "SOUNDCLOUD_URL_DESC",
-  YoutubeUsernameAsc = "YOUTUBE_USERNAME_ASC",
-  YoutubeUsernameDesc = "YOUTUBE_USERNAME_DESC",
-  YoutubeUrlAsc = "YOUTUBE_URL_ASC",
-  YoutubeUrlDesc = "YOUTUBE_URL_DESC",
-  SpotifyUrlAsc = "SPOTIFY_URL_ASC",
-  SpotifyUrlDesc = "SPOTIFY_URL_DESC",
-  HomepageAsc = "HOMEPAGE_ASC",
-  HomepageDesc = "HOMEPAGE_DESC",
-  CreatedAtAsc = "CREATED_AT_ASC",
-  CreatedAtDesc = "CREATED_AT_DESC",
-  UpdatedAtAsc = "UPDATED_AT_ASC",
-  UpdatedAtDesc = "UPDATED_AT_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `GenreToArtist`. */
-export enum GenreToArtistsOrderBy {
+/** Methods to use when ordering `WatchList`. */
+export enum WatchListsOrderBy {
   Natural = "NATURAL",
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
-  GenreIdAsc = "GENRE_ID_ASC",
-  GenreIdDesc = "GENRE_ID_DESC",
-  ArtistIdAsc = "ARTIST_ID_ASC",
-  ArtistIdDesc = "ARTIST_ID_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `ArtistToEvent`. */
-export enum ArtistToEventsOrderBy {
-  Natural = "NATURAL",
-  IdAsc = "ID_ASC",
-  IdDesc = "ID_DESC",
-  ArtistIdAsc = "ARTIST_ID_ASC",
-  ArtistIdDesc = "ARTIST_ID_DESC",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
   EventIdAsc = "EVENT_ID_ASC",
   EventIdDesc = "EVENT_ID_DESC",
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
@@ -2151,19 +2183,103 @@ export enum EventsOrderBy {
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
-/** Methods to use when ordering `Config`. */
-export enum ConfigsOrderBy {
+/** Methods to use when ordering `FollowList`. */
+export enum FollowListsOrderBy {
   Natural = "NATURAL",
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
-  PrimaryColorAsc = "PRIMARY_COLOR_ASC",
-  PrimaryColorDesc = "PRIMARY_COLOR_DESC",
-  SecondaryColorAsc = "SECONDARY_COLOR_ASC",
-  SecondaryColorDesc = "SECONDARY_COLOR_DESC",
-  TaglineAsc = "TAGLINE_ASC",
-  TaglineDesc = "TAGLINE_DESC",
-  HeroBannerAsc = "HERO_BANNER_ASC",
-  HeroBannerDesc = "HERO_BANNER_DESC",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
+  ArtistIdAsc = "ARTIST_ID_ASC",
+  ArtistIdDesc = "ARTIST_ID_DESC",
+  VenueIdAsc = "VENUE_ID_ASC",
+  VenueIdDesc = "VENUE_ID_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `GenreToArtist`. */
+export enum GenreToArtistsOrderBy {
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  GenreIdAsc = "GENRE_ID_ASC",
+  GenreIdDesc = "GENRE_ID_DESC",
+  ArtistIdAsc = "ARTIST_ID_ASC",
+  ArtistIdDesc = "ARTIST_ID_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `ArtistToEvent`. */
+export enum ArtistToEventsOrderBy {
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  ArtistIdAsc = "ARTIST_ID_ASC",
+  ArtistIdDesc = "ARTIST_ID_DESC",
+  EventIdAsc = "EVENT_ID_ASC",
+  EventIdDesc = "EVENT_ID_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `UserAccount`. */
+export enum UserAccountsOrderBy {
+  Natural = "NATURAL",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
+  EmailAsc = "EMAIL_ASC",
+  EmailDesc = "EMAIL_DESC",
+  PasswordHashAsc = "PASSWORD_HASH_ASC",
+  PasswordHashDesc = "PASSWORD_HASH_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `AdminAccount`. */
+export enum AdminAccountsOrderBy {
+  Natural = "NATURAL",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
+  EmailAsc = "EMAIL_ASC",
+  EmailDesc = "EMAIL_DESC",
+  PasswordHashAsc = "PASSWORD_HASH_ASC",
+  PasswordHashDesc = "PASSWORD_HASH_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `Artist`. */
+export enum ArtistsOrderBy {
+  Natural = "NATURAL",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  DescriptionAsc = "DESCRIPTION_ASC",
+  DescriptionDesc = "DESCRIPTION_DESC",
+  PhotoAsc = "PHOTO_ASC",
+  PhotoDesc = "PHOTO_DESC",
+  TwitterUsernameAsc = "TWITTER_USERNAME_ASC",
+  TwitterUsernameDesc = "TWITTER_USERNAME_DESC",
+  TwitterUrlAsc = "TWITTER_URL_ASC",
+  TwitterUrlDesc = "TWITTER_URL_DESC",
+  FacebookUsernameAsc = "FACEBOOK_USERNAME_ASC",
+  FacebookUsernameDesc = "FACEBOOK_USERNAME_DESC",
+  FacebookUrlAsc = "FACEBOOK_URL_ASC",
+  FacebookUrlDesc = "FACEBOOK_URL_DESC",
+  InstagramUsernameAsc = "INSTAGRAM_USERNAME_ASC",
+  InstagramUsernameDesc = "INSTAGRAM_USERNAME_DESC",
+  InstagramUrlAsc = "INSTAGRAM_URL_ASC",
+  InstagramUrlDesc = "INSTAGRAM_URL_DESC",
+  SoundcloudUsernameAsc = "SOUNDCLOUD_USERNAME_ASC",
+  SoundcloudUsernameDesc = "SOUNDCLOUD_USERNAME_DESC",
+  SoundcloudUrlAsc = "SOUNDCLOUD_URL_ASC",
+  SoundcloudUrlDesc = "SOUNDCLOUD_URL_DESC",
+  YoutubeUsernameAsc = "YOUTUBE_USERNAME_ASC",
+  YoutubeUsernameDesc = "YOUTUBE_USERNAME_DESC",
+  YoutubeUrlAsc = "YOUTUBE_URL_ASC",
+  YoutubeUrlDesc = "YOUTUBE_URL_DESC",
+  SpotifyUrlAsc = "SPOTIFY_URL_ASC",
+  SpotifyUrlDesc = "SPOTIFY_URL_DESC",
+  HomepageAsc = "HOMEPAGE_ASC",
+  HomepageDesc = "HOMEPAGE_DESC",
+  CreatedAtAsc = "CREATED_AT_ASC",
+  CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
   UpdatedAtDesc = "UPDATED_AT_DESC",
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
@@ -2353,6 +2469,41 @@ export namespace ArtistByName {
   };
 }
 
+export namespace AuthenticateUserAccount {
+  export type Variables = {
+    email: string;
+    password: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    authenticateUserAccount: Maybe<AuthenticateUserAccount>;
+  };
+
+  export type AuthenticateUserAccount = {
+    __typename?: "AuthenticateUserAccountPayload";
+
+    jwtToken: Maybe<JwtToken>;
+  };
+}
+
+export namespace CurrentAccount {
+  export type Variables = {};
+
+  export type Query = {
+    __typename?: "Query";
+
+    currentAccount: Maybe<CurrentAccount>;
+  };
+
+  export type CurrentAccount = {
+    __typename?: "Account";
+
+    username: string;
+  };
+}
+
 export namespace EventById {
   export type Variables = {
     eventId: string;
@@ -2500,6 +2651,26 @@ export namespace EventsByCity {
     __typename?: "Artist";
 
     photo: Maybe<string>;
+  };
+}
+
+export namespace RegisterUserAccount {
+  export type Variables = {
+    username: string;
+    email: string;
+    password: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    registerUserAccount: Maybe<RegisterUserAccount>;
+  };
+
+  export type RegisterUserAccount = {
+    __typename?: "RegisterUserAccountPayload";
+
+    clientMutationId: Maybe<string>;
   };
 }
 

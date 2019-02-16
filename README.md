@@ -4,6 +4,9 @@
 - Create watching table + functionality for users for an event. Only for logged in.
 - Create follow table for artists and venues.
     - Feed view for new stuff
+- ~~on the events page try making the virtual scroll full page width. On browser make the search position absolute, but on mobile it needs to be a set height so we can make the height of the below container correct.~~
+- Back btn for mobile
+- ~~Login / signup flow (for now)~~
 
 - Home page
   - ~~Search box in header with location / date~~
@@ -45,6 +48,8 @@
 - Email alerts on a weekly / semi weekly / monthly basis
 - Filter by genre, venue, region, artist
 - Follow feature. Would be adding a table for adding artists or venues and linking with a user. Can have a chronological feed of followed items with new things and maybe notification / email updates every some period of time.
+- A page with new releases for the week that might pull from reddit playlist
+
 
 ## Monetization
 - Lifted results for venues who want to promote something

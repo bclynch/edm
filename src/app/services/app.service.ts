@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AllLocationsGQL } from '../generated/graphql';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { AnalyticsService } from './analytics.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AppService {
@@ -13,7 +14,8 @@ export class AppService {
 
   constructor(
     private allLocationsGQL: AllLocationsGQL,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private userService: UserService
   ) {
     this._subject = new BehaviorSubject<boolean>(false);
     this.appInited = this._subject;
@@ -23,8 +25,12 @@ export class AppService {
   }
 
   appInit() {
-    this.fetchAllLocations().then(
-      () => this._subject.next(true)
+    this.userService.fetchUser().then(
+      () => {
+        this.fetchAllLocations().then(
+          () => this._subject.next(true)
+        );
+      }
     );
   }
 

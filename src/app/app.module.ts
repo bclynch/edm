@@ -21,6 +21,7 @@ import { AppService } from './services/app.service';
 import { DISQUS_SHORTNAME } from 'ngx-disqus';
 import { AnalyticsService } from './services/analytics.service';
 import { LocationService } from './services/location.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LocationService } from './services/location.service';
     AppService,
     AnalyticsService,
     LocationService,
+    UserService,
     { provide: DISQUS_SHORTNAME, useValue: ENV.disqusShortname }
   ],
   bootstrap: [AppComponent]
