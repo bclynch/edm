@@ -20,7 +20,8 @@
   - ~~Can favorite show (prompt to signin if not)~~
   - ~~Can buy ticket if eventbrite~~
   - ~~Can follow link to show page~~
-  - Can filter by date
+  - ~~Can filter by date~~
+    - No range yet, but maybe in 8.0? https://github.com/angular/material2/issues/4763#issuecomment-458650255
   - Can search for word (artist, venue)
   - List and map view
   - ~~Implement event brite widget for buying tickets~~

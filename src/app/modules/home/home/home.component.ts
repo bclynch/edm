@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class HomeComponent implements OnInit {
 
   selectedLocation: string;
+  dateRange = 'any';
 
   constructor(
     private routerService: RouterService,
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
     // add location to cookie for future
     this.cookieService.set('edm-location', this.selectedLocation);
 
-    this.routerService.navigateToPage('/events', { location: this.selectedLocation });
+    this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
   }
 
   setLocation(location: string) {

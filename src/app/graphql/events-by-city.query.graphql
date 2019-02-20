@@ -1,9 +1,11 @@
-query eventsByCity($city: String!, $accountId: Int!) {
-  allCities(filter: {
-    name: {
-      equalTo: $city
+query eventsByCity($city: String!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!) {
+  allCities(
+    filter: {
+      name: {
+        equalTo: $city
+      }
     }
-  }) {
+  ) {
     nodes {
       name
       venuesByCity {
@@ -11,7 +13,14 @@ query eventsByCity($city: String!, $accountId: Int!) {
           name,
           lat,
           lon,
-          eventsByVenue {
+          eventsByVenue(
+            filter: {
+              startDate: {
+                greaterThanOrEqualTo: $greaterThan,
+                lessThanOrEqualTo: $lessThan
+              }
+            }
+          ) {
             nodes {
               id,
               name,
@@ -25,11 +34,13 @@ query eventsByCity($city: String!, $accountId: Int!) {
                   }
                 }
               },
-              watchListsByEventId(filter:{
-                accountId: {
-                  equalTo: $accountId
+              watchListsByEventId(
+                filter: {
+                  accountId: {
+                    equalTo: $accountId
+                  }
                 }
-              }) {
+              ) {
                 nodes {
                   id
                 }

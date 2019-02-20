@@ -20,6 +20,9 @@
               [floatLabel]="false"
             ></app-location-search>
           </div>
+          <div class="dateWrapper">
+            <app-select-date (date)="dateFilter($event)" [value]="dateRange"></app-select-date>
+          </div>
         </div>
         <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>
       </form>

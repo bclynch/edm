@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ENV } from '../../environments/environment';
 
 // Third party modules
 import {
@@ -17,11 +18,13 @@ import {
   MatExpansionModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSelectModule
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AgmCoreModule } from '@agm/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
 
 // components
 import { PagewrapperComponent } from './pagewrapper/pagewrapper.component';
@@ -32,10 +35,9 @@ import { LocationSearchComponent } from './location-search/location-search.compo
 import { EventCardComponent } from './event-card/event-card.component';
 import { ShareDialogueComponent } from './share-dialogue/share-dialogue.component';
 import { VenueMapComponent } from './venue-map/venue-map.component';
-import { ENV } from '../../environments/environment';
 import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
-import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.component';
+import { SelectDateComponent } from './select-date/select-date.component';
 
 @NgModule({
   entryComponents: [
@@ -52,7 +54,8 @@ import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.compo
     ShareDialogueComponent,
     VenueMapComponent,
     EventbriteCheckoutComponent,
-    SigninDialogueComponent
+    SigninDialogueComponent,
+    SelectDateComponent
   ],
   imports: [
     CommonModule,
@@ -69,6 +72,7 @@ import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
+    MatSelectModule,
     DirectivesModule,
     RouterModule,
     ReactiveFormsModule,
@@ -98,7 +102,8 @@ import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.compo
     NavbarComponent,
     LocationSearchComponent,
     EventCardComponent,
-    VenueMapComponent
+    VenueMapComponent,
+    SelectDateComponent
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer}

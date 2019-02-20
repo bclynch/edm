@@ -6,6 +6,7 @@ import { MapsAPILoader } from '@agm/core';
 import { UtilService } from 'src/app/services/util.service';
 import { UserService } from 'src/app/services/user.service';
 import { AppService } from 'src/app/services/app.service';
+import * as moment from 'moment';
 
 class Event {
   id: string;
@@ -24,6 +25,7 @@ class Event {
 export class EventsComponent implements OnInit, OnDestroy {
 
   location: string;
+  dateRange: string;
   events: Event[];
   eventsObservable = new BehaviorSubject<Event[]>([]);
   selectedLocation: string;
@@ -55,14 +57,14 @@ export class EventsComponent implements OnInit, OnDestroy {
   ) {
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
-        console.log(inited);
         if (inited) {
           this.location = this.routerService.params.location;
+          this.dateRange = this.routerService.params.dates ? this.routerService.params.dates : 'any';
           this.selectedLocation = this.location;
-          if (this.location) this.fetchEvents(this.location).then(
-            // () => this.generateMap()
-            () => {}
-          );
+          if (this.location) {
+            this.dateFilter(this.dateRange);
+            // this.generateMap();
+          }
         }
       }
     );
@@ -89,9 +91,9 @@ export class EventsComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchEvents(location: string) {
+  fetchEvents(location: string, minDate: number, maxDate: number) {
     return new Promise((resolve, reject) => {
-      this.eventsByCityGQL.fetch({ city: location, accountId: this.userService.user ? this.userService.user.id : 0 }).subscribe(
+      this.eventsByCityGQL.fetch({ city: location, accountId: this.userService.user ? this.userService.user.id : 0, greaterThan: minDate.toString(), lessThan: maxDate.toString() }).subscribe(
         (result) => {
           // if arr is empty the location does not exist
           if (result.data.allCities.nodes.length) {
@@ -125,14 +127,22 @@ export class EventsComponent implements OnInit, OnDestroy {
   searchEvents(e) {
     e.preventDefault();
 
-    this.fetchEvents(this.selectedLocation);
+    // this.fetchAllEvents(this.selectedLocation);
 
     // add query params to address
-    this.routerService.navigateToPage('/events', { location: this.selectedLocation });
+    this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
   }
 
   setLocation(location: string) {
     this.selectedLocation = location;
     this.location = location;
+  }
+
+  dateFilter(filter) {
+    this.dateRange = filter;
+    const range = this.utilService.calculateDateRange(filter);
+    this.fetchEvents(this.selectedLocation, range.min, range.max);
+    // add query params to address
+    this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
   }
 }

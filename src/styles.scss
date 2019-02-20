@@ -55,6 +55,12 @@ app-navbar {
   }
 }
 
+.homeContainer {
+  .mat-select-value-text {
+    color: white;
+  }
+}
+
 .sharedialog-panel {
   width: 600px !important;
   max-width: 90% !important;

@@ -168,7 +168,12 @@ export class EventsByCityGQL extends Apollo.Query<
   EventsByCity.Variables
 > {
   document: any = gql`
-    query eventsByCity($city: String!, $accountId: Int!) {
+    query eventsByCity(
+      $city: String!
+      $accountId: Int!
+      $greaterThan: BigInt!
+      $lessThan: BigInt!
+    ) {
       allCities(filter: { name: { equalTo: $city } }) {
         nodes {
           name
@@ -177,7 +182,14 @@ export class EventsByCityGQL extends Apollo.Query<
               name
               lat
               lon
-              eventsByVenue {
+              eventsByVenue(
+                filter: {
+                  startDate: {
+                    greaterThanOrEqualTo: $greaterThan
+                    lessThanOrEqualTo: $lessThan
+                  }
+                }
+              ) {
                 nodes {
                   id
                   name
@@ -2491,6 +2503,8 @@ export namespace EventsByCity {
   export type Variables = {
     city: string;
     accountId: number;
+    greaterThan: BigInt;
+    lessThan: BigInt;
   };
 
   export type Query = {

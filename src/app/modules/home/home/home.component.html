@@ -17,11 +17,10 @@
           <div class="section">
             <div class="label">On</div>
             <div>
-              <mat-form-field color="accent">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" autocomplete="off">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker color="accent"></mat-datepicker>
-              </mat-form-field>
+              <app-select-date 
+                placeholder="Select a Date" 
+                (date)="dateRange = $event"
+              ></app-select-date>
             </div>
           </div>
           <div class="section btnSection">

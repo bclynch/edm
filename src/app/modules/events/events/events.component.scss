@@ -37,6 +37,9 @@
         font-size: 1em;
         flex: 1;
         
+        .dateWrapper {
+          font-size: .75em;
+        }
         .locationWrapper {
           display: flex;
 
@@ -83,6 +86,10 @@
   
         .searchWrapper {
           font-size: 2em;
+
+          .dateWrapper {
+            font-size: 20px;
+          }
         }
       }
     }
