@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { ENV } from '../../../environments/environment';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-event-card',
@@ -17,12 +18,13 @@ export class EventCardComponent implements OnInit {
   @Input() image: string;
   @Input() ticketProviderId: number;
   @Input() size: 'half' | 'full' = 'full';
-
+  @Input() watchId;
 
   faExternalLinkAlt = faExternalLinkAlt;
 
   constructor(
-    private utilService: UtilService
+    private utilService: UtilService,
+    private eventService: EventService
   ) { }
 
   ngOnInit() {
@@ -30,5 +32,17 @@ export class EventCardComponent implements OnInit {
 
   share() {
     this.utilService.share(`${ENV.siteBaseURL}/event/${this.id}`);
+  }
+
+  addWatch() {
+    this.eventService.addWatch(this.id).then(
+      (id) => this.watchId = id
+    );
+  }
+
+  removeWatch() {
+    this.eventService.removeWatch(this.watchId.id).then(
+      () => this.watchId = null
+    );
   }
 }

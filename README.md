@@ -1,12 +1,14 @@
 # EDM
 
 ## Todos
-- Create watching table + functionality for users for an event. Only for logged in.
+- ~~Create watching table + functionality for users for an event. Only for logged in.~~
 - Create follow table for artists and venues.
     - Feed view for new stuff
 - ~~on the events page try making the virtual scroll full page width. On browser make the search position absolute, but on mobile it needs to be a set height so we can make the height of the below container correct.~~
 - Back btn for mobile
-- ~~Login / signup flow (for now)~~
+- Login / signup flow (for now)
+    - Own pages with redirect
+- ~~Add cookie for selected location~~
 
 - Home page
   - ~~Search box in header with location / date~~
@@ -15,8 +17,8 @@
     - Maybe a nice little display of features like discuss shows with others, save for future, etc
 - Search results page
   - ~~Can share show~~
-  - Can favorite show (prompt to signin if not)
-  - Can buy ticket if eventbrite
+  - ~~Can favorite show (prompt to signin if not)~~
+  - ~~Can buy ticket if eventbrite~~
   - ~~Can follow link to show page~~
   - Can filter by date
   - Can search for word (artist, venue)

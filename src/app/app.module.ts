@@ -16,6 +16,7 @@ import { GraphQLModule } from './graphql.module';
 import { CookieService } from 'ngx-cookie-service';
 import { RoleGuardService } from './services/roleGuard.service';
 import { UtilService } from './services/util.service';
+import { EventService } from './services/event.service';
 import { RouterService } from './services/router.service';
 import { AppService } from './services/app.service';
 import { DISQUS_SHORTNAME } from 'ngx-disqus';
@@ -39,6 +40,7 @@ import { UserService } from './services/user.service';
   providers: [
     RoleGuardService,
     UtilService,
+    EventService,
     RouterService,
     CookieService,
     AppService,

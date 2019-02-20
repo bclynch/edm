@@ -1,4 +1,4 @@
-query eventsByCity($city: String!) {
+query eventsByCity($city: String!, $accountId: Int!) {
   allCities(filter: {
     name: {
       equalTo: $city
@@ -23,6 +23,15 @@ query eventsByCity($city: String!) {
                   artistByArtistId {
                     photo
                   }
+                }
+              },
+              watchListsByEventId(filter:{
+                accountId: {
+                  equalTo: $accountId
+                }
+              }) {
+                nodes {
+                  id
                 }
               }
             }

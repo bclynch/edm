@@ -2,6 +2,7 @@ query currentAccount {
   currentAccount {
     username,
     profilePhoto,
+    id,
     watchListsByAccountId {
       totalCount
     }

@@ -11,12 +11,28 @@
     <div class="eventLocation">{{location}}</div>
     <div class="eventOptions">
       <button mat-button matTooltip="Share"><mat-icon (click)="share()">share</mat-icon></button>
-      <button mat-button matTooltip="Add to Watched"><mat-icon>star_border</mat-icon></button>
+      <button 
+        *ngIf="watchId"
+        mat-button 
+        matTooltip="Remove from watched"
+        class="watched" 
+        (click)="removeWatch()"
+      >
+        <mat-icon>star</mat-icon>
+      </button>
+      <button 
+        *ngIf="!watchId"
+        mat-button 
+        matTooltip="Add to watched" 
+        (click)="addWatch()"
+      >
+        <mat-icon>star_border</mat-icon>
+      </button>
       <button 
         *ngIf="ticketProviderId" 
         mat-button 
         matTooltip="Buy Tickets" 
-        (click)="utilService.eventbriteCheckout(ticketProviderId)"
+        (click)="eventService.eventbriteCheckout(ticketProviderId)"
       >
         <mat-icon>loyalty</mat-icon>
       </button>

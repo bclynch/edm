@@ -48,13 +48,16 @@
       button {
         padding: 0 10px;
         min-width: auto;
+        cursor: pointer;
 
         mat-icon {
-          cursor: pointer;
           margin-right: 10px;
         }
         mat-icon:last-child {
           margin-right: 0;
+        }
+        &.watched {
+          color: gold;
         }
       }
       a {

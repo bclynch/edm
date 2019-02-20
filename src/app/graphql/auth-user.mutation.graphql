@@ -1,8 +1,10 @@
 mutation authenticateUserAccount($email: String!, $password: String!) {
-  authenticateUserAccount(input: {
-    email: $email,
-    password: $password
-  }) {
+  authenticateUserAccount(
+    input: {
+      email: $email,
+      password: $password
+    }
+  ) {
     jwtToken
   }
 }

@@ -11,11 +11,10 @@
       <div class="right">
         <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="userService.signin('login')" *ngIf="!userService.signedIn">Login</button>
-          <!-- <div *ngIf="userService.signedIn"> -->
-          <div>
+          <button mat-menu-item (click)="userService.signin('login')" *ngIf="!signedIn">Login</button>
+          <div *ngIf="signedIn">
             <button mat-menu-item>Account Settings</button>
-            <button mat-menu-item>Starred Events</button>
+            <button mat-menu-item>Watched Events</button>
             <button mat-menu-item (click)="userService.logoutUser()">Log out</button>
           </div>
         </mat-menu>

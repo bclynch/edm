@@ -9,7 +9,8 @@
               <app-location-search
                 placeholder="City"
                 autocomplete="off"
-                (selected)="abc($event)"
+                (selected)="setLocation($event)"
+                [value]="selectedLocation"
               ></app-location-search>
             </div>
           </div>

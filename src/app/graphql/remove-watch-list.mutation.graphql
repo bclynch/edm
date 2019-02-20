@@ -1,0 +1,9 @@
+mutation removeWatchlist($watchListId: Int!) {
+  deleteWatchListById(
+    input: {
+      id: $watchListId
+    }
+  ) {
+    clientMutationId
+  }
+}

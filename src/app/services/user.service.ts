@@ -5,10 +5,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL } from '../generated/graphql';
 import { SigninDialogueComponent } from '../shared/signin-dialogue/signin-dialogue.component';
 import { MatDialog } from '@angular/material';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class UserService {
-  signedIn = false;
+  public signedIn: Observable<boolean>;
+  private signedInSubject: BehaviorSubject<boolean>;
   user = null;
 
   constructor(
@@ -19,7 +21,10 @@ export class UserService {
     private registerUserAccountGQL: RegisterUserAccountGQL,
     private currentAccountGQL: CurrentAccountGQL,
     public dialog: MatDialog,
-  ) { }
+  ) {
+    this.signedInSubject = new BehaviorSubject<boolean>(false);
+    this.signedIn = this.signedInSubject;
+  }
 
   fetchUser(): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -29,6 +34,7 @@ export class UserService {
           console.log(result.data);
           if (result.data.currentAccount) {
             this.user = result.data.currentAccount;
+            this.signedInSubject.next(true);
           } else {
             // if it doesnt exist dump the token
             // this.cookieService.delete('edm-token');
@@ -69,7 +75,7 @@ export class UserService {
   }
 
   logoutUser() {
-    this.signedIn = false;
+    this.signedInSubject.next(false);
     // reset apollo cache and refetch queries
     this.apollo.getClient().resetStore();
     this.cookieService.delete('edm-token');
@@ -84,7 +90,7 @@ export class UserService {
         // console.log('got data', data);
         const authData = <any>data;
         if (authData.authenticateUserAccount.jwtToken) {
-          this.signedIn = true;
+          this.signedInSubject.next(true);
           // reset apollo cache and refetch queries
           this.apollo.getClient().resetStore();
           resolve(authData.authenticateUserAccount.jwtToken);

@@ -10,10 +10,12 @@ import { UserService } from 'src/app/services/user.service';
 export class NavbarComponent {
   @Input() collapsibleNav: boolean;
 
+  signedIn = false;
+
   constructor(
     private utilService: UtilService,
     private userService: UserService
   ) {
-
+    this.userService.signedIn.subscribe((signedIn) => this.signedIn = signedIn);
   }
 }

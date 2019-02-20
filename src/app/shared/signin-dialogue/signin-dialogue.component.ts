@@ -37,8 +37,7 @@ export class SigninDialogueComponent implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])
     ],
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
+    username: ['', Validators.required],
     matchingPassword: this.fb.group({
       password: [
         '',
@@ -64,11 +63,8 @@ export class SigninDialogueComponent implements OnInit {
       { type: 'pattern', message: 'Enter a valid email' }
       // need a check for unique eventually
     ],
-    'firstName': [
-      { type: 'required', message: 'First name is required' },
-    ],
-    'lastName': [
-      { type: 'required', message: 'Last name is required' },
+    'username': [
+      { type: 'required', message: 'Username is required' },
     ],
     'confirmPassword': [
       { type: 'areEqual', message: 'Password mismatch' },
