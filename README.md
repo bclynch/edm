@@ -1,18 +1,19 @@
 # EDM
 
 ## Todos
+- Retry mailing setup
 - ~~Create watching table + functionality for users for an event. Only for logged in.~~
 - Create follow table for artists and venues.
     - Feed view for new stuff
 - ~~on the events page try making the virtual scroll full page width. On browser make the search position absolute, but on mobile it needs to be a set height so we can make the height of the below container correct.~~
-- Back btn for mobile
+- ~~Back btn for mobile~~
 - Login / signup flow (for now)
     - Own pages with redirect
 - ~~Add cookie for selected location~~
 
 - Home page
   - ~~Search box in header with location / date~~
-  - Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there
+  - ~~Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there~~
     - Featured shows should probably be eventbrite so they can purchase ticket there
     - Maybe a nice little display of features like discuss shows with others, save for future, etc
 - Search results page
@@ -22,7 +23,7 @@
   - ~~Can follow link to show page~~
   - ~~Can filter by date~~
     - No range yet, but maybe in 8.0? https://github.com/angular/material2/issues/4763#issuecomment-458650255
-  - Can search for word (artist, venue)
+  - ~~Can search for word (artist, venue)~~
   - List and map view
   - ~~Implement event brite widget for buying tickets~~
     - There is a cross origin deal since localhost isn't https. Breaks the methods (like close modal). Once it's live online it should be okay. Need an affiliate link of our own and to put a few things in the env vars
@@ -63,6 +64,8 @@
 ## Down the line
 - Map view the world over. Would be for a certain date and a user can modify the date to refresh map
 - PWA available with push notifications for followed artists or venues.
+    - https://blog.angular-university.io/angular-push-notifications/
+    - https://github.com/web-push-libs/web-push
 - Featured / hot / lifted events up top
 
 ### Name Ideas

@@ -1,4 +1,4 @@
-<app-pagewrapper>
+<app-pagewrapper [hasBack]="false">
   <div class="homeContainer">
     <div class="headerContainer">
       <div class="headerBackground">
@@ -20,6 +20,7 @@
               <app-select-date 
                 placeholder="Select a Date" 
                 (date)="dateRange = $event"
+                value="any"
               ></app-select-date>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UtilService } from '../../services/util.service';
 import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -9,12 +10,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavbarComponent {
   @Input() collapsibleNav: boolean;
+  @Input() hasBack: boolean;
 
   signedIn = false;
 
   constructor(
     private utilService: UtilService,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) {
     this.userService.signedIn.subscribe((signedIn) => this.signedIn = signedIn);
   }

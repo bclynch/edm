@@ -12,6 +12,7 @@ export class PagewrapperComponent {
   @Input() displayFooter = true;
   @Input() displayNav = true;
   @Input() collapsibleNav = true;
+  @Input() hasBack = true;
   @Input() noMargin = false;
 
   constructor(

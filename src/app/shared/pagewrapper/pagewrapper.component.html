@@ -9,6 +9,7 @@
   <app-navbar 
     *ngIf="displayNav"
     [collapsibleNav]="collapsibleNav"
+    [hasBack]="hasBack"
   ></app-navbar>
   <ng-content></ng-content>
   <app-footer *ngIf="displayFooter"></app-footer>

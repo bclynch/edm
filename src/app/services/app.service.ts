@@ -11,6 +11,7 @@ export class AppService {
 
   // used in location search component
   locations: string[];
+  locationsObj = {};
 
   constructor(
     private allLocationsGQL: AllLocationsGQL,
@@ -42,6 +43,7 @@ export class AppService {
           const locationsArr = [];
           for (const x of result.data.allCities.nodes) {
             locationsArr.push(x.name);
+            this.locationsObj[x.name] = x.id;
             if (locationsArr.indexOf(x.region) === -1) {
               locationsArr.push(x.region);
             }

@@ -163,65 +163,6 @@ export class EventByIdGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
-export class EventsByCityGQL extends Apollo.Query<
-  EventsByCity.Query,
-  EventsByCity.Variables
-> {
-  document: any = gql`
-    query eventsByCity(
-      $city: String!
-      $accountId: Int!
-      $greaterThan: BigInt!
-      $lessThan: BigInt!
-    ) {
-      allCities(filter: { name: { equalTo: $city } }) {
-        nodes {
-          name
-          venuesByCity {
-            nodes {
-              name
-              lat
-              lon
-              eventsByVenue(
-                filter: {
-                  startDate: {
-                    greaterThanOrEqualTo: $greaterThan
-                    lessThanOrEqualTo: $lessThan
-                  }
-                }
-              ) {
-                nodes {
-                  id
-                  name
-                  startDate
-                  ticketproviderurl
-                  ticketproviderid
-                  artistToEventsByEventId(first: 1) {
-                    nodes {
-                      artistByArtistId {
-                        photo
-                      }
-                    }
-                  }
-                  watchListsByEventId(
-                    filter: { accountId: { equalTo: $accountId } }
-                  ) {
-                    nodes {
-                      id
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-}
-@Injectable({
-  providedIn: "root"
-})
 export class RegisterUserAccountGQL extends Apollo.Mutation<
   RegisterUserAccount.Mutation,
   RegisterUserAccount.Variables
@@ -251,6 +192,59 @@ export class RemoveWatchlistGQL extends Apollo.Mutation<
     mutation removeWatchlist($watchListId: Int!) {
       deleteWatchListById(input: { id: $watchListId }) {
         clientMutationId
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class SearchEventsGQL extends Apollo.Query<
+  SearchEvents.Query,
+  SearchEvents.Variables
+> {
+  document: any = gql`
+    query searchEvents(
+      $query: String!
+      $cityId: Int!
+      $accountId: Int!
+      $greaterThan: BigInt!
+      $lessThan: BigInt!
+    ) {
+      searchEvents(
+        query: $query
+        cityid: $cityId
+        filter: {
+          startDate: {
+            greaterThanOrEqualTo: $greaterThan
+            lessThanOrEqualTo: $lessThan
+          }
+        }
+      ) {
+        nodes {
+          id
+          name
+          startDate
+          ticketproviderurl
+          ticketproviderid
+          venue
+          venueByVenue {
+            lat
+            lon
+          }
+          artistToEventsByEventId(first: 1) {
+            nodes {
+              artistByArtistId {
+                photo
+              }
+            }
+          }
+          watchListsByEventId(filter: { accountId: { equalTo: $accountId } }) {
+            nodes {
+              id
+            }
+          }
+        }
       }
     }
   `;
@@ -2499,107 +2493,6 @@ export namespace EventById {
   };
 }
 
-export namespace EventsByCity {
-  export type Variables = {
-    city: string;
-    accountId: number;
-    greaterThan: BigInt;
-    lessThan: BigInt;
-  };
-
-  export type Query = {
-    __typename?: "Query";
-
-    allCities: Maybe<AllCities>;
-  };
-
-  export type AllCities = {
-    __typename?: "CitiesConnection";
-
-    nodes: (Maybe<Nodes>)[];
-  };
-
-  export type Nodes = {
-    __typename?: "City";
-
-    name: Maybe<string>;
-
-    venuesByCity: VenuesByCity;
-  };
-
-  export type VenuesByCity = {
-    __typename?: "VenuesConnection";
-
-    nodes: (Maybe<_Nodes>)[];
-  };
-
-  export type _Nodes = {
-    __typename?: "Venue";
-
-    name: string;
-
-    lat: Maybe<BigFloat>;
-
-    lon: Maybe<BigFloat>;
-
-    eventsByVenue: EventsByVenue;
-  };
-
-  export type EventsByVenue = {
-    __typename?: "EventsConnection";
-
-    nodes: (Maybe<__Nodes>)[];
-  };
-
-  export type __Nodes = {
-    __typename?: "Event";
-
-    id: string;
-
-    name: Maybe<string>;
-
-    startDate: BigInt;
-
-    ticketproviderurl: Maybe<string>;
-
-    ticketproviderid: Maybe<string>;
-
-    artistToEventsByEventId: ArtistToEventsByEventId;
-
-    watchListsByEventId: WatchListsByEventId;
-  };
-
-  export type ArtistToEventsByEventId = {
-    __typename?: "ArtistToEventsConnection";
-
-    nodes: (Maybe<___Nodes>)[];
-  };
-
-  export type ___Nodes = {
-    __typename?: "ArtistToEvent";
-
-    artistByArtistId: Maybe<ArtistByArtistId>;
-  };
-
-  export type ArtistByArtistId = {
-    __typename?: "Artist";
-
-    photo: Maybe<string>;
-  };
-
-  export type WatchListsByEventId = {
-    __typename?: "WatchListsConnection";
-
-    nodes: (Maybe<____Nodes>)[];
-  };
-
-  export type ____Nodes = {
-    __typename?: "WatchList";
-
-    id: number;
-  };
-}
-
 export namespace RegisterUserAccount {
   export type Variables = {
     username: string;
@@ -2635,6 +2528,88 @@ export namespace RemoveWatchlist {
     __typename?: "DeleteWatchListPayload";
 
     clientMutationId: Maybe<string>;
+  };
+}
+
+export namespace SearchEvents {
+  export type Variables = {
+    query: string;
+    cityId: number;
+    accountId: number;
+    greaterThan: BigInt;
+    lessThan: BigInt;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    searchEvents: SearchEvents;
+  };
+
+  export type SearchEvents = {
+    __typename?: "EventsConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "Event";
+
+    id: string;
+
+    name: Maybe<string>;
+
+    startDate: BigInt;
+
+    ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
+
+    venue: string;
+
+    venueByVenue: Maybe<VenueByVenue>;
+
+    artistToEventsByEventId: ArtistToEventsByEventId;
+
+    watchListsByEventId: WatchListsByEventId;
+  };
+
+  export type VenueByVenue = {
+    __typename?: "Venue";
+
+    lat: Maybe<BigFloat>;
+
+    lon: Maybe<BigFloat>;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
+    __typename?: "ArtistToEvent";
+
+    artistByArtistId: Maybe<ArtistByArtistId>;
+  };
+
+  export type ArtistByArtistId = {
+    __typename?: "Artist";
+
+    photo: Maybe<string>;
+  };
+
+  export type WatchListsByEventId = {
+    __typename?: "WatchListsConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "WatchList";
+
+    id: number;
   };
 }
 

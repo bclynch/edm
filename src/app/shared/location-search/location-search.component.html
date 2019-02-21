@@ -7,7 +7,14 @@
     [matAutocomplete]="auto"
     [formControl]="myControl"
   />
-  <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="resetInput($event)">
+  <button 
+    mat-button 
+    *ngIf="myControl.value" 
+    matSuffix 
+    mat-icon-button 
+    aria-label="Clear" 
+    (click)="resetInput($event)"
+  >
     <mat-icon>close</mat-icon>
   </button>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption()" [autoActiveFirstOption]="true">

@@ -7,6 +7,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule, ClusterManager } from '@agm/js-marker-clusterer';
 import { ENV } from '../../../environments/environment';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -25,7 +26,9 @@ const routes: Routes = [
     AgmCoreModule.forRoot({
       apiKey: ENV.googleAPIKey,
     }),
-    AgmJsMarkerClustererModule
+    AgmJsMarkerClustererModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class EventsModule { }

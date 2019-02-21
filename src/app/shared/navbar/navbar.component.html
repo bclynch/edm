@@ -5,7 +5,10 @@
 >
   <div class="navBarWrapper">
     <div class="barWrapper">
-      <div class="left">
+      <div class="backWrapper">
+        <button *ngIf="hasBack" mat-button (click)="location.back()"><mat-icon>arrow_back</mat-icon></button>
+      </div>
+      <div class="logoWrapper">
         <a class="logo" [routerLink]="['/']"><div>EDM</div></a>
       </div>
       <div class="right">

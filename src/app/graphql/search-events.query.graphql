@@ -1,0 +1,43 @@
+query searchEvents($query: String!, $cityId: Int!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!) {
+  searchEvents(
+    query: $query, 
+    cityid: $cityId,
+  	filter: {
+      startDate: {
+        greaterThanOrEqualTo: $greaterThan,
+        lessThanOrEqualTo: $lessThan
+      }
+    }
+  ) {
+    nodes {
+      id,
+      name,
+      startDate,
+      ticketproviderurl,
+      ticketproviderid,
+      venue,
+      venueByVenue {
+        lat,
+        lon
+      }
+      artistToEventsByEventId(first: 1) {
+        nodes {
+          artistByArtistId {
+            photo
+          }
+        }
+      },
+      watchListsByEventId(
+        filter: {
+          accountId: {
+            equalTo: $accountId
+          }
+        }
+      ) {
+        nodes {
+          id
+        }
+      }
+    }
+  }
+}

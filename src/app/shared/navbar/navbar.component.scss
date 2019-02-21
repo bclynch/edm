@@ -25,12 +25,13 @@
       align-items: center;
       justify-content: space-between;
       height: var(--height-navbar);
-      padding: 0 24px;
 
-      .right {
+      .backWrapper {
+        min-width: 64px; // to cover if it isn't there but keep nav balanced
 
         button {
           height: var(--height-navbar);
+          padding: 0;
 
           mat-icon {
             font-size: 32px;
@@ -41,7 +42,22 @@
           }
         }
       }
-      .left {
+      .right {
+
+        button {
+          height: var(--height-navbar);
+          padding: 0 14px;
+
+          mat-icon {
+            font-size: 32px;
+            color: black;
+            cursor: pointer;
+            height: 36px;
+            width: 36px;
+          }
+        }
+      }
+      .logoWrapper {
         .logo {
           color: var(--color-accent);
           font-weight: 800;
@@ -56,5 +72,13 @@
   .navBarContainer {
     display: flex;
     justify-content: center;
+
+    .barWrapper {
+      padding: 0 24px;
+
+      .backWrapper {
+        display: none; 
+      }
+    }
   }
 }

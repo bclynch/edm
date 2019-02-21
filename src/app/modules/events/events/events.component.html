@@ -8,6 +8,7 @@
               matInput
               placeholder="Search"
               autocomplete="off"
+              [formControl]="searchQueryControl"
             />
           </mat-form-field>
           <div class="locationWrapper">
@@ -21,7 +22,7 @@
             ></app-location-search>
           </div>
           <div class="dateWrapper">
-            <app-select-date (date)="dateFilter($event)" [value]="dateRange"></app-select-date>
+            <app-select-date (date)="selectDate($event)" [value]="dateRange"></app-select-date>
           </div>
         </div>
         <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>

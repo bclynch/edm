@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, SubscriptionLike } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { LocationService } from 'src/app/services/location.service';
   templateUrl: './location-search.component.html',
   styleUrls: ['./location-search.component.scss']
 })
-export class LocationSearchComponent implements OnInit, OnDestroy {
+export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
   @Input() autocomplete = 'on';
   @Input() placeholder = '';
   @Input() value = '';
@@ -31,7 +31,10 @@ export class LocationSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.value) this.myControl.setValue(this.value);
+  }
+
+  ngOnChanges(change) {
+    if (change.value && change.value.currentValue) this.myControl.setValue(change.value.currentValue);
   }
 
   ngOnDestroy() {

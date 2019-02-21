@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -6,7 +6,7 @@ import * as moment from 'moment';
   templateUrl: './select-date.component.html',
   styleUrls: ['./select-date.component.scss']
 })
-export class SelectDateComponent implements OnInit {
+export class SelectDateComponent implements OnInit, OnChanges {
   @Input() placeholder = '';
   @Input() value: string;
   @Output() date: EventEmitter<string> = new EventEmitter<string>();
@@ -51,6 +51,13 @@ export class SelectDateComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(change) {
+    if (change.value && change.value.currentValue && change.value.currentValue.includes('-')) {
+      this.value = 'pick';
+      this.pickedDate = moment(change.value.currentValue, 'DD-MM-YYYY');
+    }
   }
 
   selection(value: string) {

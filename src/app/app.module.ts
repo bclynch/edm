@@ -23,6 +23,7 @@ import { DISQUS_SHORTNAME } from 'ngx-disqus';
 import { AnalyticsService } from './services/analytics.service';
 import { LocationService } from './services/location.service';
 import { UserService } from './services/user.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UserService } from './services/user.service';
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production }),
   ],
   providers: [
     RoleGuardService,
