@@ -37,6 +37,7 @@ import { ShareDialogueComponent } from './share-dialogue/share-dialogue.componen
 import { VenueMapComponent } from './venue-map/venue-map.component';
 import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
 import { SelectDateComponent } from './select-date/select-date.component';
+import { EventCardAltComponent } from './event-card-alt/event-card-alt.component';
 
 @NgModule({
   entryComponents: [
@@ -52,7 +53,8 @@ import { SelectDateComponent } from './select-date/select-date.component';
     ShareDialogueComponent,
     VenueMapComponent,
     EventbriteCheckoutComponent,
-    SelectDateComponent
+    SelectDateComponent,
+    EventCardAltComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +102,8 @@ import { SelectDateComponent } from './select-date/select-date.component';
     LocationSearchComponent,
     EventCardComponent,
     VenueMapComponent,
-    SelectDateComponent
+    SelectDateComponent,
+    EventCardAltComponent
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer}

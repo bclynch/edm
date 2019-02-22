@@ -210,6 +210,7 @@ export class SearchEventsGQL extends Apollo.Query<
       $accountId: Int!
       $greaterThan: BigInt!
       $lessThan: BigInt!
+      $count: Int
     ) {
       searchEvents(
         query: $query
@@ -220,6 +221,7 @@ export class SearchEventsGQL extends Apollo.Query<
             lessThanOrEqualTo: $lessThan
           }
         }
+        first: $count
       ) {
         nodes {
           id
@@ -2539,6 +2541,7 @@ export namespace SearchEvents {
     accountId: number;
     greaterThan: BigInt;
     lessThan: BigInt;
+    count?: Maybe<number>;
   };
 
   export type Query = {

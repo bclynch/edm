@@ -19,8 +19,9 @@
             <a [routerLink]="['/login']" [queryParams]="{ redirect: router.url }"><button mat-menu-item>Login</button></a>
           </div>
           <div *ngIf="signedIn">
-            <a [routerLink]="['/settings']"><button mat-menu-item>Account Settings</button></a>
             <a [routerLink]="['/watched']"><button mat-menu-item>Watched Events</button></a>
+            <a><button mat-menu-item>Submit Event</button></a>
+            <a [routerLink]="['/settings']"><button mat-menu-item>Account Settings</button></a>
             <button mat-menu-item (click)="userService.logoutUser()">Log out</button>
           </div>
         </mat-menu>

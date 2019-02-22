@@ -11,11 +11,13 @@
     - ~~Own pages with redirect~~
 - ~~Add cookie for selected location~~
 - ~~Indicator 'new' event~~
+- Guards on various routes (watched, login, signup, following, submit) based on logged in state
 
 - Home page
   - ~~Search box in header with location / date~~
   - ~~Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there~~
-    - Featured shows should probably be eventbrite so they can purchase ticket there
+    - ~~Featured shows~~
+        - Would like to lift results like eventbrite or ticket fly which return the most $$$. Wait to figure out what the returns are. Would do this by adding a filter type = eventbrite or whatnot on the graphql call
     - Maybe a nice little display of features like discuss shows with others, save for future, etc
 - Search results page
   - ~~Can share show~~

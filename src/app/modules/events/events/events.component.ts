@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AppService } from 'src/app/services/app.service';
 import { FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
+import { CookieService } from 'ngx-cookie-service';
 
 class Event {
   id: string;
@@ -58,7 +59,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     private utilService: UtilService,
     private userService: UserService,
     private appService: AppService,
-    private eventService: EventService
+    private eventService: EventService,
+    private cookieService: CookieService
   ) {
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
@@ -142,6 +144,9 @@ export class EventsComponent implements OnInit, OnDestroy {
   setLocation(location: string) {
     this.selectedLocation = location;
     this.location = location;
+
+    // add location to cookie for future
+    this.cookieService.set('edm-location', this.selectedLocation);
   }
 
   selectDate(date) {
