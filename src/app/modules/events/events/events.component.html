@@ -69,6 +69,7 @@
         [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
         [watchId]="event.watchListsByEventId.nodes[0]"
         size="half"
+        [new]="event.new"
       ></app-event-card>
     </cdk-virtual-scroll-viewport>
   </div>

@@ -14,10 +14,13 @@
       <div class="right">
         <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="userService.signin('login')" *ngIf="!signedIn">Login</button>
+          <div *ngIf="!signedIn">
+            <a [routerLink]="['/signup']"><button mat-menu-item>Signup</button></a>
+            <a [routerLink]="['/login']"><button mat-menu-item>Login</button></a>
+          </div>
           <div *ngIf="signedIn">
-            <button mat-menu-item>Account Settings</button>
-            <button mat-menu-item>Watched Events</button>
+            <a [routerLink]="['/settings']"><button mat-menu-item>Account Settings</button></a>
+            <a [routerLink]="['/watched']"><button mat-menu-item>Watched Events</button></a>
             <button mat-menu-item (click)="userService.logoutUser()">Log out</button>
           </div>
         </mat-menu>

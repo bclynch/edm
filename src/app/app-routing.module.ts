@@ -28,6 +28,22 @@ const routes: Routes = [
     path: 'event',
     loadChildren: './modules/event/event.module#EventModule',
   },
+  {
+    path: 'login',
+    loadChildren: './modules/login/login.module#LoginModule',
+  },
+  {
+    path: 'signup',
+    loadChildren: './modules/signup/signup.module#SignupModule',
+  },
+  {
+    path: 'watched',
+    loadChildren: './modules/watched/watched.module#WatchedModule',
+  },
+  {
+    path: 'settings',
+    loadChildren: './modules/settings/settings.module#SettingsModule',
+  },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];
 

@@ -59,4 +59,16 @@ export class EventService {
       );
     });
   }
+
+  identifyNew(events) {
+    // how many days to be considered 'new'
+    const days = 5;
+    const msPerDay = 86400000;
+
+    return events.map((event) => {
+      const eventCopy = { ...event };
+      eventCopy['new'] = (Date.now() - +event.createdAt) < (msPerDay * days);
+      return eventCopy;
+    });
+  }
 }

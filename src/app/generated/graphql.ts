@@ -228,6 +228,7 @@ export class SearchEventsGQL extends Apollo.Query<
           ticketproviderurl
           ticketproviderid
           venue
+          createdAt
           venueByVenue {
             lat
             lon
@@ -2566,6 +2567,8 @@ export namespace SearchEvents {
     ticketproviderid: Maybe<string>;
 
     venue: string;
+
+    createdAt: Maybe<BigInt>;
 
     venueByVenue: Maybe<VenueByVenue>;
 

@@ -3,6 +3,7 @@
   align-items: center;
   padding: 24px;
   transition: .3s;
+  position: relative;
 
   .imageWrapper {
 
@@ -70,6 +71,14 @@
       }
     }
   }
+  .tooltip {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 1.5em;
+    width: 1.5em;
+    z-index: 999;
+  }
   @media (min-width: 768px) {
 
     &.half {
@@ -83,4 +92,25 @@
   box-shadow: 0 4px 15px 0 rgba(40,44,53,.06), 0 2px 2px 0 rgba(40,44,53,.08);
   background-color: #fff;
   border-radius: 4px;
+}
+.newEvent::before,
+.newEvent::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.newEvent::before {
+  border-width: 1.5em;
+  border-right-color: var(--color-accent);
+  border-top-color: var(--color-accent);; 
+}
+
+.newEvent::after {
+  border-width: 1.5em;
+  border-right-color: var(--color-accent);;
+  border-top-color: var(--color-accent);; 
 }

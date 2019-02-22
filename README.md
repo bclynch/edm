@@ -10,6 +10,7 @@
 - Login / signup flow (for now)
     - Own pages with redirect
 - ~~Add cookie for selected location~~
+- ~~Indicator 'new' event~~
 
 - Home page
   - ~~Search box in header with location / date~~

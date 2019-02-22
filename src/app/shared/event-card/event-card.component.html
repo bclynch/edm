@@ -1,4 +1,4 @@
-<div class="cardContainer" [ngClass]="size">
+<div class="cardContainer" [ngClass]="[size, new ? 'newEvent' : '']">
   <div class="imageWrapper">
     <a [routerLink]="['/event/' + id]">
       <div *ngIf="image" class="img" [ngStyle]="{ 'background-image': 'url(' + image + ')'}"></div>
@@ -49,4 +49,5 @@
       </a>
     </div>
   </div>
+  <div matTooltip="Newly Added Event" class="tooltip"></div>
 </div>

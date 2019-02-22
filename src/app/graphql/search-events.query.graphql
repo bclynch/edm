@@ -16,6 +16,7 @@ query searchEvents($query: String!, $cityId: Int!, $accountId: Int!, $greaterTha
       ticketproviderurl,
       ticketproviderid,
       venue,
+      createdAt,
       venueByVenue {
         lat,
         lon

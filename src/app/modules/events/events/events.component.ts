@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { UserService } from 'src/app/services/user.service';
 import { AppService } from 'src/app/services/app.service';
 import { FormControl } from '@angular/forms';
+import { EventService } from 'src/app/services/event.service';
 
 class Event {
   id: string;
@@ -56,7 +57,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     private mapsAPILoader: MapsAPILoader,
     private utilService: UtilService,
     private userService: UserService,
-    private appService: AppService
+    private appService: AppService,
+    private eventService: EventService
   ) {
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
@@ -122,8 +124,12 @@ export class EventsComponent implements OnInit, OnDestroy {
   processEvents(events) {
     // loop through and create marker arr. Sort of borked atm
     // if (+venue.lat) this.eventMarkers.push({ name: event.name, lat: +venue.lat, lon: +venue.lon });
+
+    // identify if it is newly added
+    const eventsCheckedNew = this.eventService.identifyNew(events);
+
     // sort based on start date
-    const processedEvents = events.sort((a, b) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
+    const processedEvents = eventsCheckedNew.sort((a, b) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
     return processedEvents;
   }
 
