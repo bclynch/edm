@@ -7,8 +7,8 @@
     - Feed view for new stuff
 - ~~on the events page try making the virtual scroll full page width. On browser make the search position absolute, but on mobile it needs to be a set height so we can make the height of the below container correct.~~
 - ~~Back btn for mobile~~
-- Login / signup flow (for now)
-    - Own pages with redirect
+- ~~Login / signup flow (for now)~~
+    - ~~Own pages with redirect~~
 - ~~Add cookie for selected location~~
 - ~~Indicator 'new' event~~
 

@@ -1,3 +1,30 @@
-<p>
-  login works!
-</p>
+<app-pagewrapper>
+  <div class="loginContainer">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1>Login To Your Account</h1>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Email" 
+          formControlName="email"
+          [errorStateMatcher]="matcher"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Password"
+          type="password" 
+          formControlName="password"
+          [errorStateMatcher]="matcher"
+        />
+      </mat-form-field>
+      <button mat-flat-button color="primary" type="submit">Login</button>
+      <div class="new">New to EDM? 
+        <a [routerLink]="['/signup']" [queryParams]="{ redirect: redirect }">
+          <button mat-button color="primary">Create a New Account</button>
+        </a>
+      </div>
+    </form>
+  </div>
+</app-pagewrapper>

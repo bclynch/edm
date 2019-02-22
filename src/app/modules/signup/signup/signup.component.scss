@@ -1,0 +1,14 @@
+.signupContainer {
+  form {
+
+    .mat-form-field {
+      display: block;
+    }
+    button[type='submit'] {
+      color: white;
+    }
+    .existing {
+      margin-top: 15px;
+    }
+  }
+}

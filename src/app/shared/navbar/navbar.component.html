@@ -15,8 +15,8 @@
         <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
         <mat-menu #menu="matMenu">
           <div *ngIf="!signedIn">
-            <a [routerLink]="['/signup']"><button mat-menu-item>Signup</button></a>
-            <a [routerLink]="['/login']"><button mat-menu-item>Login</button></a>
+            <a [routerLink]="['/signup']" [queryParams]="{ redirect: router.url }"><button mat-menu-item>Signup</button></a>
+            <a [routerLink]="['/login']" [queryParams]="{ redirect: router.url }"><button mat-menu-item>Login</button></a>
           </div>
           <div *ngIf="signedIn">
             <a [routerLink]="['/settings']"><button mat-menu-item>Account Settings</button></a>

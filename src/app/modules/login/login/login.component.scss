@@ -1,0 +1,14 @@
+.loginContainer {
+  form {
+
+    .mat-form-field {
+      display: block;
+    }
+    button[type='submit'] {
+      color: white;
+    }
+    .new {
+      margin-top: 15px;
+    }
+  }
+}

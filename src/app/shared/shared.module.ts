@@ -36,14 +36,12 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { ShareDialogueComponent } from './share-dialogue/share-dialogue.component';
 import { VenueMapComponent } from './venue-map/venue-map.component';
 import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
-import { SigninDialogueComponent } from './signin-dialogue/signin-dialogue.component';
 import { SelectDateComponent } from './select-date/select-date.component';
 
 @NgModule({
   entryComponents: [
     ShareDialogueComponent,
     EventbriteCheckoutComponent,
-    SigninDialogueComponent
   ],
   declarations: [
     PagewrapperComponent,
@@ -54,7 +52,6 @@ import { SelectDateComponent } from './select-date/select-date.component';
     ShareDialogueComponent,
     VenueMapComponent,
     EventbriteCheckoutComponent,
-    SigninDialogueComponent,
     SelectDateComponent
   ],
   imports: [
