@@ -241,6 +241,7 @@ export class EventByIdGQL extends Apollo.Query<
         ticketproviderurl
         ticketproviderid
         description
+        banner
         venueByVenue {
           name
           lat
@@ -604,6 +605,8 @@ export interface EventCondition {
   ticketproviderid?: Maybe<string>;
   /** Checks for equality with the object’s `ticketproviderurl` field. */
   ticketproviderurl?: Maybe<string>;
+  /** Checks for equality with the object’s `banner` field. */
+  banner?: Maybe<string>;
   /** Checks for equality with the object’s `approved` field. */
   approved?: Maybe<boolean>;
   /** Checks for equality with the object’s `contributor` field. */
@@ -633,6 +636,8 @@ export interface EventFilter {
   ticketproviderid?: Maybe<StringFilter>;
   /** Filter by the object’s `ticketproviderurl` field. */
   ticketproviderurl?: Maybe<StringFilter>;
+  /** Filter by the object’s `banner` field. */
+  banner?: Maybe<StringFilter>;
   /** Filter by the object’s `approved` field. */
   approved?: Maybe<BooleanFilter>;
   /** Filter by the object’s `contributor` field. */
@@ -1222,9 +1227,11 @@ export interface EventInput {
   ticketproviderid?: Maybe<string>;
   /** URL by the ticket provider useful for affiliate links */
   ticketproviderurl?: Maybe<string>;
-
+  /** Banner to display for event page */
+  banner?: Maybe<string>;
+  /** Whether to display event if it has been approved */
   approved?: Maybe<boolean>;
-
+  /** Who submitted the event */
   contributor?: Maybe<number>;
   /** When event created */
   createdAt?: Maybe<BigInt>;
@@ -1569,9 +1576,11 @@ export interface EventPatch {
   ticketproviderid?: Maybe<string>;
   /** URL by the ticket provider useful for affiliate links */
   ticketproviderurl?: Maybe<string>;
-
+  /** Banner to display for event page */
+  banner?: Maybe<string>;
+  /** Whether to display event if it has been approved */
   approved?: Maybe<boolean>;
-
+  /** Who submitted the event */
   contributor?: Maybe<number>;
   /** When event created */
   createdAt?: Maybe<BigInt>;
@@ -2143,6 +2152,8 @@ export enum EventsOrderBy {
   TicketprovideridDesc = "TICKETPROVIDERID_DESC",
   TicketproviderurlAsc = "TICKETPROVIDERURL_ASC",
   TicketproviderurlDesc = "TICKETPROVIDERURL_DESC",
+  BannerAsc = "BANNER_ASC",
+  BannerDesc = "BANNER_DESC",
   ApprovedAsc = "APPROVED_ASC",
   ApprovedDesc = "APPROVED_DESC",
   ContributorAsc = "CONTRIBUTOR_ASC",
@@ -2756,6 +2767,8 @@ export namespace EventById {
     ticketproviderid: Maybe<string>;
 
     description: Maybe<string>;
+
+    banner: Maybe<string>;
 
     venueByVenue: Maybe<VenueByVenue>;
 

@@ -2,12 +2,20 @@
   <div class="eventContainer">
     <div class="header">
       <div class="topWrapper">
-        <div class="bannerImage"></div>
-        <div class="eventInfo">
-          <div>{{event?.name}}</div>
+        <div class="bannerWrapper">
+          <div class="bannerImage" *ngIf="event?.banner" [ngStyle]="{ 'background-image': 'url(' + event?.banner + ')'}"></div>
+          <div class="bannerImage backup" *ngIf="!event?.banner"></div>
+          <div class="eventInfo">
+            <h1>{{event?.name}}</h1>
+            <a [routerLink]="['/venue/' + event?.venueByVenue.name]">{{event?.venueByVenue.name.split('-')[0]}}</a>
+            <div>{{event?.startDate | date:'MMM d'}}</div>
+          </div>
+        </div>
+        <!-- <div class="eventInfo">
+          <h1>{{event?.name}}</h1>
           <a [routerLink]="['/venue/' + event?.venueByVenue.name]">{{event?.venueByVenue.name.split('-')[0]}}</a>
           <div>{{event?.startDate | date:'MMM d'}}</div>
-        </div>
+        </div> -->
       </div>
       <div class="bottomWrapper">
         <div class="optionsWrapper">
@@ -42,12 +50,13 @@
       <div class="description">
         <div class="section">
           <h3 class="sectionHeader">Description</h3>
+          <div [innerHTML]="event.description"></div>
         </div>
       </div>
     </div>
     <div class="mapContainer" id="locationAnchor">
       <app-venue-map 
-        *ngIf="event" 
+        *ngIf="event && event.venueByVenue.lat" 
         [lat]="+event.venueByVenue.lat" 
         [lon]="+event.venueByVenue.lon"
         [venueName]="event.venueByVenue.name.split('-')[0]"

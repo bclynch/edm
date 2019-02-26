@@ -49,7 +49,7 @@ export class UtilService {
 
   addToCalendar(title: string, eventUrl: string, venueAddress: string, date: string) {
     // returns link for a tag href
-    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title.split(' ').join('+')}&dates=${date}/${date}&details=For+details,+the+event+page+is+here:+${eventUrl}&location=${venueAddress.split(' ').join('+')}&sf=true&output=xml`;
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title.split(' ').join('+')}&dates=${date}/${date}&details=For+details,+the+event+page+is+here:+${eventUrl}&location=${venueAddress ? venueAddress.split(' ').join('+') : ''}&sf=true&output=xml`;
   }
 
   calculateDateRange(filter): { min: number, max: number } {

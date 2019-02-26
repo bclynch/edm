@@ -16,13 +16,41 @@
       display: flex;
       flex-direction: column;
 
-      .bannerImage {
-        height: 200px;
-        background: red;
+      .bannerWrapper {
         flex: 1;
-      }
-      .eventInfo {
-        padding: 30px;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .eventInfo {
+          padding: 30px;
+          z-index: 99;
+          background: rgba(0,0,0,.5);
+          color: white;
+  
+          a {
+            color: white;
+            text-decoration: underline;
+          }
+          a:hover {
+            color: var(--color-accent);
+          }
+        }
+        .bannerImage {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 100%;
+          background-position: center;
+          background-size: cover;
+
+          &.backup {
+            background: url('../../../../assets/backgrounds/background2.jpg');
+          }
+        }
       }
     }
     .bottomWrapper {
@@ -72,6 +100,14 @@
 
       .topWrapper {
         flex-direction: row;
+
+        .bannerWrapper {
+          justify-content: flex-start;
+
+          .eventInfo {
+            margin-left: 5%;
+          }
+        }
       }
       .bottomWrapper {
         display: flex;
