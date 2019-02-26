@@ -2,6 +2,20 @@
   <div class="venueContainer">
     <div *ngIf="venue" class="header" [ngStyle]="{ 'background-image': 'url(' + venue.photo + ')'}">
       <h1>{{venue?.name.split('-')[0]}}</h1>
+      <div class="followContainer">
+        <button 
+          mat-flat-button 
+          (click)="followVenue()" 
+          color="accent" 
+          *ngIf="!venue?.followListsByVenueId.nodes.length"
+        >Follow</button>
+        <button 
+          mat-flat-button
+          (click)="unfollowVenue()" 
+          color="primary" 
+          *ngIf="venue?.followListsByVenueId.nodes.length"
+        >Following</button>
+      </div>
     </div>
     <div class="upcomingContainer">
       <div class="eventsWrapper" *ngIf="venue?.eventsByVenue.nodes.length">

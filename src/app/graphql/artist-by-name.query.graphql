@@ -1,4 +1,4 @@
-query artistByName($name: String!) {
+query artistByName($name: String!, $accountId: Int!) {
   artistByName(name: $name) {
     name,
     description,
@@ -15,6 +15,17 @@ query artistByName($name: String!) {
     youtubeUrl,
     spotifyUrl, 
     homepage,
+    followListsByArtistId(
+      filter: {
+        accountId: {
+          equalTo: $accountId
+        }
+    	}
+    ) {
+      nodes {
+        id
+      }
+    },
     artistToEventsByArtistId {
       nodes {
         eventByEventId {
@@ -23,7 +34,18 @@ query artistByName($name: String!) {
           startDate,
           id,
           ticketproviderurl,
-          ticketproviderid
+          ticketproviderid,
+          watchListsByEventId(
+            filter: {
+              accountId: {
+                equalTo: $accountId
+              }
+            }
+          ) {
+            nodes {
+              id
+            }
+          }
         }
       }
     }

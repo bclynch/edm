@@ -1,4 +1,4 @@
-query venueByName($name: String!) {
+query venueByName($name: String!, $accountId: Int!) {
   venueByName(name: $name) {
     name,
     description,
@@ -8,6 +8,17 @@ query venueByName($name: String!) {
     address,
     photo,
     logo,
+    followListsByVenueId(
+      filter: {
+        accountId: {
+          equalTo: $accountId
+        }
+      }
+    ) {
+      nodes {
+        id
+      }
+    }
     eventsByVenue(orderBy: START_DATE_ASC) {
       nodes {
         name,

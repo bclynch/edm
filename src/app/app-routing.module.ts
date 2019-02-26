@@ -41,6 +41,10 @@ const routes: Routes = [
     loadChildren: './modules/watched/watched.module#WatchedModule',
   },
   {
+    path: 'following',
+    loadChildren: './modules/following/following.module#FollowingModule',
+  },
+  {
     path: 'settings',
     loadChildren: './modules/settings/settings.module#SettingsModule',
   },

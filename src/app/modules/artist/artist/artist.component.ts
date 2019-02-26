@@ -4,6 +4,9 @@ import { ArtistByNameGQL } from 'src/app/generated/graphql';
 import { faTwitter, faFacebook, faInstagram, faSoundcloud, faYoutube, faSpotify, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { UserService } from 'src/app/services/user.service';
+import { SubscriptionLike } from 'rxjs';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-artist',
@@ -17,19 +20,32 @@ export class ArtistComponent implements OnInit {
   socialOptions: { url: string, icon: IconDefinition }[];
   soundcloudUrl: SafeResourceUrl;
 
+  initSubscription: SubscriptionLike;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private artistByNameGQL: ArtistByNameGQL,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private userService: UserService,
+    private appService: AppService
   ) {
-    this.artistByNameGQL.fetch({ name: this.activatedRoute.snapshot.paramMap.get('artistName') }).subscribe(
-      (result) => {
-        this.artist = result.data.artistByName;
-        console.log(this.artist);
-        this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId);
-        this.socialOptions = this.generateSocialOptions();
-        // generate iframe url for soundcloud widget
-        if (this.artist.soundcloudUsername) this.soundcloudUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://w.soundcloud.com/player/?url=https://soundcloud.com/${this.artist.soundcloudUsername}&amp;auto_play=false&amp;buying=false&amp;liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=true&amp;show_comments=false&amp;show_playcount=false&amp;show_user=true&amp;hide_related=false&amp;visual=true&amp;start_track=0&amp;callback=true`);
+    this.initSubscription = this.appService.appInited.subscribe(
+      (inited) =>  {
+        if (inited) {
+          this.artistByNameGQL.fetch({
+            name: this.activatedRoute.snapshot.paramMap.get('artistName'),
+            accountId: this.userService.user ? this.userService.user.id : 0,
+          }).subscribe(
+            (result) => {
+              this.artist = result.data.artistByName;
+              console.log(this.artist);
+              this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId);
+              this.socialOptions = this.generateSocialOptions();
+              // generate iframe url for soundcloud widget
+              if (this.artist.soundcloudUsername) this.soundcloudUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://w.soundcloud.com/player/?url=https://soundcloud.com/${this.artist.soundcloudUsername}&amp;auto_play=false&amp;buying=false&amp;liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=true&amp;show_comments=false&amp;show_playcount=false&amp;show_user=true&amp;hide_related=false&amp;visual=true&amp;start_track=0&amp;callback=true`);
+            }
+          );
+        }
       }
     );
   }
@@ -47,5 +63,17 @@ export class ArtistComponent implements OnInit {
     if (this.artist.youtubeUrl) socialOptions.push({ url: this.artist.youtubeUrl, icon: faYoutube });
     if (this.artist.homepage) socialOptions.push({ url: this.artist.homepage, icon: faHome });
     return socialOptions;
+  }
+
+  followArtist() {
+    this.userService.follow(this.artist.name, null, this.artist.name).then(
+      (followId) => this.artist.followListsByArtistId.nodes = [{ id: followId }]
+    );
+  }
+
+  unfollowArtist() {
+    this.userService.unfollow(this.artist.followListsByArtistId.nodes[0].id).then(
+      () => this.artist.followListsByArtistId.nodes = []
+    );
   }
 }

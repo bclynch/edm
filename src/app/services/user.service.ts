@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL } from '../generated/graphql';
+import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL, CreateFollowListGQL, RemoveFollowlistGQL } from '../generated/graphql';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,9 @@ export class UserService {
     private authenticateUserAccountGQL: AuthenticateUserAccountGQL,
     private registerUserAccountGQL: RegisterUserAccountGQL,
     private currentAccountGQL: CurrentAccountGQL,
+    private createFollowListGQL: CreateFollowListGQL,
+    private removeFollowlistGQL: RemoveFollowlistGQL,
+    private snackBar: MatSnackBar
   ) {
     this.signedInSubject = new BehaviorSubject<boolean>(false);
     this.signedIn = this.signedInSubject;
@@ -129,6 +133,34 @@ export class UserService {
           }
           reject();
         }
+      );
+    });
+  }
+
+  follow(artistId: string, venueId: string, name: string) {
+    return new Promise((resolve, reject) => {
+      if (this.user) {
+        this.createFollowListGQL.mutate({ accountId: this.user.id, artistId, venueId }).subscribe(
+          ({ data }) => {
+            this.snackBar.open(`You are now following ${name}`, 'Close', {
+              duration: 3000,
+            });
+            resolve(data.createFollowList.followList.id);
+          }
+        );
+      } else {
+        this.snackBar.open('Login to your account to add to watch list', 'Close', {
+          duration: 3000,
+        });
+        resolve(null);
+      }
+    });
+  }
+
+  unfollow(followListId: number) {
+    return new Promise((resolve, reject) => {
+      this.removeFollowlistGQL.mutate({ followListId }).subscribe(
+        () => resolve()
       );
     });
   }

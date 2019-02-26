@@ -16,6 +16,20 @@
           </a>
         </div>
       </div>
+      <div class="followContainer">
+        <button 
+          mat-flat-button 
+          (click)="followArtist()" 
+          color="accent" 
+          *ngIf="!artist?.followListsByArtistId.nodes.length"
+        >Follow</button>
+        <button 
+          mat-flat-button
+          (click)="unfollowArtist()" 
+          color="primary" 
+          *ngIf="artist?.followListsByArtistId.nodes.length"
+        >Following</button>
+      </div>
     </div>
     <div class="contentWrapper">
       <div class="infoContainer">
@@ -30,6 +44,8 @@
               [id]="event.id"
               [externalUrl]="event.ticketproviderurl"
               [ticketProviderId]="event.ticketproviderid"
+              [image]="artist.photo"
+              [watchId]="event.watchListsByEventId.nodes[0]"
             ></app-event-card>
           </div>
         </div>

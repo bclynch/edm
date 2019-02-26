@@ -40,7 +40,7 @@ export class EventService {
   addWatch(eventId): Promise<number> {
     return new Promise((resolve, reject) => {
       if (this.userService.user) {
-        this.createWatchListGQL.mutate({ accountId: this.userService.user.id, eventId: eventId }).subscribe(
+        this.createWatchListGQL.mutate({ accountId: this.userService.user.id, eventId }).subscribe(
           ({ data }) => resolve(data.createWatchList.watchList.id)
         );
       } else {

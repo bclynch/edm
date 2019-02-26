@@ -1,0 +1,9 @@
+mutation removeFollowlist($followListId: Int!) {
+  deleteFollowListById(
+    input: {
+    	id: $followListId
+  	}
+  ) {
+    clientMutationId
+  }
+}

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { VenueByNameGQL } from 'src/app/generated/graphql';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { SubscriptionLike } from 'rxjs';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-venue',
@@ -11,14 +14,27 @@ export class VenueComponent implements OnInit {
 
   venue;
 
+  initSubscription: SubscriptionLike;
+
   constructor(
     private venueByNameGQL: VenueByNameGQL,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private appService: AppService
   ) {
-    this.venueByNameGQL.fetch({ name: this.activatedRoute.snapshot.paramMap.get('venueName') }).subscribe(
-      (result) => {
-        this.venue = result.data.venueByName;
-        console.log(this.venue);
+    this.initSubscription = this.appService.appInited.subscribe(
+      (inited) =>  {
+        if (inited) {
+          this.venueByNameGQL.fetch({
+            name: this.activatedRoute.snapshot.paramMap.get('venueName'),
+            accountId: this.userService.user ? this.userService.user.id : 0,
+          }).subscribe(
+            (result) => {
+              this.venue = result.data.venueByName;
+              console.log(this.venue);
+            }
+          );
+        }
       }
     );
   }
@@ -26,4 +42,15 @@ export class VenueComponent implements OnInit {
   ngOnInit() {
   }
 
+  followVenue() {
+    this.userService.follow(null, this.venue.name, this.venue.name).then(
+      (followId) => this.venue.followListsByVenueId.nodes = [{ id: followId }]
+    );
+  }
+
+  unfollowVenue() {
+    this.userService.unfollow(this.venue.followListsByVenueId.nodes[0].id).then(
+      () => this.venue.followListsByVenueId.nodes = []
+    );
+  }
 }

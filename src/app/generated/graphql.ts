@@ -38,7 +38,7 @@ export class ArtistByNameGQL extends Apollo.Query<
   ArtistByName.Variables
 > {
   document: any = gql`
-    query artistByName($name: String!) {
+    query artistByName($name: String!, $accountId: Int!) {
       artistByName(name: $name) {
         name
         description
@@ -55,6 +55,11 @@ export class ArtistByNameGQL extends Apollo.Query<
         youtubeUrl
         spotifyUrl
         homepage
+        followListsByArtistId(filter: { accountId: { equalTo: $accountId } }) {
+          nodes {
+            id
+          }
+        }
         artistToEventsByArtistId {
           nodes {
             eventByEventId {
@@ -64,6 +69,13 @@ export class ArtistByNameGQL extends Apollo.Query<
               id
               ticketproviderurl
               ticketproviderid
+              watchListsByEventId(
+                filter: { accountId: { equalTo: $accountId } }
+              ) {
+                nodes {
+                  id
+                }
+              }
             }
           }
         }
@@ -82,6 +94,35 @@ export class AuthenticateUserAccountGQL extends Apollo.Mutation<
     mutation authenticateUserAccount($email: String!, $password: String!) {
       authenticateUserAccount(input: { email: $email, password: $password }) {
         jwtToken
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class CreateFollowListGQL extends Apollo.Mutation<
+  CreateFollowList.Mutation,
+  CreateFollowList.Variables
+> {
+  document: any = gql`
+    mutation createFollowList(
+      $accountId: Int!
+      $artistId: String
+      $venueId: String
+    ) {
+      createFollowList(
+        input: {
+          followList: {
+            accountId: $accountId
+            artistId: $artistId
+            venueId: $venueId
+          }
+        }
+      ) {
+        followList {
+          id
+        }
       }
     }
   `;
@@ -184,6 +225,21 @@ export class RegisterUserAccountGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class RemoveFollowlistGQL extends Apollo.Mutation<
+  RemoveFollowlist.Mutation,
+  RemoveFollowlist.Variables
+> {
+  document: any = gql`
+    mutation removeFollowlist($followListId: Int!) {
+      deleteFollowListById(input: { id: $followListId }) {
+        clientMutationId
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class RemoveWatchlistGQL extends Apollo.Mutation<
   RemoveWatchlist.Mutation,
   RemoveWatchlist.Variables
@@ -260,7 +316,7 @@ export class VenueByNameGQL extends Apollo.Query<
   VenueByName.Variables
 > {
   document: any = gql`
-    query venueByName($name: String!) {
+    query venueByName($name: String!, $accountId: Int!) {
       venueByName(name: $name) {
         name
         description
@@ -270,6 +326,11 @@ export class VenueByNameGQL extends Apollo.Query<
         address
         photo
         logo
+        followListsByVenueId(filter: { accountId: { equalTo: $accountId } }) {
+          nodes {
+            id
+          }
+        }
         eventsByVenue(orderBy: START_DATE_ASC) {
           nodes {
             name
@@ -2285,6 +2346,7 @@ export namespace AllLocations {
 export namespace ArtistByName {
   export type Variables = {
     name: string;
+    accountId: number;
   };
 
   export type Query = {
@@ -2326,16 +2388,30 @@ export namespace ArtistByName {
 
     homepage: Maybe<string>;
 
+    followListsByArtistId: FollowListsByArtistId;
+
     artistToEventsByArtistId: ArtistToEventsByArtistId;
   };
 
-  export type ArtistToEventsByArtistId = {
-    __typename?: "ArtistToEventsConnection";
+  export type FollowListsByArtistId = {
+    __typename?: "FollowListsConnection";
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
+    __typename?: "FollowList";
+
+    id: number;
+  };
+
+  export type ArtistToEventsByArtistId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
     __typename?: "ArtistToEvent";
 
     eventByEventId: Maybe<EventByEventId>;
@@ -2355,6 +2431,20 @@ export namespace ArtistByName {
     ticketproviderurl: Maybe<string>;
 
     ticketproviderid: Maybe<string>;
+
+    watchListsByEventId: WatchListsByEventId;
+  };
+
+  export type WatchListsByEventId = {
+    __typename?: "WatchListsConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "WatchList";
+
+    id: number;
   };
 }
 
@@ -2374,6 +2464,32 @@ export namespace AuthenticateUserAccount {
     __typename?: "AuthenticateUserAccountPayload";
 
     jwtToken: Maybe<JwtToken>;
+  };
+}
+
+export namespace CreateFollowList {
+  export type Variables = {
+    accountId: number;
+    artistId?: Maybe<string>;
+    venueId?: Maybe<string>;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createFollowList: Maybe<CreateFollowList>;
+  };
+
+  export type CreateFollowList = {
+    __typename?: "CreateFollowListPayload";
+
+    followList: Maybe<FollowList>;
+  };
+
+  export type FollowList = {
+    __typename?: "FollowList";
+
+    id: number;
   };
 }
 
@@ -2516,6 +2632,24 @@ export namespace RegisterUserAccount {
   };
 }
 
+export namespace RemoveFollowlist {
+  export type Variables = {
+    followListId: number;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteFollowListById: Maybe<DeleteFollowListById>;
+  };
+
+  export type DeleteFollowListById = {
+    __typename?: "DeleteFollowListPayload";
+
+    clientMutationId: Maybe<string>;
+  };
+}
+
 export namespace RemoveWatchlist {
   export type Variables = {
     watchListId: number;
@@ -2622,6 +2756,7 @@ export namespace SearchEvents {
 export namespace VenueByName {
   export type Variables = {
     name: string;
+    accountId: number;
   };
 
   export type Query = {
@@ -2649,16 +2784,30 @@ export namespace VenueByName {
 
     logo: Maybe<string>;
 
+    followListsByVenueId: FollowListsByVenueId;
+
     eventsByVenue: EventsByVenue;
   };
 
-  export type EventsByVenue = {
-    __typename?: "EventsConnection";
+  export type FollowListsByVenueId = {
+    __typename?: "FollowListsConnection";
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
+    __typename?: "FollowList";
+
+    id: number;
+  };
+
+  export type EventsByVenue = {
+    __typename?: "EventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
     __typename?: "Event";
 
     name: Maybe<string>;
@@ -2677,10 +2826,10 @@ export namespace VenueByName {
   export type ArtistToEventsByEventId = {
     __typename?: "ArtistToEventsConnection";
 
-    nodes: (Maybe<_Nodes>)[];
+    nodes: (Maybe<__Nodes>)[];
   };
 
-  export type _Nodes = {
+  export type __Nodes = {
     __typename?: "ArtistToEvent";
 
     artistByArtistId: Maybe<ArtistByArtistId>;
