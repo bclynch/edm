@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RoleGuardService as RoleGuard } from './services/roleGuard.service';
 
 const routes: Routes = [
   {
@@ -37,16 +36,16 @@ const routes: Routes = [
     loadChildren: './modules/signup/signup.module#SignupModule',
   },
   {
-    path: 'watched',
-    loadChildren: './modules/watched/watched.module#WatchedModule',
-  },
-  {
-    path: 'following',
-    loadChildren: './modules/following/following.module#FollowingModule',
+    path: 'user',
+    loadChildren: './modules/user/user.module#UserModule',
   },
   {
     path: 'settings',
     loadChildren: './modules/settings/settings.module#SettingsModule',
+  },
+  {
+    path: 'create-event',
+    loadChildren: './modules/create/create.module#CreateModule',
   },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];

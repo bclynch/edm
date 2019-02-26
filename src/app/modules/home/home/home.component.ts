@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterService } from 'src/app/services/router.service';
 import { CookieService } from 'ngx-cookie-service';
 import { SearchEventsGQL } from 'src/app/generated/graphql';
@@ -13,7 +13,7 @@ import { faUsers, faBell, faCompactDisc } from '@fortawesome/free-solid-svg-icon
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   selectedLocation: string;
   dateRange = 'any';
@@ -99,6 +99,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.initSubscription.unsubscribe();
   }
 
   searchShows(e) {

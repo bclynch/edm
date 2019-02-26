@@ -14,6 +14,64 @@ import gql from "graphql-tag";
 @Injectable({
   providedIn: "root"
 })
+export class AccountByUsernameGQL extends Apollo.Query<
+  AccountByUsername.Query,
+  AccountByUsername.Variables
+> {
+  document: any = gql`
+    query accountByUsername($username: String!, $accountId: Int!) {
+      accountByUsername(username: $username) {
+        username
+        profilePhoto
+        watchListsByAccountId {
+          totalCount
+          nodes {
+            eventByEventId {
+              id
+              name
+              startDate
+              ticketproviderurl
+              ticketproviderid
+              venue
+              createdAt
+              artistToEventsByEventId(first: 1) {
+                nodes {
+                  artistByArtistId {
+                    photo
+                  }
+                }
+              }
+              watchListsByEventId(
+                filter: { accountId: { equalTo: $accountId } }
+              ) {
+                nodes {
+                  id
+                }
+              }
+            }
+          }
+        }
+        followListsByAccountId {
+          totalCount
+          nodes {
+            id
+            artistByArtistId {
+              name
+              photo
+            }
+            venueByVenueId {
+              name
+              photo
+            }
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class AllLocationsGQL extends Apollo.Query<
   AllLocations.Query,
   AllLocations.Variables
@@ -2316,6 +2374,131 @@ export type JwtToken = any;
 // ====================================================
 // Documents
 // ====================================================
+
+export namespace AccountByUsername {
+  export type Variables = {
+    username: string;
+    accountId: number;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    accountByUsername: Maybe<AccountByUsername>;
+  };
+
+  export type AccountByUsername = {
+    __typename?: "Account";
+
+    username: string;
+
+    profilePhoto: Maybe<string>;
+
+    watchListsByAccountId: WatchListsByAccountId;
+
+    followListsByAccountId: FollowListsByAccountId;
+  };
+
+  export type WatchListsByAccountId = {
+    __typename?: "WatchListsConnection";
+
+    totalCount: Maybe<number>;
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "WatchList";
+
+    eventByEventId: Maybe<EventByEventId>;
+  };
+
+  export type EventByEventId = {
+    __typename?: "Event";
+
+    id: string;
+
+    name: Maybe<string>;
+
+    startDate: BigInt;
+
+    ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
+
+    venue: string;
+
+    createdAt: Maybe<BigInt>;
+
+    artistToEventsByEventId: ArtistToEventsByEventId;
+
+    watchListsByEventId: WatchListsByEventId;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
+    __typename?: "ArtistToEvent";
+
+    artistByArtistId: Maybe<ArtistByArtistId>;
+  };
+
+  export type ArtistByArtistId = {
+    __typename?: "Artist";
+
+    photo: Maybe<string>;
+  };
+
+  export type WatchListsByEventId = {
+    __typename?: "WatchListsConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "WatchList";
+
+    id: number;
+  };
+
+  export type FollowListsByAccountId = {
+    __typename?: "FollowListsConnection";
+
+    totalCount: Maybe<number>;
+
+    nodes: (Maybe<___Nodes>)[];
+  };
+
+  export type ___Nodes = {
+    __typename?: "FollowList";
+
+    id: number;
+
+    artistByArtistId: Maybe<_ArtistByArtistId>;
+
+    venueByVenueId: Maybe<VenueByVenueId>;
+  };
+
+  export type _ArtistByArtistId = {
+    __typename?: "Artist";
+
+    name: string;
+
+    photo: Maybe<string>;
+  };
+
+  export type VenueByVenueId = {
+    __typename?: "Venue";
+
+    name: string;
+
+    photo: Maybe<string>;
+  };
+}
 
 export namespace AllLocations {
   export type Variables = {};

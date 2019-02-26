@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArtistByNameGQL } from 'src/app/generated/graphql';
 import { faTwitter, faFacebook, faInstagram, faSoundcloud, faYoutube, faSpotify, IconDefinition } from '@fortawesome/free-brands-svg-icons';
@@ -13,7 +13,7 @@ import { AppService } from 'src/app/services/app.service';
   templateUrl: './artist.component.html',
   styleUrls: ['./artist.component.scss']
 })
-export class ArtistComponent implements OnInit {
+export class ArtistComponent implements OnInit, OnDestroy {
 
   artist;
   events;
@@ -36,8 +36,8 @@ export class ArtistComponent implements OnInit {
             name: this.activatedRoute.snapshot.paramMap.get('artistName'),
             accountId: this.userService.user ? this.userService.user.id : 0,
           }).subscribe(
-            (result) => {
-              this.artist = result.data.artistByName;
+            ({ data }) => {
+              this.artist = data.artistByName;
               console.log(this.artist);
               this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId);
               this.socialOptions = this.generateSocialOptions();
@@ -51,6 +51,10 @@ export class ArtistComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.initSubscription.unsubscribe();
   }
 
   generateSocialOptions() {

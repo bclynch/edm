@@ -1,0 +1,52 @@
+query accountByUsername($username: String!, $accountId: Int!) {
+  accountByUsername(username: $username) {
+    username,
+    profilePhoto,
+    watchListsByAccountId {
+      totalCount,
+      nodes {
+        eventByEventId {
+          id,
+          name,
+          startDate,
+          ticketproviderurl,
+          ticketproviderid,
+          venue,
+          createdAt,
+          artistToEventsByEventId(first: 1) {
+            nodes {
+              artistByArtistId {
+                photo
+              }
+            }
+          },
+          watchListsByEventId(
+            filter: {
+              accountId: {
+                equalTo: $accountId
+              }
+            }
+          ) {
+            nodes {
+              id
+            }
+          }
+        }
+      }
+    },
+    followListsByAccountId {
+      totalCount,
+      nodes {
+        id,
+        artistByArtistId {
+          name,
+          photo
+        },
+        venueByVenueId {
+          name,
+          photo
+        }
+      }
+    }
+  }
+}

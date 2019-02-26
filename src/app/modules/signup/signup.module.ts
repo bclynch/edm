@@ -4,11 +4,13 @@ import { SignupComponent } from './signup/signup.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoginGuardService as LoginGuard } from '../../services/loginGuard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: SignupComponent
+    component: SignupComponent,
+    canActivate: [LoginGuard]
   }
 ];
 

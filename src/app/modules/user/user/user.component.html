@@ -1,0 +1,62 @@
+<app-pagewrapper>
+  <div class="userContainer">
+    <div class="userWrapper" *ngIf="user">
+      <div *ngIf="user.profilePhoto" class="profile" [ngStyle]="{ 'background-image': 'url(' + user.profilePhoto + ')'}"></div>
+      <div *ngIf="!user.profilePhoto" class="backupImg profile"></div>
+      <h1>{{user.username}}</h1>
+      <div class="trackingWrapper">
+        <div>{{user.watchListsByAccountId.totalCount}} Watching</div>
+        <div class="spacer"> | </div>
+        <div>{{user.followListsByAccountId.totalCount}} Following</div>
+      </div>
+    </div>
+    <div class="watchingContainer">
+      <div class="verticalSpacer">
+        <div class="line"></div>
+      </div>
+      <h2>Watched Events</h2>
+      <div class="watchingWrapper">
+        <app-event-card-alt
+          *ngFor="let event of user?.watchListsByAccountId.nodes; let i = index;"
+          [name]="event.eventByEventId.name"
+          [index]="i"
+          [location]="event.eventByEventId.venue"
+          [date]="event.eventByEventId.startDate"
+          [id]="event.eventByEventId.id"
+          [externalUrl]="event.eventByEventId.ticketproviderurl"
+          [ticketProviderId]="event.eventByEventId.ticketproviderid"
+          [image]="event.eventByEventId.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+          [watchId]="event.eventByEventId.watchListsByEventId.nodes[0]"
+        ></app-event-card-alt>
+      </div>
+    </div>
+    <div class="followingContainer">
+      <div class="verticalSpacer">
+        <div class="line"></div>
+      </div>
+      <h2>Following</h2>
+      <div class="followingWrapper">
+        <div class="followCard" *ngFor="let follow of user?.followListsByAccountId.nodes">
+          <div class="followCardWrapper" *ngIf="follow.artistByArtistId">
+            <div class="imageWrapper">
+              <a [routerLink]="['/event/' + id]">
+                <div *ngIf="follow.artistByArtistId.photo" class="img" [ngStyle]="{ 'background-image': 'url(' + follow.artistByArtistId.photo + ')'}"></div>
+                <div *ngIf="!follow.artistByArtistId.photo" class="backupImg img"></div>
+              </a>
+            </div>
+            <a [routerLink]="['/artist/' + follow.artistByArtistId.name]"><h3>{{follow.artistByArtistId.name}}</h3></a>
+          </div>
+          <div class="followCardWrapper" *ngIf="follow.venueByVenueId">
+            <div class="imageWrapper">
+              <a [routerLink]="['/event/' + id]">
+                <div *ngIf="follow.venueByVenueId.photo" class="img venue" [ngStyle]="{ 'background-image': 'url(' + follow.venueByVenueId.photo + ')'}"></div>
+                <div *ngIf="!follow.venueByVenueId.photo" class="backupImg img"></div>
+              </a>
+            </div>
+            <a [routerLink]="['/venue/' + follow.venueByVenueId.name]"><h3>{{follow.venueByVenueId.name}}</h3></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-pagewrapper>

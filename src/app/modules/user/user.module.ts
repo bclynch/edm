@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FollowingComponent } from './following/following.component';
+import { UserComponent } from './user/user.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   {
-    path: '',
-    component: FollowingComponent
+    path: ':username',
+    component: UserComponent
   }
 ];
 
 @NgModule({
-  declarations: [FollowingComponent],
+  declarations: [UserComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
   ]
 })
-export class FollowingModule { }
+export class UserModule { }

@@ -10,16 +10,17 @@
         - Make sure they know it's just updates from here on out
 - ~~Create watching table + functionality for users for an event. Only for logged in.~~
 - ~~Create follow table for artists and venues.~~
-- Feed view for new stuff in following
-- Feed view for watched events
+- ~~Feed view for new stuff in following~~
+    - Need a /following route with grid of events for followed artists / venues a la eb
+- ~~Feed view for watched events~~
 - ~~on the events page try making the virtual scroll full page width. On browser make the search position absolute, but on mobile it needs to be a set height so we can make the height of the below container correct.~~
 - ~~Back btn for mobile~~
 - ~~Login / signup flow (for now)~~
     - ~~Own pages with redirect~~
 - ~~Add cookie for selected location~~
 - ~~Indicator 'new' event~~
-- Guards on various routes (watched, login, signup, following, submit) based on logged in state
-- Simple submit event page
+- ~~Guards on various routes (settings, login, signup, submit) based on logged in state~~
+- Simple submit event page (after release)
     - Would need some nice autofill boxes on front end to check event doesn't already exist + form requirements
 - Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows
 

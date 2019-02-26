@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { VenueByNameGQL } from 'src/app/generated/graphql';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -10,7 +10,7 @@ import { AppService } from 'src/app/services/app.service';
   templateUrl: './venue.component.html',
   styleUrls: ['./venue.component.scss']
 })
-export class VenueComponent implements OnInit {
+export class VenueComponent implements OnInit, OnDestroy {
 
   venue;
 
@@ -40,6 +40,10 @@ export class VenueComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.initSubscription.unsubscribe();
   }
 
   followVenue() {

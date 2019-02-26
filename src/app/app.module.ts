@@ -15,6 +15,8 @@ import { GraphQLModule } from './graphql.module';
 // Services
 import { CookieService } from 'ngx-cookie-service';
 import { RoleGuardService } from './services/roleGuard.service';
+import { LoginGuardService } from './services/loginGuard.service';
+import { AnonGuardService } from './services/anonGuard.service';
 import { UtilService } from './services/util.service';
 import { EventService } from './services/event.service';
 import { RouterService } from './services/router.service';
@@ -41,6 +43,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   ],
   providers: [
     RoleGuardService,
+    LoginGuardService,
+    AnonGuardService,
     UtilService,
     EventService,
     RouterService,
