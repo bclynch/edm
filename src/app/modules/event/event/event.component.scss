@@ -1,6 +1,14 @@
 .eventContainer {
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    background: white;
+  }
   a:visited,
   a { 
     color:#3659e3;
@@ -18,7 +26,7 @@
 
       .bannerWrapper {
         flex: 1;
-        height: 300px;
+        min-height: 300px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -54,12 +62,24 @@
       }
     }
     .bottomWrapper {
-      display: none;
+      display: flex;
       justify-content: space-between;
       padding: 10px 15px;
+      border-bottom: solid 1px #ddd;
 
-      mat-icon {
-        cursor: pointer;
+      .ticketBtn {
+        color: white;
+      }
+      .watched {
+        color: gold;
+      }
+      .optionsWrapper {
+        display: flex;
+        align-items: center;
+
+        mat-icon {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -108,9 +128,6 @@
             margin-left: 5%;
           }
         }
-      }
-      .bottomWrapper {
-        display: flex;
       }
     }
     .infoContainer {

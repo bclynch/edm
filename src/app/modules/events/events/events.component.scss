@@ -10,7 +10,8 @@
     position: fixed;
     top: var(--height-navbar);
     left: 0;
-    height: 20vh;
+    // height: 20vh;
+    height: 200px;
     background: white;
 
     .mapContainer {
@@ -70,10 +71,12 @@
     }
   }
   .eventsWrapper {
-    height: calc(100vh - var(--height-navbar) - 20vh);
+    height: calc(100vh - 54px - 200px);
     width: 100vw;
     position: absolute;
-    top: calc(var(--height-navbar) + 20vh)
+    top: 200px;
+    background: white;
+    margin-top: 54px;
   }
   @media (min-width: 768px) {
     display: flex;

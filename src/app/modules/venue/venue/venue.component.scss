@@ -1,6 +1,14 @@
 .venueContainer {
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    background: white;
+  }
   .header {
     background-size: cover;
     background-position: center;

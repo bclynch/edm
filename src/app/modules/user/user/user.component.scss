@@ -1,6 +1,14 @@
 .userContainer {
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    background: white;
+  }
   .userWrapper {
     padding: 5% 5% 0;
     display: flex;
@@ -8,8 +16,8 @@
     align-items: center;
 
     .profile {
-      height: 200px;
-      width: 200px;
+      height: 120px;
+      width: 120px;
       background-size: cover;
       border-radius: 50%;
 
@@ -91,6 +99,13 @@
     }
   }
   @media (min-width: 768px) {
+    .userWrapper {
+  
+      .profile {
+        height: 200px;
+        width: 200px;
+      }
+    }
     .watchingContainer {
 
       .watchingWrapper {

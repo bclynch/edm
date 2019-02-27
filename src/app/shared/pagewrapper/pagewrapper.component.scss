@@ -6,6 +6,7 @@
   min-height: 100vh;
   position: relative;
   margin-top: var(--height-navbar);
+  background: var(--color-background);
 
   &.noMargin {
     margin-top: 0;

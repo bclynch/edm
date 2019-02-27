@@ -1,45 +1,47 @@
 <app-pagewrapper>
   <div class="venueContainer">
-    <div *ngIf="venue" class="header" [ngStyle]="{ 'background-image': 'url(' + venue.photo + ')'}">
-      <h1>{{venue?.name.split('-')[0]}}</h1>
-      <div class="followContainer">
-        <button 
-          mat-flat-button 
-          (click)="followVenue()" 
-          color="accent" 
-          *ngIf="!venue?.followListsByVenueId.nodes.length"
-        >Follow</button>
-        <button 
-          mat-flat-button
-          (click)="unfollowVenue()" 
-          color="primary" 
-          *ngIf="venue?.followListsByVenueId.nodes.length"
-        >Following</button>
+    <div class="wrapper">
+      <div *ngIf="venue" class="header" [ngStyle]="{ 'background-image': 'url(' + venue.photo + ')'}">
+        <h1>{{venue?.name.split('-')[0]}}</h1>
+        <div class="followContainer">
+          <button 
+            mat-flat-button 
+            (click)="followVenue()" 
+            color="accent" 
+            *ngIf="!venue?.followListsByVenueId.nodes.length"
+          >Follow</button>
+          <button 
+            mat-flat-button
+            (click)="unfollowVenue()" 
+            color="primary" 
+            *ngIf="venue?.followListsByVenueId.nodes.length"
+          >Following</button>
+        </div>
       </div>
-    </div>
-    <div class="upcomingContainer">
-      <div class="eventsWrapper" *ngIf="venue?.eventsByVenue.nodes.length">
-        <h2>Upcoming Shows</h2>
-        <app-event-card
-          *ngFor="let event of venue.eventsByVenue.nodes"
-          [name]="event.name"
-          [location]="venue.name"
-          [date]="event.startDate"
-          [id]="event.id"
-          [externalUrl]="event.ticketproviderurl"
-          [ticketProviderId]="event.ticketproviderid"
-          [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
-        ></app-event-card>
+      <div class="upcomingContainer">
+        <div class="eventsWrapper" *ngIf="venue?.eventsByVenue.nodes.length">
+          <h2>Upcoming Shows</h2>
+          <app-event-card
+            *ngFor="let event of venue.eventsByVenue.nodes"
+            [name]="event.name"
+            [location]="venue.name"
+            [date]="event.startDate"
+            [id]="event.id"
+            [externalUrl]="event.ticketproviderurl"
+            [ticketProviderId]="event.ticketproviderid"
+            [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+          ></app-event-card>
+        </div>
       </div>
-    </div>
-    <div class="mapContainer">
-      <app-venue-map 
-        *ngIf="venue" 
-        [lat]="+venue.lat" 
-        [lon]="+venue.lon"
-        [venueName]="venue.name.split('-')[0]"
-        [address]="venue.address"
-      ></app-venue-map>
+      <div class="mapContainer">
+        <app-venue-map 
+          *ngIf="venue" 
+          [lat]="+venue.lat" 
+          [lon]="+venue.lon"
+          [venueName]="venue.name.split('-')[0]"
+          [address]="venue.address"
+        ></app-venue-map>
+      </div>
     </div>
   </div>
 </app-pagewrapper>

@@ -232,7 +232,7 @@ export class EventByIdGQL extends Apollo.Query<
   EventById.Variables
 > {
   document: any = gql`
-    query eventById($eventId: String!) {
+    query eventById($eventId: String!, $accountId: Int!) {
       eventById(id: $eventId) {
         id
         name
@@ -248,6 +248,11 @@ export class EventByIdGQL extends Apollo.Query<
           lon
           city
           address
+        }
+        watchListsByEventId(filter: { accountId: { equalTo: $accountId } }) {
+          nodes {
+            id
+          }
         }
         artistToEventsByEventId {
           nodes {
@@ -2743,6 +2748,7 @@ export namespace CurrentAccount {
 export namespace EventById {
   export type Variables = {
     eventId: string;
+    accountId: number;
   };
 
   export type Query = {
@@ -2772,6 +2778,8 @@ export namespace EventById {
 
     venueByVenue: Maybe<VenueByVenue>;
 
+    watchListsByEventId: WatchListsByEventId;
+
     artistToEventsByEventId: ArtistToEventsByEventId;
   };
 
@@ -2789,13 +2797,25 @@ export namespace EventById {
     address: Maybe<string>;
   };
 
-  export type ArtistToEventsByEventId = {
-    __typename?: "ArtistToEventsConnection";
+  export type WatchListsByEventId = {
+    __typename?: "WatchListsConnection";
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
+    __typename?: "WatchList";
+
+    id: number;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
     __typename?: "ArtistToEvent";
 
     artistByArtistId: Maybe<ArtistByArtistId>;

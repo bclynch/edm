@@ -1,75 +1,76 @@
 <app-pagewrapper [hasBack]="false">
   <div class="homeContainer">
-    <div class="carousel">
-      <div 
-        class="slide" 
-        *ngFor="let slide of carouselSlides; let i = index;" 
-      >
+    <div class="wrapper">
+      <div class="carousel">
         <div 
-          class="slideImg" 
-          [ngStyle]="{ 'background-image': 'url(' + slide.image + ')'}"
-          [style.opacity]="activeSlide === i ? 1 : 0"
+          class="slide" 
+          *ngFor="let slide of carouselSlides; let i = index;" 
         >
-          <form class="searchContainer" (submit)="searchShows($event)">
-            <div class="section">
-              <div class="label">Looking for shows in</div>
-              <div>
-                <app-location-search
-                  placeholder="City"
-                  autocomplete="off"
-                  (selected)="setLocation($event)"
-                  [value]="selectedLocation"
-                ></app-location-search>
-              </div>
+          <div 
+            class="slideImg" 
+            [ngStyle]="{ 'background-image': 'url(' + slide.image + ')'}"
+            [style.opacity]="activeSlide === i ? 1 : 0"
+          ></div>
+          <div class="slideCallout">
+            <div class="calloutWrapper">
+              <div>Discover</div>
+              <div [ngClass]="activeSlide === i ? 'active' : ''" class="boldFont tagline">{{slide.tagline}}</div>
             </div>
-            <div class="section">
-              <div class="label">On</div>
-              <div>
-                <app-select-date 
-                  placeholder="Select a Date" 
-                  (date)="dateRange = $event"
-                  value="any"
-                ></app-select-date>
-              </div>
-            </div>
-            <div class="section btnSection">
-              <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>
-            </div>
-          </form>
-        </div>
-        <div class="slideCallout">
-          <div class="calloutWrapper">
-            <div>Discover</div>
-            <div [ngClass]="activeSlide === i ? 'active' : ''" class="boldFont tagline">{{slide.tagline}}</div>
           </div>
         </div>
+        <form class="searchContainer" (submit)="searchShows($event)">
+          <div class="section">
+            <div class="label">Looking for shows in</div>
+            <div>
+              <app-location-search
+                placeholder="City"
+                autocomplete="off"
+                (selected)="setLocation($event)"
+                [value]="selectedLocation"
+              ></app-location-search>
+            </div>
+          </div>
+          <div class="section">
+            <div class="label">On</div>
+            <div>
+              <app-select-date 
+                placeholder="Select a Date" 
+                (date)="dateRange = $event"
+                value="any"
+              ></app-select-date>
+            </div>
+          </div>
+          <div class="section btnSection">
+            <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>
+          </div>
+        </form>
       </div>
-    </div>
-    <div class="featuresContainer">
-      <div class="featureContainer" *ngFor="let feature of features">
-        <fa-icon [icon]="feature.icon"></fa-icon>
-        <h3 class="featureHeader">{{feature.header}}</h3>
-        <div class="featureContent">{{feature.content}}</div>
+      <div class="featuresContainer">
+        <div class="featureContainer" *ngFor="let feature of features">
+          <fa-icon [icon]="feature.icon"></fa-icon>
+          <h3 class="featureHeader">{{feature.header}}</h3>
+          <div class="featureContent">{{feature.content}}</div>
+        </div>
       </div>
-    </div>
-    <div class="featuredContainer">
-      <h1>Featured Upcoming Shows</h1>
-      <div class="featuredWrapper">
-        <app-event-card-alt
-          *ngFor="let event of featuredEvents; let i = index;"
-          [name]="event.name"
-          [index]="i"
-          [location]="event.venue"
-          [date]="event.startDate"
-          [id]="event.id"
-          [externalUrl]="event.ticketproviderurl"
-          [ticketProviderId]="event.ticketproviderid"
-          [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
-          [watchId]="event.watchListsByEventId.nodes[0]"
-        ></app-event-card-alt>
-      </div>
-      <div class="moreWrapper">
-        <a [routerLink]="['/events']" [queryParams]="{ dates: 'any', location: selectedLocation }" class="more">See More Shows</a>
+      <div class="featuredContainer">
+        <h1>Featured Upcoming Shows</h1>
+        <div class="featuredWrapper">
+          <app-event-card-alt
+            *ngFor="let event of featuredEvents; let i = index;"
+            [name]="event.name"
+            [index]="i"
+            [location]="event.venue"
+            [date]="event.startDate"
+            [id]="event.id"
+            [externalUrl]="event.ticketproviderurl"
+            [ticketProviderId]="event.ticketproviderid"
+            [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+            [watchId]="event.watchListsByEventId.nodes[0]"
+          ></app-event-card-alt>
+        </div>
+        <div class="moreWrapper">
+          <a [routerLink]="['/events']" [queryParams]="{ dates: 'any', location: selectedLocation }" class="more">See More Shows</a>
+        </div>
       </div>
     </div>
   </div>

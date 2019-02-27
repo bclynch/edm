@@ -9,6 +9,8 @@
   --color-accent: #ffc107;
   --color-border: #ddd;
   --height-navbar: 54px;
+  --height-footer: 275px;
+  --color-background: radial-gradient(circle farthest-side, #fff602, #ffb600);
 }
 
 .boldFont {
@@ -37,6 +39,12 @@ app-footer {
 
 app-navbar {
   width: 100%;
+}
+
+app-events {
+  .pageWrapperContainer {
+    margin-top: 0 !important;
+  }
 }
 
 // hacky css editing of material inputs

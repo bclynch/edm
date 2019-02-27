@@ -1,9 +1,20 @@
 .homeContainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
+  position: relative;
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    background: white;
+  }
   .carousel {
     height: 75vh;
     width: 100vw;
-    position: relative;
+    position: absolute;
+    left: 0;
 
     .slide {
       height: 100%;
@@ -19,38 +30,6 @@
         transition: .5s ease-in;
         width: 100%;
         height: 100%;
-
-        form {
-          display: flex;
-          flex-direction: column;
-          width: calc(100vw - 10%);
-          position: absolute;
-          bottom: 5%;
-          left: 5%;
-  
-          .section {
-            background: var(--color-primary);
-            color: white;
-            padding: 8px 8px 0;
-            flex: 2;
-  
-            .label {
-              font-size: 13px;
-              margin-bottom: 10px;
-            }
-            &.btnSection {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex: 1;
-              padding-bottom: 8px;
-  
-              .searchBtn {
-                background: var(--color-accent);
-              }
-            }
-          }
-        }
       }
       .slideCallout {
         justify-content: center;
@@ -69,7 +48,6 @@
             position: relative;
             opacity: 0;
             top: -25px;
-            color: var(--color-primary);
             -webkit-text-stroke: 0;
 
             &.active {
@@ -80,11 +58,42 @@
         }
       }
     }
+    form {
+      display: flex;
+      flex-direction: column;
+      width: calc(100vw - 10%);
+      position: absolute;
+      bottom: 5%;
+      left: 5%;
+
+      .section {
+        background: var(--color-primary);
+        color: white;
+        padding: 8px 8px 0;
+        flex: 2;
+
+        .label {
+          font-size: 13px;
+          margin-bottom: 10px;
+        }
+        &.btnSection {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          padding-bottom: 8px;
+
+          .searchBtn {
+            background: var(--color-accent);
+          }
+        }
+      }
+    }
   }
   .featuresContainer {
     display: flex;
     flex-direction: column;
-    margin: 80px 0 40px;
+    margin: calc(75vh + 80px) 0 40px;
     padding: 5%;
     max-width: 1200px;
 
@@ -104,6 +113,7 @@
       }
       .featureHeader {
         color: var(--color-accent);
+        text-align: center;
       }
       .featureContent {
 
@@ -113,6 +123,7 @@
   .featuredContainer {
     max-width: 1200px;
     padding: 5%;
+    background: white;
 
     app-event-card-alt {
       width: 100%;
@@ -139,22 +150,6 @@
   
       .slide {
 
-        .slideImg {
-          form {
-            flex-direction: row;
-  
-            .section {
-              padding: 16px;
-  
-              .label {
-                margin-bottom: 15px;
-              }
-            }
-            .section:first-child {
-              border-right: solid 1px white;
-            }
-          }
-        }
         .slideCallout {
 
           .calloutWrapper {
@@ -168,6 +163,20 @@
               font-size: 48px;
             }
           }
+        }
+      }
+      form {
+        flex-direction: row;
+
+        .section {
+          padding: 16px;
+
+          .label {
+            margin-bottom: 15px;
+          }
+        }
+        .section:first-child {
+          border-right: solid 1px white;
         }
       }
     }

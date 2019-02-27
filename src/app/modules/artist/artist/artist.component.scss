@@ -1,10 +1,17 @@
 .artistContainer {
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  background: var(--color-background);
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    background: white;
+  }
   .header {
-    height: 35vh;
     background: var(--color-primary);
-    padding: 0 5%;
+    padding: 5%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -42,6 +49,10 @@
     margin: 0 5%;
   }
   @media (min-width: 768px) {
+    .header {
+      height: 35vh;
+      padding: 0 5%;
+    }
     .contentWrapper {
       display: flex;
       align-items: center;
