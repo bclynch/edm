@@ -73,4 +73,12 @@ export class EventComponent implements OnInit {
       () => this.watchId = null
     );
   }
+
+  buyTickets() {
+    if (this.event.ticketproviderid) {
+      this.eventService.eventbriteCheckout(this.event.ticketproviderid);
+    } else {
+      window.open(this.event.ticketproviderurl, '_blank');
+    }
+  }
 }

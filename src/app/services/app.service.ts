@@ -42,10 +42,14 @@ export class AppService {
           // creating an array of strings with both cities + regions
           const locationsArr = [];
           for (const x of result.data.allCities.nodes) {
-            locationsArr.push(x.name);
-            this.locationsObj[x.name] = x.id;
-            if (locationsArr.indexOf(x.region) === -1) {
-              locationsArr.push(x.region);
+            if (x.name) {
+              if (locationsArr.indexOf(x.name) === -1) {
+                locationsArr.push(x.name);
+                this.locationsObj[x.name] = x.id;
+              }
+              if (locationsArr.indexOf(x.region) === -1 && x.region) {
+                locationsArr.push(x.region);
+              }
             }
           }
           this.locations = locationsArr;

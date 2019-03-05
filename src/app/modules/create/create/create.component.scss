@@ -1,0 +1,24 @@
+.createContainer {
+  height: 100vh;
+  width: 100vw;
+  background: white;
+  display: flex;
+  justify-content: center;
+
+  form {
+    padding: 5%;
+    max-width: 400px;
+    margin-top: 5%;
+    width: 100%;
+
+    h1 {
+      text-align: center;
+    }
+    .mat-form-field {
+      display: block;
+    }
+    button[type='submit'] {
+      color: white;
+    }
+  }
+}

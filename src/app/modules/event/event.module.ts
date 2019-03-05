@@ -4,6 +4,7 @@ import { EventComponent } from './event/event.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { DisqusModule } from 'ngx-disqus';
+import { OverlayContainer, FullscreenOverlayContainer } from '@angular/cdk/overlay';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     DisqusModule
+  ],
+  providers: [
+    {provide: OverlayContainer, useClass: FullscreenOverlayContainer}
   ]
 })
 export class EventModule { }

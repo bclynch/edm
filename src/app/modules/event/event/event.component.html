@@ -43,10 +43,9 @@
           </div>
           <button
             class="ticketBtn" 
-            *ngIf="event?.ticketproviderid" 
             mat-flat-button 
             color="accent" 
-            (click)="eventService.eventbriteCheckout(event.ticketproviderid)"
+            (click)="buyTickets()"
           >Tickets</button>
         </div>
       </div>

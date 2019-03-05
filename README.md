@@ -22,7 +22,7 @@
 - ~~Guards on various routes (settings, login, signup, submit) based on logged in state~~
 - Simple submit event page (after release)
     - Would need some nice autofill boxes on front end to check event doesn't already exist + form requirements
-- Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows
+- ~~Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows~~
 
 - Home page
   - ~~Search box in header with location / date~~
@@ -42,8 +42,8 @@
   - ~~Implement event brite widget for buying tickets~~
     - There is a cross origin deal since localhost isn't https. Breaks the methods (like close modal). Once it's live online it should be okay. Need an affiliate link of our own and to put a few things in the env vars
 - Show page
-  - Can buy ticket
-  - Grab eventbrite banner images
+  - ~~Can buy ticket~~
+  - ~~Grab eventbrite banner images~~
   - ~~General info about show~~
   - ~~Map where it's at~~
   - ~~Links to artist page and venue page~~
