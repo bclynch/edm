@@ -17,7 +17,7 @@
       border-radius: 50%;
     }
     .backupImg {
-      background: purple;
+      border-radius: 0;
     }
   }
   .eventInfo {
@@ -62,7 +62,7 @@
       align-self: flex-end;
 
       button {
-        padding: 0 10px;
+        padding: 0 5px;
         min-width: auto;
         cursor: pointer;
 

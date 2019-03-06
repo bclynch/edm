@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-settings',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private appService: AppService
+  ) {
+    this.appService.modPageMeta('Settings', 'Modify settings for your EDM Flare account');
+  }
 
   ngOnInit() {
   }

@@ -7,6 +7,7 @@ import { EventService } from 'src/app/services/event.service';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event',
@@ -40,6 +41,7 @@ export class EventComponent implements OnInit {
             (result) => {
               this.event = result.data.eventById;
               console.log(this.event);
+              this.appService.modPageMeta(`${this.event.name.trim()} Event Information - ${this.event.venueByVenue.name.split('-')[0].trim()}`, `Check out artist, venue, and ticket information for ${this.event.name.trim()} at ${this.event.venueByVenue.name.split('-')[0].trim()} on ${moment(+this.event.startDate).format('MMMM Do, YYYY')}`);
               this.disqusId = `event/${this.event.id}`;
               // generate add to calendar link
               this.calendarLink = this.utilService.addToCalendar(this.event.name, `${ENV.siteBaseURL}/event/${this.event.id}`, this.event.venueByVenue.address, (new Date(+this.event.startDate)).toISOString().replace(/-|:|\.\d\d\d/g, ''));

@@ -64,6 +64,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private utilService: UtilService
   ) {
+    this.appService.modPageMeta('Discover EDM events, information, and community', `EDM Flare is the most comprehensive and easy to use source for all things edm`);
+
     // queue up carousel
     setInterval(() => this.activeSlide = this.activeSlide === this.carouselSlides.length - 1 ? 0 : this.activeSlide += 1, 10000 );
 

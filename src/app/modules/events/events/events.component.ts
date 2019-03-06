@@ -62,13 +62,15 @@ export class EventsComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     private cookieService: CookieService
   ) {
+    this.location = this.routerService.params.location;
+    this.dateRange = this.routerService.params.dates ? this.routerService.params.dates : 'any';
+    this.searchQueryControl.setValue(this.routerService.params.query ? this.routerService.params.query : '');
+    this.selectedLocation = this.location;
+
+    this.appService.modPageMeta(`${this.location} EDM Shows`, `Listing of upcoming edm events in ${this.location}`);
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
-          this.location = this.routerService.params.location;
-          this.dateRange = this.routerService.params.dates ? this.routerService.params.dates : 'any';
-          this.searchQueryControl.setValue(this.routerService.params.query ? this.routerService.params.query : '');
-          this.selectedLocation = this.location;
           if (this.location) {
             this.searchEvents();
             // this.generateMap();

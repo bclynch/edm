@@ -3,6 +3,7 @@ import { AllLocationsGQL } from '../generated/graphql';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { AnalyticsService } from './analytics.service';
 import { UserService } from './user.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Injectable()
 export class AppService {
@@ -16,7 +17,9 @@ export class AppService {
   constructor(
     private allLocationsGQL: AllLocationsGQL,
     private analyticsService: AnalyticsService,
-    private userService: UserService
+    private userService: UserService,
+    private titleService: Title,
+    private meta: Meta
   ) {
     this._subject = new BehaviorSubject<boolean>(false);
     this.appInited = this._subject;
@@ -57,5 +60,11 @@ export class AppService {
         }
       );
     });
+  }
+
+  modPageMeta(title: string, description: string) {
+    this.meta.removeTag('name="description"');
+    this.titleService.setTitle(`${title} | EDM Flare`);
+    this.meta.addTag({ name: 'description', content: `${description}. Discover upcoming edm shows where you live and get in touch with the local community.`});
   }
 }

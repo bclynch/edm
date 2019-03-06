@@ -58,11 +58,15 @@
         }
       }
       .logoWrapper {
+        height: var(--height-navbar);
         .logo {
-          color: var(--color-accent);
-          font-weight: 800;
-          font-size: 1.5em;
-          text-decoration: none !important;
+          height: var(--height-navbar);
+          display: flex;
+          align-items: center;
+
+          img {
+            height: 30px;
+          }
         }
       }
     }

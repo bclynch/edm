@@ -6,9 +6,6 @@
   align-items: center;
   text-align: center;
 
-  img {
-    width: 50vw;
-  }
   button {
     color: white;
     width: 50vw;
@@ -16,9 +13,6 @@
   }
   @media (min-width: 768px) {
 
-    img {
-      width: 30vw;
-    }
     button {
       width: 25vw;
     }

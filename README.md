@@ -1,4 +1,4 @@
-# EDM
+# EDM Flare
 
 ## Todos
 - Mailing setup
@@ -23,7 +23,11 @@
 - Simple submit event page (after release)
     - Would need some nice autofill boxes on front end to check event doesn't already exist + form requirements
 - ~~Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows~~
+- ~~SEO work with titles for pages~~
+- ~~Create + add logo~~
 
+- Create Event Page
+    - 
 - Home page
   - ~~Search box in header with location / date~~
   - ~~Featured shows below for NY on default and then maybe a cookie for recent search location pulls from there~~
@@ -81,6 +85,7 @@
     - https://blog.angular-university.io/angular-push-notifications/
     - https://github.com/web-push-libs/web-push
 - Featured / hot / lifted events up top
+- Maybe pull api stuff for artists from youtube / insta / etc if they have it
 
 ### Name Ideas
 
@@ -128,3 +133,15 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 - Can run `$ gql-gen init` to get it working which will install some things and setup an npm script and codegen.yml file
 - Create schemas in the src/app/graphql folder for each and the script will pull from there and generate code in src/app/generated/graphql.ts
 
+## Logo Work
+- Great intro video logo for inkscape (inspo for logo here): https://www.youtube.com/watch?v=hmaYeZ5iDPo
+- Inkscape (svg) / gimp (for maing transparent png)
+- Nice favicon generator https://realfavicongenerator.net/
+- App logo generator https://makeappicon.com/
+
+### Export svg from Inkscape
+- Select the object(s) to export
+- Open the document properties window (Ctrl+Shift+D)
+- Select "Resize page to drawing or selection"
+- File > Save As Copy...
+- Select Optimized SVG as the format if you want to use it on the web

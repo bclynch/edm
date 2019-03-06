@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private userServive: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private appService: AppService
   ) {
+    this.appService.modPageMeta('Login', 'Login to your EDM Flare account');
+
     // grabbing redirect url and parsing it for base and params
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       this.redirect = params.redirect;

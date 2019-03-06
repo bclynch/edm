@@ -22,11 +22,13 @@ export class VenueComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private appService: AppService
   ) {
+    const venue = this.activatedRoute.snapshot.paramMap.get('venueName');
+    this.appService.modPageMeta(`${venue} Venue Information`, `Check out upcoming shows, maps, and information for venue ${venue}`);
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
           this.venueByNameGQL.fetch({
-            name: this.activatedRoute.snapshot.paramMap.get('venueName'),
+            name: venue,
             accountId: this.userService.user ? this.userService.user.id : 0,
           }).subscribe(
             (result) => {

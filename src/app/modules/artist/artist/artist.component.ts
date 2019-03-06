@@ -29,11 +29,13 @@ export class ArtistComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private appService: AppService
   ) {
+    const artist = this.activatedRoute.snapshot.paramMap.get('artistName');
+    this.appService.modPageMeta(`${artist} Artist Information`, `Check out artist discography, upcoming shows, and social media information for ${artist}`);
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
           this.artistByNameGQL.fetch({
-            name: this.activatedRoute.snapshot.paramMap.get('artistName'),
+            name: artist,
             accountId: this.userService.user ? this.userService.user.id : 0,
           }).subscribe(
             ({ data }) => {

@@ -14,6 +14,7 @@ export class NavbarComponent {
   @Input() hasBack: boolean;
 
   signedIn = false;
+  abc = 'assets/images/edm_flare.png';
 
   constructor(
     private utilService: UtilService,

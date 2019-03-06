@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormBuilder, FormControl } from '@angular/forms'
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-signup',
@@ -63,8 +64,11 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private userServive: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private appService: AppService
   ) {
+    this.appService.modPageMeta('Sign Up', 'Sign up for an EDM Flare account to keep track of upcoming shows in your area');
+
     // grabbing redirect url and parsing it for base and params
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       this.redirect = params.redirect;

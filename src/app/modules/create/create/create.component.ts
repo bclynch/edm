@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-create',
@@ -42,7 +43,10 @@ export class CreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+    private appService: AppService
+  ) {
+    this.appService.modPageMeta('Submit New EDM Event', 'Submit local shows in your area that haven\'t been listed yet');
+  }
 
   ngOnInit() {
   }
