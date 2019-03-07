@@ -25,6 +25,7 @@
 - ~~Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows~~
 - ~~SEO work with titles for pages~~
 - ~~Create + add logo~~
+- ~~Make location search work for cities and regions~~
 
 - Create Event Page
     - 

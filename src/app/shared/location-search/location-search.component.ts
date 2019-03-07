@@ -59,7 +59,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
 
       filteredArr = this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
-    filteredArr.unshift('📍 Use my current location');
+    // filteredArr.unshift('📍 Use my current location');
     return filteredArr;
   }
 

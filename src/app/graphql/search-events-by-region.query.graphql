@@ -1,0 +1,58 @@
+query searchEventsByRegion($query: String!, $regionName: String!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!, $count: Int) {
+  regionByName(name: $regionName) {
+    name,
+    citiesByRegion {
+      nodes {
+        name,
+      	venuesByCity {
+          nodes {
+            eventsByVenue(
+              filter: {
+                name: {
+                  includesInsensitive: $query
+                },
+                startDate: {
+                  greaterThanOrEqualTo: $greaterThan,
+                  lessThanOrEqualTo: $lessThan
+                }
+              },
+              first: $count
+            ) {
+              nodes {
+                id,
+                name,
+                startDate,
+                ticketproviderurl,
+                ticketproviderid,
+                venue,
+                createdAt,
+                venueByVenue {
+                  lat,
+                  lon
+                }
+                artistToEventsByEventId(first: 1) {
+                  nodes {
+                    artistByArtistId {
+                      photo
+                    }
+                  }
+                },
+                watchListsByEventId(
+                  filter: {
+                    accountId: {
+                      equalTo: $accountId
+                    }
+                  }
+                ) {
+                  nodes {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

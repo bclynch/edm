@@ -319,12 +319,12 @@ export class RemoveWatchlistGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
-export class SearchEventsGQL extends Apollo.Query<
-  SearchEvents.Query,
-  SearchEvents.Variables
+export class SearchEventsByCityGQL extends Apollo.Query<
+  SearchEventsByCity.Query,
+  SearchEventsByCity.Variables
 > {
   document: any = gql`
-    query searchEvents(
+    query searchEventsByCity(
       $query: String!
       $cityId: Int!
       $accountId: Int!
@@ -365,6 +365,75 @@ export class SearchEventsGQL extends Apollo.Query<
           watchListsByEventId(filter: { accountId: { equalTo: $accountId } }) {
             nodes {
               id
+            }
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class SearchEventsByRegionGQL extends Apollo.Query<
+  SearchEventsByRegion.Query,
+  SearchEventsByRegion.Variables
+> {
+  document: any = gql`
+    query searchEventsByRegion(
+      $query: String!
+      $regionName: String!
+      $accountId: Int!
+      $greaterThan: BigInt!
+      $lessThan: BigInt!
+      $count: Int
+    ) {
+      regionByName(name: $regionName) {
+        name
+        citiesByRegion {
+          nodes {
+            name
+            venuesByCity {
+              nodes {
+                eventsByVenue(
+                  filter: {
+                    name: { includesInsensitive: $query }
+                    startDate: {
+                      greaterThanOrEqualTo: $greaterThan
+                      lessThanOrEqualTo: $lessThan
+                    }
+                  }
+                  first: $count
+                ) {
+                  nodes {
+                    id
+                    name
+                    startDate
+                    ticketproviderurl
+                    ticketproviderid
+                    venue
+                    createdAt
+                    venueByVenue {
+                      lat
+                      lon
+                    }
+                    artistToEventsByEventId(first: 1) {
+                      nodes {
+                        artistByArtistId {
+                          photo
+                        }
+                      }
+                    }
+                    watchListsByEventId(
+                      filter: { accountId: { equalTo: $accountId } }
+                    ) {
+                      nodes {
+                        id
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -2884,7 +2953,7 @@ export namespace RemoveWatchlist {
   };
 }
 
-export namespace SearchEvents {
+export namespace SearchEventsByCity {
   export type Variables = {
     query: string;
     cityId: number;
@@ -2963,6 +3032,125 @@ export namespace SearchEvents {
   };
 
   export type __Nodes = {
+    __typename?: "WatchList";
+
+    id: number;
+  };
+}
+
+export namespace SearchEventsByRegion {
+  export type Variables = {
+    query: string;
+    regionName: string;
+    accountId: number;
+    greaterThan: BigInt;
+    lessThan: BigInt;
+    count?: Maybe<number>;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    regionByName: Maybe<RegionByName>;
+  };
+
+  export type RegionByName = {
+    __typename?: "Region";
+
+    name: string;
+
+    citiesByRegion: CitiesByRegion;
+  };
+
+  export type CitiesByRegion = {
+    __typename?: "CitiesConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "City";
+
+    name: Maybe<string>;
+
+    venuesByCity: VenuesByCity;
+  };
+
+  export type VenuesByCity = {
+    __typename?: "VenuesConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
+    __typename?: "Venue";
+
+    eventsByVenue: EventsByVenue;
+  };
+
+  export type EventsByVenue = {
+    __typename?: "EventsConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "Event";
+
+    id: string;
+
+    name: Maybe<string>;
+
+    startDate: BigInt;
+
+    ticketproviderurl: Maybe<string>;
+
+    ticketproviderid: Maybe<string>;
+
+    venue: string;
+
+    createdAt: Maybe<BigInt>;
+
+    venueByVenue: Maybe<VenueByVenue>;
+
+    artistToEventsByEventId: ArtistToEventsByEventId;
+
+    watchListsByEventId: WatchListsByEventId;
+  };
+
+  export type VenueByVenue = {
+    __typename?: "Venue";
+
+    lat: Maybe<BigFloat>;
+
+    lon: Maybe<BigFloat>;
+  };
+
+  export type ArtistToEventsByEventId = {
+    __typename?: "ArtistToEventsConnection";
+
+    nodes: (Maybe<___Nodes>)[];
+  };
+
+  export type ___Nodes = {
+    __typename?: "ArtistToEvent";
+
+    artistByArtistId: Maybe<ArtistByArtistId>;
+  };
+
+  export type ArtistByArtistId = {
+    __typename?: "Artist";
+
+    photo: Maybe<string>;
+  };
+
+  export type WatchListsByEventId = {
+    __typename?: "WatchListsConnection";
+
+    nodes: (Maybe<____Nodes>)[];
+  };
+
+  export type ____Nodes = {
     __typename?: "WatchList";
 
     id: number;

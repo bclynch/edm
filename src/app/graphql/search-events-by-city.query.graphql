@@ -1,4 +1,4 @@
-query searchEvents($query: String!, $cityId: Int!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!, $count: Int) {
+query searchEventsByCity($query: String!, $cityId: Int!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!, $count: Int) {
   searchEvents(
     query: $query, 
     cityid: $cityId,

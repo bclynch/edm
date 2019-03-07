@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { RouterService } from 'src/app/services/router.service';
-import { SearchEventsGQL } from 'src/app/generated/graphql';
+import { SearchEventsByCityGQL, SearchEventsByRegionGQL } from 'src/app/generated/graphql';
 import { BehaviorSubject, SubscriptionLike } from 'rxjs';
 import { MapsAPILoader } from '@agm/core';
 import { UtilService } from 'src/app/services/util.service';
@@ -33,6 +33,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   events: Event[];
   eventsObservable = new BehaviorSubject<Event[]>([]);
+  eventsInited = false;
   selectedLocation: string;
   initSubscription: SubscriptionLike;
 
@@ -54,7 +55,8 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   constructor(
     private routerService: RouterService,
-    private searchEventsGQL: SearchEventsGQL,
+    private searchEventsByCityGQL: SearchEventsByCityGQL,
+    private searchEventsbyRegionGQL: SearchEventsByRegionGQL,
     private mapsAPILoader: MapsAPILoader,
     private utilService: UtilService,
     private userService: UserService,
@@ -103,26 +105,60 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   searchEvents() {
     const range = this.utilService.calculateDateRange(this.dateRange);
-    this.searchEventsGQL.fetch({
-      query: this.searchQueryControl.value,
-      cityId: this.appService.locationsObj[this.selectedLocation],
-      accountId: this.userService.user ? this.userService.user.id : 0,
-      greaterThan: range.min.toString(),
-      lessThan: range.max.toString()
-    }).subscribe(
-      (result) => {
-        this.events = this.processEvents(result.data.searchEvents.nodes);
-        console.log(this.events);
-        this.eventsObservable.next(this.events);
+    if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
+      this.searchEventsByCityGQL.fetch({
+        query: this.searchQueryControl.value,
+        cityId: this.appService.locationsObj[this.selectedLocation],
+        accountId: this.userService.user ? this.userService.user.id : 0,
+        greaterThan: range.min.toString(),
+        lessThan: range.max.toString()
+      }).subscribe(
+        ({ data }) => {
+          this.events = this.processEvents(data.searchEvents.nodes);
+          console.log('Events: ', this.events);
+          this.eventsObservable.next(this.events);
 
-        // add query params to address
-        if (this.searchQueryControl.value) {
-          this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
-        } else {
-          this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
+          // add query params to address
+          if (this.searchQueryControl.value) {
+            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
+          } else {
+            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
+          }
+          this.eventsInited = true;
         }
-      }
-    );
+      );
+    } else {
+      this.searchEventsbyRegionGQL.fetch({
+        query: this.searchQueryControl.value,
+        regionName: this.appService.locationsObj[this.selectedLocation],
+        accountId: this.userService.user ? this.userService.user.id : 0,
+        greaterThan: range.min.toString(),
+        lessThan: range.max.toString()
+      }).subscribe(
+        ({ data }) => {
+          const eventsArr = [];
+          data.regionByName.citiesByRegion.nodes.forEach((city) => {
+            city.venuesByCity.nodes.forEach((venue) => {
+              venue.eventsByVenue.nodes.forEach((event) => {
+                eventsArr.push(event);
+              });
+            });
+          });
+
+          this.events = this.processEvents(eventsArr);
+          console.log('Events: ', this.events);
+          this.eventsObservable.next(this.events);
+
+          // add query params to address
+          if (this.searchQueryControl.value) {
+            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
+          } else {
+            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
+          }
+          this.eventsInited = true;
+        }
+      );
+    }
   }
 
   processEvents(events) {

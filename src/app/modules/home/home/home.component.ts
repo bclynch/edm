@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterService } from 'src/app/services/router.service';
 import { CookieService } from 'ngx-cookie-service';
-import { SearchEventsGQL } from 'src/app/generated/graphql';
+import { SearchEventsByCityGQL, SearchEventsByRegionGQL } from 'src/app/generated/graphql';
 import { AppService } from 'src/app/services/app.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -59,7 +59,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private routerService: RouterService,
     private cookieService: CookieService,
-    private searchEventsGQL: SearchEventsGQL,
+    private searchEventsByCityGQL: SearchEventsByCityGQL,
+    private searchEventsByRegionGQL: SearchEventsByRegionGQL,
     private appService: AppService,
     private userService: UserService,
     private utilService: UtilService
@@ -83,18 +84,39 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (inited) {
           // fetch featured
           const range = this.utilService.calculateDateRange('any');
-          this.searchEventsGQL.fetch({
-            query: '',
-            cityId: this.appService.locationsObj[this.selectedLocation],
-            accountId: this.userService.user ? this.userService.user.id : 0,
-            greaterThan: range.min.toString(),
-            lessThan: range.max.toString(),
-            count: 12
-          }).subscribe(
-            (result) => {
-              this.featuredEvents = result.data.searchEvents.nodes;
-            }
-          );
+          if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
+            this.searchEventsByCityGQL.fetch({
+              query: '',
+              cityId: this.appService.locationsObj[this.selectedLocation],
+              accountId: this.userService.user ? this.userService.user.id : 0,
+              greaterThan: range.min.toString(),
+              lessThan: range.max.toString(),
+              count: 12
+            }).subscribe(
+              ({ data }) => this.featuredEvents = data.searchEvents.nodes
+            );
+          } else {
+            this.searchEventsByRegionGQL.fetch({
+              query: '',
+              regionName: this.appService.locationsObj[this.selectedLocation],
+              accountId: this.userService.user ? this.userService.user.id : 0,
+              greaterThan: range.min.toString(),
+              lessThan: range.max.toString(),
+              count: 12
+            }).subscribe(
+              ({ data }) => {
+                const eventsArr = [];
+                data.regionByName.citiesByRegion.nodes.forEach((city) => {
+                  city.venuesByCity.nodes.forEach((venue) => {
+                    venue.eventsByVenue.nodes.forEach((event) => {
+                      eventsArr.push(event);
+                    });
+                  });
+                });
+                this.featuredEvents = eventsArr.length > 12 ? eventsArr.slice(0, 12) : eventsArr;
+              }
+            );
+          }
         }
       }
     );

@@ -14,7 +14,7 @@
           <div class="locationWrapper">
             <span class="in">in</span>
             <app-location-search
-              placeholder="City"
+              placeholder="Location"
               autocomplete="off"
               (selected)="setLocation($event)"
               [value]="selectedLocation"
@@ -71,6 +71,12 @@
         size="half"
         [new]="event.new"
       ></app-event-card>
+      <div class="eventFallback" *ngIf="!(eventsObservable | async)?.length && eventsInited">
+        <div class="wrapper">
+          <img class="logoImg" src="assets/icons/icon-192x192.png" />
+        </div>
+        <h2>No events. Try a new search.</h2>
+      </div>
     </cdk-virtual-scroll-viewport>
   </div>
 </app-pagewrapper>

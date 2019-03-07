@@ -52,6 +52,7 @@ export class AppService {
               }
               if (locationsArr.indexOf(x.region) === -1 && x.region) {
                 locationsArr.push(x.region);
+                this.locationsObj[x.region] = x.region;
               }
             }
           }

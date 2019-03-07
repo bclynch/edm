@@ -77,6 +77,17 @@
     top: 200px;
     background: white;
     margin-top: 54px;
+
+    .eventFallback {
+      margin-top: 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        text-align: center;
+      }
+    }
   }
   @media (min-width: 768px) {
     display: flex;
@@ -100,6 +111,11 @@
       height: calc(100vh - var(--height-navbar));
       width: 100vw;
       top: 0;
+
+      .eventFallback {
+        width: 50vw;
+        margin-left: 50vw;
+      }
     }
   }
 }
