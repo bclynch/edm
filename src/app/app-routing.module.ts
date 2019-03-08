@@ -42,6 +42,22 @@ const routes: Routes = [
     path: 'create-event',
     loadChildren: './modules/create/create.module#CreateModule',
   },
+  {
+    path: 'locations',
+    loadChildren: './modules/locations/locations.module#LocationsModule',
+  },
+  {
+    path: 'policies',
+    loadChildren: './modules/policies/policies.module#PoliciesModule',
+  },
+  {
+    path: 'about',
+    loadChildren: './modules/about/about.module#AboutModule',
+  },
+  {
+    path: 'contact',
+    loadChildren: './modules/contact/contact.module#ContactModule',
+  },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];
 

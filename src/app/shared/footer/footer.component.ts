@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { faFacebook, faInstagram, faGithub } from '@fortawesome/free-brands-svg-icons';
-
-import { RouterService } from '../../services/router.service';
+import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-footer',
@@ -13,33 +10,113 @@ import { RouterService } from '../../services/router.service';
 export class FooterComponent {
   year = Date.now();
 
-  links: string[] = ['About', 'Contact', 'Terms', 'Privacy Policy'];
-  socialOptions = [
-    { icon: faInstagram, url: 'https://www.instagram.com/bclynch7/', label: 'instagram' },
-    { icon: faFacebook, url: 'https://www.facebook.com/brendan.lynch.90', label: 'facebook' },
-    { icon: faGithub, url: 'https://github.com/bclynch', label: 'github' },
+  bottomLinks = [
+    {
+      label: 'About',
+      path: '/about',
+      fragment: null
+    },
+    {
+      label: 'Terms',
+      path: '/policies',
+      fragment: 'terms'
+    },
+    {
+      label: 'Privacy Policy',
+      path: '/policies',
+      fragment: 'privacy'
+    }
+  ];
+
+  usageLinks = [
+    {
+      label: 'FAQs',
+      path: '/faqs'
+    }
+  ];
+
+  locationLinks = [
+    {
+      label: 'New York Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'New York' }
+    },
+    {
+      label: 'Bay Area Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Bay Area' }
+    },
+    {
+      label: 'Miami Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Miami' }
+    },
+    {
+      label: 'Chicago Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Chicago' }
+    },
+    {
+      label: 'Washington Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Washington' }
+    },
+    {
+      label: 'Atlanta Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Atlanta' }
+    },
+    {
+      label: 'Los Angeles Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Los Angeles' }
+    },
+    {
+      label: 'Nevada Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Nevada' }
+    },
+    {
+      label: 'Wisconsin Shows',
+      path: '/events',
+      queryParams: { dates: 'any', location: 'Wisconsin' }
+    },
+    {
+      label: 'All Locations',
+      path: '/locations',
+      queryParams: null
+    },
+  ];
+
+  connectLinks = [
+    {
+      label: 'Contact Us',
+      path: '/contact',
+      icon: faPaperPlane,
+      type: 'internal'
+    },
+    {
+      label: 'Instagram',
+      path: 'https://www.instagram.com',
+      icon: faInstagram,
+      type: 'external'
+    },
+    {
+      label: 'Facebook',
+      path: 'https://www.facebook.com/',
+      icon: faFacebook,
+      type: 'external'
+    },
+    {
+      label: 'Twitter',
+      path: 'https://twitter.com',
+      icon: faTwitter,
+      type: 'external'
+    },
   ];
 
   constructor(
-    private sanitizer: DomSanitizer,
-    private router: Router,
-    private routerService: RouterService
+
   ) { }
 
-  navigateTo(link) {
-    switch (link) {
-      case 'About':
-        this.router.navigateByUrl('/about');
-        break;
-      case 'Contact':
-        this.router.navigateByUrl('/contact');
-        break;
-      case 'Terms':
-        this.routerService.modifyFragment('terms', '/policies');
-        break;
-      case 'Privacy Policy':
-        this.routerService.modifyFragment('privacy', '/policies');
-        break;
-    }
-  }
 }

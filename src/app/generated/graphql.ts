@@ -78,11 +78,15 @@ export class AllLocationsGQL extends Apollo.Query<
 > {
   document: any = gql`
     query allLocations {
-      allCities {
+      allRegions {
         nodes {
-          id
           name
-          region
+          citiesByRegion(orderBy: NAME_ASC) {
+            nodes {
+              id
+              name
+            }
+          }
         }
       }
     }
@@ -397,7 +401,10 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
               nodes {
                 eventsByVenue(
                   filter: {
-                    name: { includesInsensitive: $query }
+                    or: [
+                      { name: { includesInsensitive: $query } }
+                      { venue: { includesInsensitive: $query } }
+                    ]
                     startDate: {
                       greaterThanOrEqualTo: $greaterThan
                       lessThanOrEqualTo: $lessThan
@@ -2591,23 +2598,35 @@ export namespace AllLocations {
   export type Query = {
     __typename?: "Query";
 
-    allCities: Maybe<AllCities>;
+    allRegions: Maybe<AllRegions>;
   };
 
-  export type AllCities = {
-    __typename?: "CitiesConnection";
+  export type AllRegions = {
+    __typename?: "RegionsConnection";
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
+    __typename?: "Region";
+
+    name: string;
+
+    citiesByRegion: CitiesByRegion;
+  };
+
+  export type CitiesByRegion = {
+    __typename?: "CitiesConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
     __typename?: "City";
 
     id: number;
 
     name: Maybe<string>;
-
-    region: Maybe<string>;
   };
 }
 

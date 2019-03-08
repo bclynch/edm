@@ -29,7 +29,8 @@
         class="navOption" 
         *ngFor="let option of navOptions;" 
         [href]="option.link" 
-        target="_blank"
+        target="_blank" 
+        rel="nofollow"
       >
         <button mat-button>
           <mat-icon>{{option.icon}}</mat-icon>

@@ -26,6 +26,14 @@
 - ~~SEO work with titles for pages~~
 - ~~Create + add logo~~
 - ~~Make location search work for cities and regions~~
+- Fix footer
+    - ~~Styling mobile~~
+    - ~~Maybe some nice links to popular regions~~
+        - ~~Would be nice to have a page with all countries, regions, cities like https://www.eventbrite.com/directory/sitemap/~~
+    - Fix / create social links
+    - About page
+    - Contact Page
+    - Terms / privacy
 
 - Create Event Page
     - 
@@ -65,6 +73,12 @@
     - ~~For pages~~
     - For on some clicks (like buy tickets)
     - Need to swap in correct account in index.html
+- Settings page
+    - User setting to change frequence of email updates
+    - Unsubscribe
+    - Change profile pic (down the line)
+    - Delete account
+    - password stuff
 
 ## Feature Ideas
 - List view for a region on a per day basis
@@ -87,6 +101,8 @@
     - https://github.com/web-push-libs/web-push
 - Featured / hot / lifted events up top
 - Maybe pull api stuff for artists from youtube / insta / etc if they have it
+- Skeleton loading
+    - https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba
 
 ### Name Ideas
 
@@ -101,7 +117,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- To run a staging build: `ng build --configuration=staging`
+    - Staging setup env config https://angular.io/guide/build
 
 ## Running unit tests
 

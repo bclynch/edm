@@ -1,9 +1,13 @@
 query allLocations {
-  allCities {
+  allRegions {
     nodes {
-      id,
       name,
-      region
+      citiesByRegion(orderBy: NAME_ASC) {
+        nodes {
+          id,
+          name
+        }
+      }
     }
   }
 }

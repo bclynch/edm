@@ -9,6 +9,7 @@ import { AppService } from 'src/app/services/app.service';
 import { FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute } from '@angular/router';
 
 class Event {
   id: string;
@@ -36,6 +37,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   eventsInited = false;
   selectedLocation: string;
   initSubscription: SubscriptionLike;
+  paramsSubscription: SubscriptionLike;
 
   // map props
   coords: { lat: number; lon: number; } = { lat: null, lon: null };
@@ -62,24 +64,29 @@ export class EventsComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private appService: AppService,
     private eventService: EventService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private route: ActivatedRoute
   ) {
-    this.location = this.routerService.params.location;
-    this.dateRange = this.routerService.params.dates ? this.routerService.params.dates : 'any';
-    this.searchQueryControl.setValue(this.routerService.params.query ? this.routerService.params.query : '');
-    this.selectedLocation = this.location;
-
-    this.appService.modPageMeta(`${this.location} EDM Shows`, `Listing of upcoming edm events in ${this.location}`);
+    this.appService.modPageMeta(`${this.routerService.params.location} EDM Shows`, `Listing of upcoming edm events in ${this.routerService.params.location}`);
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
           if (this.location) {
-            this.searchEvents();
+            this.changeUrlPath();
             // this.generateMap();
           }
         }
       }
     );
+
+    // if params change need to fire off a new search
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
+      this.location = params.location;
+      this.dateRange = params.dates ? params.dates : 'any';
+      this.searchQueryControl.setValue(params.query ? params.query : '');
+      this.selectedLocation = this.location;
+      this.searchEvents();
+    });
   }
 
   ngOnInit() {
@@ -87,6 +94,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.initSubscription.unsubscribe();
+    this.paramsSubscription.unsubscribe();
   }
 
   generateMap() {
@@ -105,59 +113,51 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   searchEvents() {
     const range = this.utilService.calculateDateRange(this.dateRange);
-    if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
-      this.searchEventsByCityGQL.fetch({
-        query: this.searchQueryControl.value,
-        cityId: this.appService.locationsObj[this.selectedLocation],
-        accountId: this.userService.user ? this.userService.user.id : 0,
-        greaterThan: range.min.toString(),
-        lessThan: range.max.toString()
-      }).subscribe(
-        ({ data }) => {
-          this.events = this.processEvents(data.searchEvents.nodes);
-          console.log('Events: ', this.events);
-          this.eventsObservable.next(this.events);
-
-          // add query params to address
-          if (this.searchQueryControl.value) {
-            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
-          } else {
-            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
-          }
-          this.eventsInited = true;
-        }
-      );
+    // if location does not exist then make empty arr
+    if (!this.appService.locationsObj[this.selectedLocation]) {
+      this.eventsObservable.next([]);
+      this.eventsInited = true;
     } else {
-      this.searchEventsbyRegionGQL.fetch({
-        query: this.searchQueryControl.value,
-        regionName: this.appService.locationsObj[this.selectedLocation],
-        accountId: this.userService.user ? this.userService.user.id : 0,
-        greaterThan: range.min.toString(),
-        lessThan: range.max.toString()
-      }).subscribe(
-        ({ data }) => {
-          const eventsArr = [];
-          data.regionByName.citiesByRegion.nodes.forEach((city) => {
-            city.venuesByCity.nodes.forEach((venue) => {
-              venue.eventsByVenue.nodes.forEach((event) => {
-                eventsArr.push(event);
+      if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
+        this.searchEventsByCityGQL.fetch({
+          query: this.searchQueryControl.value,
+          cityId: this.appService.locationsObj[this.selectedLocation],
+          accountId: this.userService.user ? this.userService.user.id : 0,
+          greaterThan: range.min.toString(),
+          lessThan: range.max.toString()
+        }).subscribe(
+          ({ data }) => {
+            this.events = this.processEvents(data.searchEvents.nodes);
+            console.log('Events: ', this.events);
+            this.eventsObservable.next(this.events);
+            this.eventsInited = true;
+          }
+        );
+      } else {
+        this.searchEventsbyRegionGQL.fetch({
+          query: this.searchQueryControl.value,
+          regionName: this.appService.locationsObj[this.selectedLocation],
+          accountId: this.userService.user ? this.userService.user.id : 0,
+          greaterThan: range.min.toString(),
+          lessThan: range.max.toString()
+        }).subscribe(
+          ({ data }) => {
+            const eventsArr = [];
+            data.regionByName.citiesByRegion.nodes.forEach((city) => {
+              city.venuesByCity.nodes.forEach((venue) => {
+                venue.eventsByVenue.nodes.forEach((event) => {
+                  eventsArr.push(event);
+                });
               });
             });
-          });
 
-          this.events = this.processEvents(eventsArr);
-          console.log('Events: ', this.events);
-          this.eventsObservable.next(this.events);
-
-          // add query params to address
-          if (this.searchQueryControl.value) {
-            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
-          } else {
-            this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
+            this.events = this.processEvents(eventsArr);
+            console.log('Events: ', this.events);
+            this.eventsObservable.next(this.events);
+            this.eventsInited = true;
           }
-          this.eventsInited = true;
-        }
-      );
+        );
+      }
     }
   }
 
@@ -176,7 +176,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   submitSearch(e) {
     e.preventDefault();
 
-    this.searchEvents();
+    this.changeUrlPath();
   }
 
   setLocation(location: string) {
@@ -190,5 +190,15 @@ export class EventsComponent implements OnInit, OnDestroy {
   selectDate(date) {
     console.log(date);
     this.dateRange = date;
+  }
+
+  changeUrlPath() {
+    console.log(this.selectedLocation);
+    // add query params to address and also kicks off search events in the router subscription
+    if (this.searchQueryControl.value) {
+      this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
+    } else {
+      this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
+    }
   }
 }

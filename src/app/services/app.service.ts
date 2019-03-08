@@ -13,6 +13,7 @@ export class AppService {
   // used in location search component
   locations: string[];
   locationsObj = {};
+  locationDirectory;
 
   constructor(
     private allLocationsGQL: AllLocationsGQL,
@@ -41,18 +42,18 @@ export class AppService {
   fetchAllLocations() {
     return new Promise((resolve, reject) => {
       this.allLocationsGQL.fetch().subscribe(
-        (result) => {
+        ({ data }) => {
           // creating an array of strings with both cities + regions
           const locationsArr = [];
-          for (const x of result.data.allCities.nodes) {
-            if (x.name) {
-              if (locationsArr.indexOf(x.name) === -1) {
-                locationsArr.push(x.name);
-                this.locationsObj[x.name] = x.id;
-              }
-              if (locationsArr.indexOf(x.region) === -1 && x.region) {
-                locationsArr.push(x.region);
-                this.locationsObj[x.region] = x.region;
+          this.locationDirectory = data.allRegions.nodes;
+          for (const region of data.allRegions.nodes) {
+            this.locationsObj[region.name] = region.name;
+            locationsArr.push(region.name);
+
+            for (const city of region.citiesByRegion.nodes) {
+              if (locationsArr.indexOf(city.name) === -1) {
+                locationsArr.push(city.name);
+                this.locationsObj[city.name] = city.id;
               }
             }
           }

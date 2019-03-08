@@ -8,9 +8,18 @@ query searchEventsByRegion($query: String!, $regionName: String!, $accountId: In
           nodes {
             eventsByVenue(
               filter: {
-                name: {
-                  includesInsensitive: $query
-                },
+                or: [
+                  {
+                    name: {
+                  		includesInsensitive: $query
+                		}
+                  },
+                  {
+                    venue: {
+                      includesInsensitive: $query
+                    }
+                  }
+                ],
                 startDate: {
                   greaterThanOrEqualTo: $greaterThan,
                   lessThanOrEqualTo: $lessThan

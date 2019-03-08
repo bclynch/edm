@@ -19,7 +19,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatAutocompleteModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTabsModule,
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AgmCoreModule } from '@agm/core';
@@ -72,6 +73,7 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     MatNativeDateModule,
     MatAutocompleteModule,
     MatSelectModule,
+    MatTabsModule,
     DirectivesModule,
     RouterModule,
     ReactiveFormsModule,
@@ -96,6 +98,8 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
+    MatSelectModule,
+    MatTabsModule,
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent,

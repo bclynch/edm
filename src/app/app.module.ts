@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,7 @@ import { DISQUS_SHORTNAME } from 'ngx-disqus';
 import { AnalyticsService } from './services/analytics.service';
 import { LocationService } from './services/location.service';
 import { UserService } from './services/user.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { EmailService } from './services/email.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AnalyticsService,
     LocationService,
     UserService,
+    EmailService,
     { provide: DISQUS_SHORTNAME, useValue: ENV.disqusShortname }
   ],
   bootstrap: [AppComponent]
