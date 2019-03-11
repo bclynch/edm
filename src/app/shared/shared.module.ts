@@ -21,6 +21,7 @@ import {
   MatAutocompleteModule,
   MatSelectModule,
   MatTabsModule,
+  MatSidenavModule
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AgmCoreModule } from '@agm/core';
@@ -39,6 +40,7 @@ import { VenueMapComponent } from './venue-map/venue-map.component';
 import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-checkout.component';
 import { SelectDateComponent } from './select-date/select-date.component';
 import { EventCardAltComponent } from './event-card-alt/event-card-alt.component';
+import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.component';
 
 @NgModule({
   entryComponents: [
@@ -55,7 +57,8 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     VenueMapComponent,
     EventbriteCheckoutComponent,
     SelectDateComponent,
-    EventCardAltComponent
+    EventCardAltComponent,
+    SettingsWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +77,7 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     MatAutocompleteModule,
     MatSelectModule,
     MatTabsModule,
+    MatSidenavModule,
     DirectivesModule,
     RouterModule,
     ReactiveFormsModule,
@@ -100,6 +104,7 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     MatAutocompleteModule,
     MatSelectModule,
     MatTabsModule,
+    MatSidenavModule,
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent,
@@ -107,7 +112,8 @@ import { EventCardAltComponent } from './event-card-alt/event-card-alt.component
     EventCardComponent,
     VenueMapComponent,
     SelectDateComponent,
-    EventCardAltComponent
+    EventCardAltComponent,
+    SettingsWrapperComponent
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer}

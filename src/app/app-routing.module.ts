@@ -35,10 +35,6 @@ const routes: Routes = [
     loadChildren: './modules/user/user.module#UserModule',
   },
   {
-    path: 'settings',
-    loadChildren: './modules/settings/settings.module#SettingsModule',
-  },
-  {
     path: 'create-event',
     loadChildren: './modules/create/create.module#CreateModule',
   },
@@ -57,6 +53,27 @@ const routes: Routes = [
   {
     path: 'contact',
     loadChildren: './modules/contact/contact.module#ContactModule',
+  },
+  {
+    path: 'settings',
+    redirectTo: 'settings/user-profile',
+    pathMatch: 'full'
+  },
+  {
+    path: 'settings/user-profile',
+    loadChildren: './modules/user-profile/user-profile.module#UserProfileModule',
+  },
+  {
+    path: 'settings/password',
+    loadChildren: './modules/password/password.module#PasswordModule',
+  },
+  {
+    path: 'settings/email-preferences',
+    loadChildren: './modules/email-preferences/email-preferences.module#EmailPreferencesModule',
+  },
+  {
+    path: 'settings/close-account',
+    loadChildren: './modules/close-account/close-account.module#CloseAccountModule',
   },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];

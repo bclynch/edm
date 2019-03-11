@@ -1,0 +1,18 @@
+<app-pagewrapper>
+  <app-settings-wrapper>
+    <div class="preferencesContainer">
+      <h1 class="settingsHeader">Email Preferences</h1>
+      <form (ngSubmit)="changeFrequency()">
+        <h3>Email me about new events</h3>
+        <mat-form-field>
+          <mat-select name="frequencyInput" [(ngModel)]="frequency">
+            <mat-option *ngFor="let frequency of frequencies;" [value]="frequency">
+              {{frequency}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </app-settings-wrapper>
+</app-pagewrapper>

@@ -1,0 +1,21 @@
+.preferencesContainer {
+  padding: 0 20px;
+  margin-bottom: 50px;
+
+  .settingsHeader {
+    border-bottom: solid 1px var(--color-border);
+    padding-bottom: 20px;
+    width: 100%;
+  }
+  form {
+    width: 100%;
+    max-width: 400px;
+
+    .mat-form-field {
+      display: block;
+    }
+    button[type='submit'] {
+      color: white;
+    }
+  }
+}

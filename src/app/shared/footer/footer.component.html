@@ -1,49 +1,51 @@
 <div class="footerContainer">
-  <div class="contentContainer">
-    <div class="column use">
-      <h3>Use EDM Flare</h3>
-      <div class="linksContainer">
-        <div *ngFor="let usageLink of usageLinks;">
-          <a [routerLink]="[usageLink.path]">{{usageLink.label}}</a>
+  <div class="wrapper">
+    <div class="contentContainer">
+      <div class="column use">
+        <h3>Use EDM Flare</h3>
+        <div class="linksContainer">
+          <div *ngFor="let usageLink of usageLinks;">
+            <a [routerLink]="[usageLink.path]">{{usageLink.label}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="column find">
+        <h3>Find Shows</h3>
+        <div class="linksContainer">
+          <div *ngFor="let locationLink of locationLinks;">
+            <a
+              [routerLink]="[locationLink.path]" 
+              [queryParams]="locationLink.queryParams"
+            >{{locationLink.label}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="column connect">
+        <h3>Connect With Us</h3>
+        <div class="linksContainer">
+          <div *ngFor="let connectLink of connectLinks;" >
+            <a
+              *ngIf="connectLink.type === 'internal'"
+              [routerLink]="[connectLink.path]" 
+              [queryParams]="connectLink.queryParams"
+            ><fa-icon [icon]="connectLink.icon"></fa-icon> {{connectLink.label}}</a>
+            <a
+              *ngIf="connectLink.type === 'external'"
+              [href]="connectLink.path"
+              target="_blank" 
+              rel="nofollow"
+            ><fa-icon [icon]="connectLink.icon"></fa-icon> {{connectLink.label}}</a>
+          </div>
         </div>
       </div>
     </div>
-    <div class="column find">
-      <h3>Find Shows</h3>
-      <div class="linksContainer">
-        <div *ngFor="let locationLink of locationLinks;">
-          <a
-            [routerLink]="[locationLink.path]" 
-            [queryParams]="locationLink.queryParams"
-          >{{locationLink.label}}</a>
-        </div>
+    <div class="bottomContainer">
+      <div class="copyright">©{{year | date:'y'}} EDM Flare</div>
+      <div class="linksWrapper">
+        <a *ngFor="let link of bottomLinks;" class="link" [routerLink]="[link.path]" [fragment]="link.fragment">{{link.label}}</a>
       </div>
+        <!-- maybe in the future localization select -->
+      <div class="spacer"></div>
     </div>
-    <div class="column connect">
-      <h3>Connect With Us</h3>
-      <div class="linksContainer">
-        <div *ngFor="let connectLink of connectLinks;" >
-          <a
-            *ngIf="connectLink.type === 'internal'"
-            [routerLink]="[connectLink.path]" 
-            [queryParams]="connectLink.queryParams"
-          ><fa-icon [icon]="connectLink.icon"></fa-icon> {{connectLink.label}}</a>
-          <a
-            *ngIf="connectLink.type === 'external'"
-            [href]="connectLink.path"
-            target="_blank" 
-            rel="nofollow"
-          ><fa-icon [icon]="connectLink.icon"></fa-icon> {{connectLink.label}}</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="bottomContainer">
-    <div class="copyright">©{{year | date:'y'}} EDM Flare</div>
-    <div class="linksWrapper">
-      <a *ngFor="let link of bottomLinks;" class="link" [routerLink]="[link.path]" [fragment]="link.fragment">{{link.label}}</a>
-    </div>
-     <!-- maybe in the future localization select -->
-    <div class="spacer"></div>
   </div>
 </div>

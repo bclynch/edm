@@ -4,11 +4,17 @@
   border-top: solid 1px var(--color-border);
   height: var(--height-footer);
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   color: #aaa;
+  display: flex;
+  justify-content: center;
 
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   a {
     color: #aaa;
     text-decoration: none;

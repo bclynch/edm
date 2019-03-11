@@ -323,6 +323,21 @@ export class RemoveWatchlistGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class ResetPasswordGQL extends Apollo.Mutation<
+  ResetPassword.Mutation,
+  ResetPassword.Variables
+> {
+  document: any = gql`
+    mutation resetPassword($email: String!) {
+      resetPassword(input: { email: $email }) {
+        string
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class SearchEventsByCityGQL extends Apollo.Query<
   SearchEventsByCity.Query,
   SearchEventsByCity.Variables
@@ -444,6 +459,31 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
             }
           }
         }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class UpdatePasswordGQL extends Apollo.Mutation<
+  UpdatePassword.Mutation,
+  UpdatePassword.Variables
+> {
+  document: any = gql`
+    mutation updatePassword(
+      $userId: Int!
+      $password: String!
+      $newPassword: String!
+    ) {
+      updatePassword(
+        input: {
+          userId: $userId
+          password: $password
+          newPassword: $newPassword
+        }
+      ) {
+        boolean
       }
     }
   `;
@@ -2972,6 +3012,24 @@ export namespace RemoveWatchlist {
   };
 }
 
+export namespace ResetPassword {
+  export type Variables = {
+    email: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    resetPassword: Maybe<ResetPassword>;
+  };
+
+  export type ResetPassword = {
+    __typename?: "ResetPasswordPayload";
+
+    string: Maybe<string>;
+  };
+}
+
 export namespace SearchEventsByCity {
   export type Variables = {
     query: string;
@@ -3173,6 +3231,26 @@ export namespace SearchEventsByRegion {
     __typename?: "WatchList";
 
     id: number;
+  };
+}
+
+export namespace UpdatePassword {
+  export type Variables = {
+    userId: number;
+    password: string;
+    newPassword: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updatePassword: Maybe<UpdatePassword>;
+  };
+
+  export type UpdatePassword = {
+    __typename?: "UpdatePasswordPayload";
+
+    boolean: Maybe<boolean>;
   };
 }
 
