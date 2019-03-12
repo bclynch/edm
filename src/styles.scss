@@ -83,3 +83,13 @@ app-events {
     text-decoration: none;
   }
 }
+
+// event page style to override the inner html style
+.infoContainer {
+ 
+  .description {
+    img {
+      max-width: 100% !important;
+    }
+  }
+}

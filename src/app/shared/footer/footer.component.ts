@@ -97,19 +97,19 @@ export class FooterComponent {
     },
     {
       label: 'Instagram',
-      path: 'https://www.instagram.com',
+      path: 'https://www.instagram.com/edmflare/',
       icon: faInstagram,
       type: 'external'
     },
     {
       label: 'Facebook',
-      path: 'https://www.facebook.com/',
+      path: 'https://www.facebook.com/edmflare/',
       icon: faFacebook,
       type: 'external'
     },
     {
       label: 'Twitter',
-      path: 'https://twitter.com',
+      path: 'https://twitter.com/edmflare',
       icon: faTwitter,
       type: 'external'
     },

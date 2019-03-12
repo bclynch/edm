@@ -13,8 +13,8 @@ export class EmailService {
 
   }
 
-  sendResetEmail(user: string, pw: string) {
-    return this.http.post(`${ENV.apiBaseURL}/mailing/reset`, { user, pw })
+  sendResetEmail(email: string, pw: string) {
+    return this.http.post(`${ENV.apiBaseURL}/mailing/reset`, { email, pw })
       .pipe(map(
         (response: Response) => {
           const data = response.json();
@@ -30,6 +30,21 @@ export class EmailService {
 
   sendContactEmail(data: { why: string; name: string; email: string; content: string; }) {
     return this.http.post(`${ENV.apiBaseURL}/mailing/contact`, { data })
+      .pipe(map(
+        (response: Response) => {
+          const json = response.json();
+          return json;
+        }
+      )
+      ).pipe(catchError(
+        (error: Response) => {
+          return Observable.throw('Something went wrong');
+        }
+      ));
+  }
+
+  sendRegistrationEmail(email: string) {
+    return this.http.post(`${ENV.apiBaseURL}/mailing/registration`, { email })
       .pipe(map(
         (response: Response) => {
           const json = response.json();

@@ -19,6 +19,7 @@
           [errorStateMatcher]="matcher"
         />
       </mat-form-field>
+      <div class="linkWrapper"><a [routerLink]="['/password-reset']">Forgot your password?</a></div>
       <button mat-flat-button color="primary" type="submit">Login</button>
       <div class="new">New to EDM? 
         <a [routerLink]="['/signup']" [queryParams]="{ redirect: redirect }">

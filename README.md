@@ -3,11 +3,11 @@
 ## Todos
 - Mailing setup
     - ~~Working with pomb + ses~~
-    - Create welcome email
-        - Nice image of on different devices
-        - Explain a bit about community
+    - ~~Create welcome email~~
+        - ~~Nice image of on different devices~~
+        - ~~Explain a bit about community~~
         - Explain how to install as an app
-        - Make sure they know it's just updates from here on out
+        - ~~Make sure they know it's just updates from here on out~~
 - ~~Create watching table + functionality for users for an event. Only for logged in.~~
 - ~~Create follow table for artists and venues.~~
 - ~~Feed view for new stuff in following~~
@@ -30,9 +30,9 @@
     - ~~Styling mobile~~
     - ~~Maybe some nice links to popular regions~~
         - ~~Would be nice to have a page with all countries, regions, cities like https://www.eventbrite.com/directory/sitemap/~~
-    - Fix / create social links
+    - ~~Fix / create social links~~
     - About page
-    - Contact Page
+    - ~~Contact Page~~
     - Terms / privacy
 
 - Create Event Page
@@ -72,13 +72,16 @@
 - Setup google analytics
     - ~~For pages~~
     - For on some clicks (like buy tickets)
-    - Need to swap in correct account in index.html
+    - ~~Need to swap in correct account in index.html~~
 - Settings page
-    - User setting to change frequence of email updates
+    - User setting to change frequency of email updates
+        - Also what cities to watch. In settings
+        - Going to need a table for this - probably identify region vs city I guesss
+        - Something in footer with link to get notifications that pops alert to sign in if not
     - Unsubscribe
     - Change profile pic (down the line)
     - Delete account
-    - password stuff
+    - ~~password stuff~~
 
 ## Feature Ideas
 - List view for a region on a per day basis
@@ -86,6 +89,10 @@
 - Filter by genre, venue, region, artist
 - Follow feature. Would be adding a table for adding artists or venues and linking with a user. Can have a chronological feed of followed items with new things and maybe notification / email updates every some period of time.
 - A page with new releases for the week that might pull from reddit playlist
+
+## Design
+- Device mocks https://mockuphone.com/#ios
+- Email Templates - mailchimp
 
 
 ## Monetization
@@ -103,6 +110,9 @@
 - Maybe pull api stuff for artists from youtube / insta / etc if they have it
 - Skeleton loading
     - https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba
+- App store apps
+    - https://www.nativescript.org/nativescript-is-how-you-build-native-mobile-apps-with-angular/code-sharing-angular-and-nativescript
+    - https://blog.angular.io/apps-that-work-natively-on-the-web-and-mobile-9b26852495e7
 
 ### Name Ideas
 

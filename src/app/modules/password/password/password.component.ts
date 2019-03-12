@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { FormGroup, Validators, FormControl, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { UpdatePasswordGQL, ResetPasswordGQL } from 'src/app/generated/graphql';
+import { UpdatePasswordGQL } from 'src/app/generated/graphql';
 import { UserService } from 'src/app/services/user.service';
-import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-password',
@@ -26,7 +25,7 @@ export class PasswordComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') // this is for the letters (both uppercase and lowercase) and numbers validation
+          Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/) // this is for the letters (both uppercase and lowercase) and numbers validation
         ])
       ],
       confirmPassword: new FormControl('', Validators.required)
@@ -50,24 +49,12 @@ export class PasswordComponent implements OnInit {
     ]
   };
 
-  resetForm: FormGroup = this.fb.group({
-    email: [
-      '',
-      Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])
-    ]
-  });
-
   constructor(
     private appService: AppService,
     private fb: FormBuilder,
     public snackBar: MatSnackBar,
     private updatePasswordGQL: UpdatePasswordGQL,
-    private resetPasswordGQL: ResetPasswordGQL,
     private userService: UserService,
-    private emailService: EmailService
   ) {
     this.appService.modPageMeta('Password Settings', 'Modify password settings for your EDM Flare account');
   }
@@ -83,51 +70,12 @@ export class PasswordComponent implements OnInit {
             this.snackBar.open('Password changed', 'Close', {
               duration: 3000,
             });
-            this.changeForm.reset();
             formDirective.resetForm();
+            this.changeForm.reset();
           } else {
             this.snackBar.open('Something went wrong. Make sure you have the correct current password', 'Close', {
               duration: 3000,
             });
-          }
-        }
-      );
-  }
-
-  sendReset(formDirective: FormGroupDirective) {
-    console.log(this.resetForm.value);
-    this.resetPasswordGQL.mutate({ email: this.resetForm.value.email })
-      .subscribe(
-        (result) => {
-          this.emailService.sendResetEmail(this.resetForm.value, result.data.resetPassword.string).subscribe(
-            data => {
-              console.log(data);
-              if (data.result === 'Forgot email sent') {
-                this.resetForm.reset();
-                formDirective.resetForm();
-                this.snackBar.open('Your password reset email has been sent. Please check your inbox for the new password. It might take a minute or two to send.', 'Close', {
-                  duration: 3000,
-                });
-              }
-            }
-          );
-        },
-        err => {
-          switch (err.message) {
-            case 'GraphQL error: permission denied for function reset_password':
-              this.snackBar.open('Cannot reset password while user is logged in', 'Close', {
-                duration: 3000,
-              });
-              break;
-            case 'GraphQL error: column "user does not exist" does not exist':
-              this.snackBar.open('That email doesn\'t exist. Check what you entered and try again', 'Close', {
-                duration: 3000,
-              });
-              break;
-            default:
-              this.snackBar.open('Something went wrong. Check your email address and try again', 'Close', {
-                duration: 3000,
-              });
           }
         }
       );

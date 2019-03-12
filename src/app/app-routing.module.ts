@@ -75,6 +75,10 @@ const routes: Routes = [
     path: 'settings/close-account',
     loadChildren: './modules/close-account/close-account.module#CloseAccountModule',
   },
+  {
+    path: 'password-reset',
+    loadChildren: './modules/password-reset/password-reset.module#PasswordResetModule',
+  },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];
 

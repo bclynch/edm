@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL, CreateFollowListGQL, RemoveFollowlistGQL } from '../generated/graphql';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { EmailService } from './email.service';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,8 @@ export class UserService {
     private currentAccountGQL: CurrentAccountGQL,
     private createFollowListGQL: CreateFollowListGQL,
     private removeFollowlistGQL: RemoveFollowlistGQL,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private emailService: EmailService
   ) {
     this.signedInSubject = new BehaviorSubject<boolean>(false);
     this.signedIn = this.signedInSubject;
@@ -102,10 +104,11 @@ export class UserService {
         ({ data }) => {
           const userObj = data as any;
 
-          // // send welcome registration email
-          // this.apiService.sendRegistrationEmail(model.email).subscribe(
-          //   result => {}
-          // );
+          // send welcome registration email
+          console.log(model.email);
+          this.emailService.sendRegistrationEmail(model.email).subscribe(
+            (result) => {}
+          );
 
           // auth to snag token
           this.authUserAccount({ email: model.email, password: model.matchingPassword.password }).then((token) => {

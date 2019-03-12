@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') // this is for the letters (both uppercase and lowercase) and numbers validation
+          Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/) // this is for the letters (both uppercase and lowercase) and numbers validation + min 8 chars
         ])
       ],
       confirmPassword: new FormControl('', Validators.required)

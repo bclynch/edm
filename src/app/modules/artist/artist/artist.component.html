@@ -52,7 +52,7 @@
           </div>
           <div class="bioContainer" *ngIf="artist?.description">
             <h2>Bio</h2>
-            <div [innerHTML]="artist.description"></div>
+            <div class="description" [innerHTML]="artist.description"></div>
           </div>
         </div>
         <div class="soundcloudWrapper" *ngIf="soundcloudUrl">
