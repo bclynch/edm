@@ -20,7 +20,7 @@
     - ~~Own pages with redirect~~
 - ~~Add cookie for selected location~~
 - ~~Indicator 'new' event~~
-- ~~Guards on various routes (settings, login, signup, submit) based on logged in state~~
+- Guards on various routes (settings, login, signup, submit) based on logged in state
 - Simple submit event page (after release)
     - Would need some nice autofill boxes on front end to check event doesn't already exist + form requirements
 - ~~Polish up artist + event page. Need some fall back banners that don't look like ass. EB if there is one for shows~~

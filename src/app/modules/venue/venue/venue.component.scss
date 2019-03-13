@@ -4,27 +4,36 @@
   justify-content: center;
   background: var(--color-background);
 
-  .wrapper {
-    width: 100%;
-    max-width: 1080px;
-    background: white;
-  }
   .header {
-    background-size: cover;
-    background-position: center;
     padding: 0 5%;
     height: 35vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    position: relative;
 
+    .bannerImg {
+      position: absolute;
+      width: 100vw;
+      height: 35vh;
+      left: 0;
+      background-size: cover;
+      background-position: center;
+
+      &.backup {
+        background: var(--color-primary);
+      }
+    }
     h1 {
-      font-size: 3em;
       color: white;
+      z-index: 99;
     }
     .followContainer {
       button {
         color: white;
+        font-size: 1.2em;
+        line-height: 2em;
+        padding: 0 1.2em;
       }
     }
   }

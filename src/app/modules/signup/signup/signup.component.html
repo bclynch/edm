@@ -51,7 +51,11 @@
         </mat-form-field>
       </ng-container>
       <button mat-flat-button color="primary" type="submit">Signup</button>
-      <div class="existing">Have an Account? <a [routerLink]="['/login']" [queryParams]="{ redirect: redirect }"><button mat-button color="primary">Go To Login</button></a></div>
+      <div class="existing">Have an Account? 
+        <a [routerLink]="['/login']" [queryParams]="{ redirect: redirect }">
+          <button mat-button class="existingBtn" color="primary">Go To Login</button>
+        </a>
+      </div>
     </form>
   </div>
 </app-pagewrapper>

@@ -4,11 +4,6 @@
   justify-content: center;
   background: var(--color-background);
 
-  .wrapper {
-    width: 100%;
-    max-width: 1080px;
-    background: white;
-  }
   a:visited,
   a { 
     color:#3659e3;
@@ -69,6 +64,8 @@
 
       .ticketBtn {
         color: white;
+        font-size: 1.2em;
+        padding: .35em 1em;
       }
       .watched {
         color: gold;

@@ -27,6 +27,8 @@ class Event {
 })
 export class EventsComponent implements OnInit, OnDestroy {
 
+  collapsed = true;
+
   // search props
   location: string;
   dateRange: string;
@@ -130,6 +132,7 @@ export class EventsComponent implements OnInit, OnDestroy {
             console.log('Events: ', this.events);
             this.eventsObservable.next(this.events);
             this.eventsInited = true;
+            this.collapsed = true;
           }
         );
       } else {
@@ -154,6 +157,7 @@ export class EventsComponent implements OnInit, OnDestroy {
             console.log('Events: ', this.events);
             this.eventsObservable.next(this.events);
             this.eventsInited = true;
+            this.collapsed = true;
           }
         );
       }

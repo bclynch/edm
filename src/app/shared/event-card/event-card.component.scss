@@ -1,15 +1,15 @@
 .cardContainer {
   display: flex;
   align-items: center;
-  padding: 24px;
+  padding: .5em;
   transition: .3s;
   position: relative;
 
   .imageWrapper {
 
     .img {
-      height: 100px;
-      width: 100px;
+      height: 5em;
+      width: 5em;
       cursor: pointer;
       background-size: contain;
       border-radius: 50%;
@@ -34,7 +34,7 @@
       }
     }
     > div {
-      font-size: 13px;
+      font-size: .8em;
       color: #6f7287;
     }
     .eventName {
@@ -53,6 +53,9 @@
 
         mat-icon {
           margin-right: 10px;
+          font-size: 2em;
+          height: 1em;
+          width: 1em;
         }
         mat-icon:last-child {
           margin-right: 0;
@@ -66,7 +69,7 @@
         color: #6f7287;
 
         fa-icon {
-          font-size: 1.2em;
+          font-size: 1.5em;
         }
       }
     }
@@ -81,8 +84,11 @@
   }
   @media (min-width: 768px) {
 
+    .cardContainer {
+      padding: 1.5em;
+    }
     &.half {
-      width: 50%;
+      width: 50vw;
       box-sizing: border-box;
       margin-left: 50vw;
     }
@@ -104,13 +110,13 @@
 }
 
 .newEvent::before {
-  border-width: 1.5em;
+  border-width: 1em;
   border-right-color: var(--color-accent);
   border-top-color: var(--color-accent);; 
 }
 
 .newEvent::after {
-  border-width: 1.5em;
+  border-width: 1em;
   border-right-color: var(--color-accent);;
   border-top-color: var(--color-accent);; 
 }

@@ -1,7 +1,9 @@
 <app-pagewrapper>
   <div class="venueContainer">
     <div class="wrapper">
-      <div *ngIf="venue" class="header" [ngStyle]="{ 'background-image': 'url(' + venue.photo + ')'}">
+      <div *ngIf="venue" class="header">
+        <div class="bannerImg" *ngIf="venue.photo" [ngStyle]="{ 'background-image': 'url(' + venue.photo + ')'}"></div>
+        <div class="bannerImg backup" *ngIf="!venue.photo"></div>
         <h1>{{venue?.name.split('-')[0]}}</h1>
         <div class="followContainer">
           <button 
@@ -33,7 +35,7 @@
           ></app-event-card>
         </div>
       </div>
-      <div class="mapContainer">
+      <div class="mapContainer" *ngIf="venue?.lat">
         <app-venue-map 
           *ngIf="venue" 
           [lat]="+venue.lat" 

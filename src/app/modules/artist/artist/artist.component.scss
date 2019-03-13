@@ -4,11 +4,6 @@
   justify-content: center;
   background: var(--color-background);
 
-  .wrapper {
-    width: 100%;
-    max-width: 1080px;
-    background: white;
-  }
   .header {
     background: var(--color-primary);
     padding: 5%;
@@ -17,11 +12,12 @@
     flex-direction: column;
 
     h1 {
-      font-size: 3em;
       color: white;
+      margin-top: 0;
     }
     .socialOptions {
       display: flex;
+      margin-bottom: .6em;
 
       .socialOption {
         a {
@@ -42,6 +38,9 @@
     .followContainer {
       button {
         color: white;
+        font-size: 1.2em;
+        line-height: 2em;
+        padding: 0 1.2em;
       }
     }
   }
@@ -50,8 +49,17 @@
   }
   @media (min-width: 768px) {
     .header {
-      height: 35vh;
-      padding: 0 5%;
+      .socialOptions {
+        .socialOption {
+          a {
+            button {
+              fa-icon {
+                font-size: 2em;
+              }
+            }
+          }
+        }
+      }
     }
     .contentWrapper {
       display: flex;

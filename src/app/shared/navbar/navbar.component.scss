@@ -32,30 +32,19 @@
         button {
           height: var(--height-navbar);
           padding: 0;
-
-          mat-icon {
-            font-size: 32px;
-            color: black;
-            cursor: pointer;
-            height: 36px;
-            width: 36px;
-          }
         }
       }
       .right {
 
         button {
           height: var(--height-navbar);
-          padding: 0 14px;
-
-          mat-icon {
-            font-size: 32px;
-            color: black;
-            cursor: pointer;
-            height: 36px;
-            width: 36px;
-          }
+          padding: 0 1em;
+          text-align: right;
         }
+      }
+      mat-icon {
+        color: black;
+        cursor: pointer;
       }
       .logoWrapper {
         height: var(--height-navbar);
@@ -65,7 +54,7 @@
           align-items: center;
 
           img {
-            height: 30px;
+            height: 60%;
           }
         }
       }
@@ -78,7 +67,7 @@
     justify-content: center;
 
     .barWrapper {
-      padding: 0 24px;
+      padding: 0 1.5em;
 
       .backWrapper {
         display: none; 

@@ -2,23 +2,29 @@
   background: var(--color-primary);
   padding: 16px 24px;
   border-top: solid 1px var(--color-border);
-  height: var(--height-footer);
+  // height: var(--height-footer);
   box-sizing: border-box;
   color: #aaa;
   display: flex;
   justify-content: center;
 
   .wrapper {
-    width: 100%;
-    max-width: 1080px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: var(--color-primary);
   }
   a {
     color: #aaa;
     text-decoration: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    fa-icon {
+      margin-right: .25em;
+      font-size: 1.5em !important;
+    }
   }
   a:hover {
     text-decoration: underline;
@@ -48,8 +54,8 @@
       &.connect {
         margin-top: 20px;
       }
-      h3 {
-        margin: 5px 0 10px;
+      h4 {
+        margin: .3em 0 .6em;
       }
       .linksContainer {
         >div {
@@ -60,6 +66,7 @@
   }
   .bottomContainer {
     text-align: center;
+    margin-top: .5em;
 
     .linksWrapper {
       display: flex;
@@ -67,7 +74,6 @@
 
       > a {
         text-align: center;
-        font-size: 16px;
       }
     }
   }

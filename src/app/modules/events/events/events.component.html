@@ -1,6 +1,10 @@
 <app-pagewrapper [collapsibleNav]="false">
   <div class="eventsContainer">
-    <div class="searchContainer">
+    <div class="toggleContainer" (click)="collapsed = !collapsed">
+      <div>{{collapsed ? 'Expand Search' : 'Collapse Search'}}</div>
+      <mat-icon>search</mat-icon>
+    </div>
+    <div class="searchContainer" [ngClass]="collapsed ? 'collapsed' : ''">
       <form (submit)="changeUrlPath()">
         <div class="searchWrapper">
           <mat-form-field color="accent" floatLabel="never">
@@ -57,7 +61,7 @@
       </div> -->
     </div>
     <div *ngIf="!location">Select a city to search for shows in to get started</div>
-    <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="50">
+    <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="50" [ngClass]="collapsed ? 'collapsed' : ''">
       <app-event-card
         *cdkVirtualFor="let event of eventsObservable | async"
         [name]="event.name"

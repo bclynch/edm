@@ -5,11 +5,6 @@
   background: var(--color-background);
   position: relative;
 
-  .wrapper {
-    width: 100%;
-    max-width: 1080px;
-    background: white;
-  }
   .carousel {
     height: 75vh;
     width: 100vw;
@@ -38,7 +33,7 @@
 
         .calloutWrapper {
           position: absolute;
-          font-size: 28px;
+          font-size: 1.75em;
           top: 10%;
           left: 5%;
           color: white;
@@ -73,8 +68,8 @@
         flex: 2;
 
         .label {
-          font-size: 13px;
-          margin-bottom: 10px;
+          font-size: .8em;
+          margin-bottom: .6em;
         }
         &.btnSection {
           display: flex;
@@ -93,9 +88,8 @@
   .featuresContainer {
     display: flex;
     flex-direction: column;
-    margin: calc(75vh + 80px) 0 40px;
+    margin: calc(75vh + 80px) auto 3em;
     padding: 5%;
-    max-width: 1200px;
 
     .featureContainer {
       display: flex;
@@ -103,13 +97,12 @@
       align-items: center;
       padding: 15px;
       font-weight: 400;
-      font-size: 17px;
-      line-height: 28px;
+      font-size: 1.1em;
+      line-height: 1.75em;
       color: #525f7f;
 
       fa-icon {
         color: var(--color-accent);
-        font-size: 36px;
       }
       .featureHeader {
         color: var(--color-accent);
@@ -121,9 +114,9 @@
     }
   }
   .featuredContainer {
-    max-width: 1200px;
     padding: 5%;
     background: white;
+    margin: 0 auto;
 
     app-event-card-alt {
       width: 100%;
@@ -132,7 +125,7 @@
     }
     .moreWrapper {
       margin-top: 20px;
-      font-size: 24px;
+      font-size: 1.5em;
       text-align: center;
 
       a {
@@ -153,14 +146,14 @@
         .slideCallout {
 
           .calloutWrapper {
-            font-size: 60px;
-            width: 450px;
-            top: 10%;
+            font-size: 3.75rem;
+            width: 60vw;
+            top: 8%;
             right: 5%;
             left: auto;
   
             .tagline {
-              font-size: 48px;
+              font-size: 3rem;
             }
           }
         }
@@ -169,10 +162,10 @@
         flex-direction: row;
 
         .section {
-          padding: 16px;
+          padding: 1em;
 
           .label {
-            margin-bottom: 15px;
+            margin-bottom: 1em;
           }
         }
         .section:first-child {

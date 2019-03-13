@@ -9,11 +9,11 @@
         <button *ngIf="hasBack" mat-button (click)="location.back()"><mat-icon>arrow_back</mat-icon></button>
       </div>
       <div class="logoWrapper">
-        <a class="logo" [routerLink]="['/']"><img src="assets/images/edm_flare.png" /></a>
+        <a class="logo" [routerLink]="['/']"><img src="assets/images/edm_flare_opt.svg" /></a>
       </div>
       <div class="right">
-        <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
-        <mat-menu #menu="matMenu">
+        <button class="menuBtn" mat-button [matMenuTriggerFor]="menu"><mat-icon>person_outline</mat-icon></button>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false" xPosition="before">
           <div *ngIf="!signedIn">
             <a [routerLink]="['/signup']" [queryParams]="{ redirect: router.url }"><button mat-menu-item>Signup</button></a>
             <a [routerLink]="['/login']" [queryParams]="{ redirect: router.url }"><button mat-menu-item>Login</button></a>

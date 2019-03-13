@@ -14,7 +14,9 @@
       <a [routerLink]="['/event/' + id]"><h3 class="eventName">{{name}}</h3></a>
       <div class="eventLocation">{{location}}</div>
       <div class="eventOptions">
-        <button mat-button matTooltip="Share"><mat-icon (click)="share()">share</mat-icon></button>
+        <button mat-button matTooltip="Share">
+          <mat-icon class="smallIcon" (click)="share()">share</mat-icon>
+        </button>
         <button 
           *ngIf="watchId"
           mat-button 
@@ -22,7 +24,7 @@
           class="watched" 
           (click)="removeWatch()"
         >
-          <mat-icon>star</mat-icon>
+          <mat-icon class="smallIcon">star</mat-icon>
         </button>
         <button 
           *ngIf="!watchId"
@@ -30,7 +32,7 @@
           matTooltip="Add to watched" 
           (click)="addWatch()"
         >
-          <mat-icon>star_border</mat-icon>
+          <mat-icon class="smallIcon">star_border</mat-icon>
         </button>
         <button 
           *ngIf="ticketProviderId" 
@@ -38,7 +40,7 @@
           matTooltip="Buy Tickets" 
           (click)="eventService.eventbriteCheckout(ticketProviderId)"
         >
-          <mat-icon>loyalty</mat-icon>
+          <mat-icon class="smallIcon">loyalty</mat-icon>
         </button>
         <a 
           [href]="externalUrl" 

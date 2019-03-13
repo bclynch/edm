@@ -19,7 +19,7 @@
         </mat-autocomplete>
       </mat-form-field>
       <div formArrayName="artists">
-        <h3>Artists</h3> <button (click)="addArtist()">Add Artist</button>
+        <h3>Artists</h3> <button mat-flat-button color="primary" class="addArtistBtn" (click)="addArtist()">Add Artist</button>
       
         <div *ngFor="let artist of artists.controls; let i=index">
           <label>
