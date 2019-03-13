@@ -6,8 +6,8 @@
         <h3>Email me about new events</h3>
         <mat-form-field>
           <mat-select name="frequencyInput" [(ngModel)]="frequency">
-            <mat-option *ngFor="let frequency of frequencies;" [value]="frequency">
-              {{frequency}}
+            <mat-option *ngFor="let frequency of frequencies;" [value]="frequency.value">
+              {{frequency.label}}
             </mat-option>
           </mat-select>
         </mat-form-field>

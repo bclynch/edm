@@ -1,6 +1,7 @@
 # EDM Flare
 
 ## Todos
+- Look at affiliate / ref links
 - Mailing setup
     - ~~Working with pomb + ses~~
     - ~~Create welcome email~~
@@ -74,7 +75,7 @@
     - For on some clicks (like buy tickets)
     - ~~Need to swap in correct account in index.html~~
 - Settings page
-    - User setting to change frequency of email updates
+    - ~~User setting to change frequency of email updates~~
         - Also what cities to watch. In settings
         - Going to need a table for this - probably identify region vs city I guesss
         - Something in footer with link to get notifications that pops alert to sign in if not

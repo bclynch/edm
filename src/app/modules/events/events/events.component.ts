@@ -71,6 +71,14 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
+          // if params change need to fire off a new search
+          this.paramsSubscription = this.route.queryParams.subscribe((params) => {
+            this.location = params.location;
+            this.dateRange = params.dates ? params.dates : 'any';
+            this.searchQueryControl.setValue(params.query ? params.query : '');
+            this.selectedLocation = this.location;
+            this.searchEvents();
+          });
           if (this.location) {
             this.changeUrlPath();
             // this.generateMap();
@@ -78,15 +86,6 @@ export class EventsComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-    // if params change need to fire off a new search
-    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
-      this.location = params.location;
-      this.dateRange = params.dates ? params.dates : 'any';
-      this.searchQueryControl.setValue(params.query ? params.query : '');
-      this.selectedLocation = this.location;
-      this.searchEvents();
-    });
   }
 
   ngOnInit() {

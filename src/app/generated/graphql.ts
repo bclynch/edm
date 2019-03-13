@@ -219,6 +219,7 @@ export class CurrentAccountGQL extends Apollo.Query<
     query currentAccount {
       currentAccount {
         username
+        notificationFrequency
         profilePhoto
         id
         watchListsByAccountId {
@@ -466,6 +467,41 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
 @Injectable({
   providedIn: "root"
 })
+export class UpdateAccountGQL extends Apollo.Mutation<
+  UpdateAccount.Mutation,
+  UpdateAccount.Variables
+> {
+  document: any = gql`
+    mutation updateAccount(
+      $userId: Int!
+      $profilePhoto: String
+      $notificationFrequency: Frequency
+    ) {
+      updateAccountById(
+        input: {
+          id: $userId
+          accountPatch: {
+            notificationFrequency: $notificationFrequency
+            profilePhoto: $profilePhoto
+          }
+        }
+      ) {
+        account {
+          username
+          notificationFrequency
+          profilePhoto
+          id
+          watchListsByAccountId {
+            totalCount
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class UpdatePasswordGQL extends Apollo.Mutation<
   UpdatePassword.Mutation,
   UpdatePassword.Variables
@@ -546,6 +582,8 @@ export interface AccountCondition {
   username?: Maybe<string>;
   /** Checks for equality with the object’s `profilePhoto` field. */
   profilePhoto?: Maybe<string>;
+  /** Checks for equality with the object’s `notificationFrequency` field. */
+  notificationFrequency?: Maybe<Frequency>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
@@ -559,6 +597,8 @@ export interface AccountFilter {
   username?: Maybe<StringFilter>;
   /** Filter by the object’s `profilePhoto` field. */
   profilePhoto?: Maybe<StringFilter>;
+  /** Filter by the object’s `notificationFrequency` field. */
+  notificationFrequency?: Maybe<FrequencyFilter>;
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
@@ -656,6 +696,23 @@ export interface StringFilter {
   /** Does not match the specified pattern using the SQL standard's definition of a regular expression. */
   notSimilarTo?: Maybe<string>;
 }
+/** A filter to be used against Frequency fields. All fields are combined with a logical ‘and.’ */
+export interface FrequencyFilter {
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<boolean>;
+  /** Equal to the specified value. */
+  equalTo?: Maybe<Frequency>;
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<Frequency>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<Frequency>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<Frequency>;
+  /** Included in the specified list. */
+  in?: Maybe<Frequency[]>;
+  /** Not included in the specified list. */
+  notIn?: Maybe<Frequency[]>;
+}
 /** A filter to be used against BigInt fields. All fields are combined with a logical ‘and.’ */
 export interface BigIntFilter {
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
@@ -706,107 +763,69 @@ export interface DatetimeFilter {
   /** Greater than or equal to the specified value. */
   greaterThanOrEqualTo?: Maybe<Datetime>;
 }
-/** A condition to be used against `Event` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface EventCondition {
+/** A condition to be used against `WatchedToAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface WatchedToAccountCondition {
   /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<string>;
-  /** Checks for equality with the object’s `venue` field. */
-  venue?: Maybe<string>;
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
+  /** Checks for equality with the object’s `region` field. */
+  region?: Maybe<string>;
+  /** Checks for equality with the object’s `cityId` field. */
+  cityId?: Maybe<number>;
+}
+/** A filter to be used against `WatchedToAccount` object types. All fields are combined with a logical ‘and.’ */
+export interface WatchedToAccountFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
+  /** Filter by the object’s `region` field. */
+  region?: Maybe<StringFilter>;
+  /** Filter by the object’s `cityId` field. */
+  cityId?: Maybe<IntFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<WatchedToAccountFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<WatchedToAccountFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<WatchedToAccountFilter>;
+}
+/** A condition to be used against `Region` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface RegionCondition {
   /** Checks for equality with the object’s `name` field. */
   name?: Maybe<string>;
   /** Checks for equality with the object’s `description` field. */
   description?: Maybe<string>;
-  /** Checks for equality with the object’s `type` field. */
-  type?: Maybe<EventType>;
-  /** Checks for equality with the object’s `startDate` field. */
-  startDate?: Maybe<BigInt>;
-  /** Checks for equality with the object’s `endDate` field. */
-  endDate?: Maybe<BigInt>;
-  /** Checks for equality with the object’s `ticketproviderid` field. */
-  ticketproviderid?: Maybe<string>;
-  /** Checks for equality with the object’s `ticketproviderurl` field. */
-  ticketproviderurl?: Maybe<string>;
-  /** Checks for equality with the object’s `banner` field. */
-  banner?: Maybe<string>;
-  /** Checks for equality with the object’s `approved` field. */
-  approved?: Maybe<boolean>;
-  /** Checks for equality with the object’s `contributor` field. */
-  contributor?: Maybe<number>;
+  /** Checks for equality with the object’s `photo` field. */
+  photo?: Maybe<string>;
+  /** Checks for equality with the object’s `country` field. */
+  country?: Maybe<string>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
   updatedAt?: Maybe<Datetime>;
 }
-/** A filter to be used against `Event` object types. All fields are combined with a logical ‘and.’ */
-export interface EventFilter {
-  /** Filter by the object’s `id` field. */
-  id?: Maybe<StringFilter>;
-  /** Filter by the object’s `venue` field. */
-  venue?: Maybe<StringFilter>;
+/** A filter to be used against `Region` object types. All fields are combined with a logical ‘and.’ */
+export interface RegionFilter {
   /** Filter by the object’s `name` field. */
   name?: Maybe<StringFilter>;
   /** Filter by the object’s `description` field. */
   description?: Maybe<StringFilter>;
-  /** Filter by the object’s `type` field. */
-  type?: Maybe<EventTypeFilter>;
-  /** Filter by the object’s `startDate` field. */
-  startDate?: Maybe<BigIntFilter>;
-  /** Filter by the object’s `endDate` field. */
-  endDate?: Maybe<BigIntFilter>;
-  /** Filter by the object’s `ticketproviderid` field. */
-  ticketproviderid?: Maybe<StringFilter>;
-  /** Filter by the object’s `ticketproviderurl` field. */
-  ticketproviderurl?: Maybe<StringFilter>;
-  /** Filter by the object’s `banner` field. */
-  banner?: Maybe<StringFilter>;
-  /** Filter by the object’s `approved` field. */
-  approved?: Maybe<BooleanFilter>;
-  /** Filter by the object’s `contributor` field. */
-  contributor?: Maybe<IntFilter>;
+  /** Filter by the object’s `photo` field. */
+  photo?: Maybe<StringFilter>;
+  /** Filter by the object’s `country` field. */
+  country?: Maybe<StringFilter>;
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
   updatedAt?: Maybe<DatetimeFilter>;
   /** Checks for all expressions in this list. */
-  and?: Maybe<EventFilter[]>;
+  and?: Maybe<RegionFilter[]>;
   /** Checks for any expressions in this list. */
-  or?: Maybe<EventFilter[]>;
+  or?: Maybe<RegionFilter[]>;
   /** Negates the expression. */
-  not?: Maybe<EventFilter>;
-}
-/** A filter to be used against EventType fields. All fields are combined with a logical ‘and.’ */
-export interface EventTypeFilter {
-  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: Maybe<boolean>;
-  /** Equal to the specified value. */
-  equalTo?: Maybe<EventType>;
-  /** Not equal to the specified value. */
-  notEqualTo?: Maybe<EventType>;
-  /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: Maybe<EventType>;
-  /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: Maybe<EventType>;
-  /** Included in the specified list. */
-  in?: Maybe<EventType[]>;
-  /** Not included in the specified list. */
-  notIn?: Maybe<EventType[]>;
-}
-/** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
-export interface BooleanFilter {
-  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: Maybe<boolean>;
-  /** Equal to the specified value. */
-  equalTo?: Maybe<boolean>;
-  /** Not equal to the specified value. */
-  notEqualTo?: Maybe<boolean>;
-  /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: Maybe<boolean>;
-  /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: Maybe<boolean>;
-  /** Included in the specified list. */
-  in?: Maybe<boolean[]>;
-  /** Not included in the specified list. */
-  notIn?: Maybe<boolean[]>;
+  not?: Maybe<RegionFilter>;
 }
 /** A condition to be used against `City` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface CityCondition {
@@ -925,6 +944,156 @@ export interface BigFloatFilter {
   /** Greater than or equal to the specified value. */
   greaterThanOrEqualTo?: Maybe<BigFloat>;
 }
+/** A condition to be used against `Event` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface EventCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<string>;
+  /** Checks for equality with the object’s `venue` field. */
+  venue?: Maybe<string>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: Maybe<string>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: Maybe<string>;
+  /** Checks for equality with the object’s `type` field. */
+  type?: Maybe<EventType>;
+  /** Checks for equality with the object’s `startDate` field. */
+  startDate?: Maybe<BigInt>;
+  /** Checks for equality with the object’s `endDate` field. */
+  endDate?: Maybe<BigInt>;
+  /** Checks for equality with the object’s `ticketproviderid` field. */
+  ticketproviderid?: Maybe<string>;
+  /** Checks for equality with the object’s `ticketproviderurl` field. */
+  ticketproviderurl?: Maybe<string>;
+  /** Checks for equality with the object’s `banner` field. */
+  banner?: Maybe<string>;
+  /** Checks for equality with the object’s `approved` field. */
+  approved?: Maybe<boolean>;
+  /** Checks for equality with the object’s `contributor` field. */
+  contributor?: Maybe<number>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<BigInt>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: Maybe<Datetime>;
+}
+/** A filter to be used against `Event` object types. All fields are combined with a logical ‘and.’ */
+export interface EventFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<StringFilter>;
+  /** Filter by the object’s `venue` field. */
+  venue?: Maybe<StringFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: Maybe<StringFilter>;
+  /** Filter by the object’s `description` field. */
+  description?: Maybe<StringFilter>;
+  /** Filter by the object’s `type` field. */
+  type?: Maybe<EventTypeFilter>;
+  /** Filter by the object’s `startDate` field. */
+  startDate?: Maybe<BigIntFilter>;
+  /** Filter by the object’s `endDate` field. */
+  endDate?: Maybe<BigIntFilter>;
+  /** Filter by the object’s `ticketproviderid` field. */
+  ticketproviderid?: Maybe<StringFilter>;
+  /** Filter by the object’s `ticketproviderurl` field. */
+  ticketproviderurl?: Maybe<StringFilter>;
+  /** Filter by the object’s `banner` field. */
+  banner?: Maybe<StringFilter>;
+  /** Filter by the object’s `approved` field. */
+  approved?: Maybe<BooleanFilter>;
+  /** Filter by the object’s `contributor` field. */
+  contributor?: Maybe<IntFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: Maybe<DatetimeFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<EventFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<EventFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<EventFilter>;
+}
+/** A filter to be used against EventType fields. All fields are combined with a logical ‘and.’ */
+export interface EventTypeFilter {
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<boolean>;
+  /** Equal to the specified value. */
+  equalTo?: Maybe<EventType>;
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<EventType>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<EventType>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<EventType>;
+  /** Included in the specified list. */
+  in?: Maybe<EventType[]>;
+  /** Not included in the specified list. */
+  notIn?: Maybe<EventType[]>;
+}
+/** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
+export interface BooleanFilter {
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<boolean>;
+  /** Equal to the specified value. */
+  equalTo?: Maybe<boolean>;
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<boolean>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<boolean>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<boolean>;
+  /** Included in the specified list. */
+  in?: Maybe<boolean[]>;
+  /** Not included in the specified list. */
+  notIn?: Maybe<boolean[]>;
+}
+/** A condition to be used against `ArtistToEvent` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface ArtistToEventCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `artistId` field. */
+  artistId?: Maybe<string>;
+  /** Checks for equality with the object’s `eventId` field. */
+  eventId?: Maybe<string>;
+}
+/** A filter to be used against `ArtistToEvent` object types. All fields are combined with a logical ‘and.’ */
+export interface ArtistToEventFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `artistId` field. */
+  artistId?: Maybe<StringFilter>;
+  /** Filter by the object’s `eventId` field. */
+  eventId?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<ArtistToEventFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<ArtistToEventFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<ArtistToEventFilter>;
+}
+/** A condition to be used against `GenreToArtist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface GenreToArtistCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `genreId` field. */
+  genreId?: Maybe<string>;
+  /** Checks for equality with the object’s `artistId` field. */
+  artistId?: Maybe<string>;
+}
+/** A filter to be used against `GenreToArtist` object types. All fields are combined with a logical ‘and.’ */
+export interface GenreToArtistFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `genreId` field. */
+  genreId?: Maybe<StringFilter>;
+  /** Filter by the object’s `artistId` field. */
+  artistId?: Maybe<StringFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<GenreToArtistFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<GenreToArtistFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<GenreToArtistFilter>;
+}
 /** A condition to be used against `FollowList` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface FollowListCondition {
   /** Checks for equality with the object’s `id` field. */
@@ -952,54 +1121,6 @@ export interface FollowListFilter {
   or?: Maybe<FollowListFilter[]>;
   /** Negates the expression. */
   not?: Maybe<FollowListFilter>;
-}
-/** A condition to be used against `GenreToArtist` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface GenreToArtistCondition {
-  /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<number>;
-  /** Checks for equality with the object’s `genreId` field. */
-  genreId?: Maybe<string>;
-  /** Checks for equality with the object’s `artistId` field. */
-  artistId?: Maybe<string>;
-}
-/** A filter to be used against `GenreToArtist` object types. All fields are combined with a logical ‘and.’ */
-export interface GenreToArtistFilter {
-  /** Filter by the object’s `id` field. */
-  id?: Maybe<IntFilter>;
-  /** Filter by the object’s `genreId` field. */
-  genreId?: Maybe<StringFilter>;
-  /** Filter by the object’s `artistId` field. */
-  artistId?: Maybe<StringFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<GenreToArtistFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<GenreToArtistFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<GenreToArtistFilter>;
-}
-/** A condition to be used against `ArtistToEvent` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface ArtistToEventCondition {
-  /** Checks for equality with the object’s `id` field. */
-  id?: Maybe<number>;
-  /** Checks for equality with the object’s `artistId` field. */
-  artistId?: Maybe<string>;
-  /** Checks for equality with the object’s `eventId` field. */
-  eventId?: Maybe<string>;
-}
-/** A filter to be used against `ArtistToEvent` object types. All fields are combined with a logical ‘and.’ */
-export interface ArtistToEventFilter {
-  /** Filter by the object’s `id` field. */
-  id?: Maybe<IntFilter>;
-  /** Filter by the object’s `artistId` field. */
-  artistId?: Maybe<StringFilter>;
-  /** Filter by the object’s `eventId` field. */
-  eventId?: Maybe<StringFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<ArtistToEventFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<ArtistToEventFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<ArtistToEventFilter>;
 }
 /** A condition to be used against `WatchList` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface WatchListCondition {
@@ -1153,6 +1274,34 @@ export interface ArtistFilter {
   /** Negates the expression. */
   not?: Maybe<ArtistFilter>;
 }
+/** A condition to be used against `Country` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface CountryCondition {
+  /** Checks for equality with the object’s `code` field. */
+  code?: Maybe<string>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: Maybe<string>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<BigInt>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: Maybe<Datetime>;
+}
+/** A filter to be used against `Country` object types. All fields are combined with a logical ‘and.’ */
+export interface CountryFilter {
+  /** Filter by the object’s `code` field. */
+  code?: Maybe<StringFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: Maybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: Maybe<DatetimeFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<CountryFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<CountryFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<CountryFilter>;
+}
 /** A condition to be used against `Genre` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface GenreCondition {
   /** Checks for equality with the object’s `name` field. */
@@ -1181,42 +1330,6 @@ export interface GenreFilter {
   /** Negates the expression. */
   not?: Maybe<GenreFilter>;
 }
-/** A condition to be used against `Region` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface RegionCondition {
-  /** Checks for equality with the object’s `name` field. */
-  name?: Maybe<string>;
-  /** Checks for equality with the object’s `description` field. */
-  description?: Maybe<string>;
-  /** Checks for equality with the object’s `photo` field. */
-  photo?: Maybe<string>;
-  /** Checks for equality with the object’s `country` field. */
-  country?: Maybe<string>;
-  /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: Maybe<BigInt>;
-  /** Checks for equality with the object’s `updatedAt` field. */
-  updatedAt?: Maybe<Datetime>;
-}
-/** A filter to be used against `Region` object types. All fields are combined with a logical ‘and.’ */
-export interface RegionFilter {
-  /** Filter by the object’s `name` field. */
-  name?: Maybe<StringFilter>;
-  /** Filter by the object’s `description` field. */
-  description?: Maybe<StringFilter>;
-  /** Filter by the object’s `photo` field. */
-  photo?: Maybe<StringFilter>;
-  /** Filter by the object’s `country` field. */
-  country?: Maybe<StringFilter>;
-  /** Filter by the object’s `createdAt` field. */
-  createdAt?: Maybe<BigIntFilter>;
-  /** Filter by the object’s `updatedAt` field. */
-  updatedAt?: Maybe<DatetimeFilter>;
-  /** Checks for all expressions in this list. */
-  and?: Maybe<RegionFilter[]>;
-  /** Checks for any expressions in this list. */
-  or?: Maybe<RegionFilter[]>;
-  /** Negates the expression. */
-  not?: Maybe<RegionFilter>;
-}
 /** All input for the create `Account` mutation. */
 export interface CreateAccountInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1232,6 +1345,8 @@ export interface AccountInput {
   username: string;
   /** Profile photo of account */
   profilePhoto?: Maybe<string>;
+  /** Frequency of requested notification for new events */
+  notificationFrequency?: Maybe<Frequency>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -1319,6 +1434,24 @@ export interface CityInput {
   /** When city created */
   createdAt?: Maybe<BigInt>;
   /** When city last updated */
+  updatedAt?: Maybe<Datetime>;
+}
+/** All input for the create `Country` mutation. */
+export interface CreateCountryInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The `Country` to be created by this mutation. */
+  country: CountryInput;
+}
+/** An input for mutations affecting `Country` */
+export interface CountryInput {
+  /** Primary key and code for country */
+  code: string;
+  /** Name for country */
+  name?: Maybe<string>;
+  /** When country created */
+  createdAt?: Maybe<BigInt>;
+  /** When country last updated */
   updatedAt?: Maybe<Datetime>;
 }
 /** All input for the create `Event` mutation. */
@@ -1479,6 +1612,24 @@ export interface WatchListInput {
   /** Id of the event */
   eventId: string;
 }
+/** All input for the create `WatchedToAccount` mutation. */
+export interface CreateWatchedToAccountInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The `WatchedToAccount` to be created by this mutation. */
+  watchedToAccount: WatchedToAccountInput;
+}
+/** An input for mutations affecting `WatchedToAccount` */
+export interface WatchedToAccountInput {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId: number;
+  /** Name of the region */
+  region: string;
+  /** Id of the city */
+  cityId: number;
+}
 /** All input for the create `AdminAccount` mutation. */
 export interface CreateAdminAccountInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -1528,6 +1679,8 @@ export interface AccountPatch {
   username?: Maybe<string>;
   /** Profile photo of account */
   profilePhoto?: Maybe<string>;
+  /** Frequency of requested notification for new events */
+  notificationFrequency?: Maybe<Frequency>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -1667,6 +1820,35 @@ export interface UpdateCityByIdInput {
   cityPatch: CityPatch;
   /** Primary key for city */
   id: number;
+}
+/** All input for the `updateCountry` mutation. */
+export interface UpdateCountryInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `Country` to be updated. */
+  nodeId: string;
+  /** An object where the defined keys will be set on the `Country` being updated. */
+  countryPatch: CountryPatch;
+}
+/** Represents an update to a `Country`. Fields that are set will be updated. */
+export interface CountryPatch {
+  /** Primary key and code for country */
+  code?: Maybe<string>;
+  /** Name for country */
+  name?: Maybe<string>;
+  /** When country created */
+  createdAt?: Maybe<BigInt>;
+  /** When country last updated */
+  updatedAt?: Maybe<Datetime>;
+}
+/** All input for the `updateCountryByCode` mutation. */
+export interface UpdateCountryByCodeInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** An object where the defined keys will be set on the `Country` being updated. */
+  countryPatch: CountryPatch;
+  /** Primary key and code for country */
+  code: string;
 }
 /** All input for the `updateEvent` mutation. */
 export interface UpdateEventInput {
@@ -1903,6 +2085,35 @@ export interface UpdateWatchListByIdInput {
   /** Id of the row */
   id: number;
 }
+/** All input for the `updateWatchedToAccount` mutation. */
+export interface UpdateWatchedToAccountInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `WatchedToAccount` to be updated. */
+  nodeId: string;
+  /** An object where the defined keys will be set on the `WatchedToAccount` being updated. */
+  watchedToAccountPatch: WatchedToAccountPatch;
+}
+/** Represents an update to a `WatchedToAccount`. Fields that are set will be updated. */
+export interface WatchedToAccountPatch {
+  /** Id of the row */
+  id?: Maybe<number>;
+  /** Id of the account */
+  accountId?: Maybe<number>;
+  /** Name of the region */
+  region?: Maybe<string>;
+  /** Id of the city */
+  cityId?: Maybe<number>;
+}
+/** All input for the `updateWatchedToAccountById` mutation. */
+export interface UpdateWatchedToAccountByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** An object where the defined keys will be set on the `WatchedToAccount` being updated. */
+  watchedToAccountPatch: WatchedToAccountPatch;
+  /** Id of the row */
+  id: number;
+}
 /** All input for the `updateAdminAccount` mutation. */
 export interface UpdateAdminAccountInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -2038,6 +2249,20 @@ export interface DeleteCityByIdInput {
   /** Primary key for city */
   id: number;
 }
+/** All input for the `deleteCountry` mutation. */
+export interface DeleteCountryInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `Country` to be deleted. */
+  nodeId: string;
+}
+/** All input for the `deleteCountryByCode` mutation. */
+export interface DeleteCountryByCodeInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** Primary key and code for country */
+  code: string;
+}
 /** All input for the `deleteEvent` mutation. */
 export interface DeleteEventInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -2131,6 +2356,20 @@ export interface DeleteWatchListInput {
 }
 /** All input for the `deleteWatchListById` mutation. */
 export interface DeleteWatchListByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** Id of the row */
+  id: number;
+}
+/** All input for the `deleteWatchedToAccount` mutation. */
+export interface DeleteWatchedToAccountInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `WatchedToAccount` to be deleted. */
+  nodeId: string;
+}
+/** All input for the `deleteWatchedToAccountById` mutation. */
+export interface DeleteWatchedToAccountByIdInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
   clientMutationId?: Maybe<string>;
   /** Id of the row */
@@ -2245,6 +2484,95 @@ export enum AccountsOrderBy {
   UsernameDesc = "USERNAME_DESC",
   ProfilePhotoAsc = "PROFILE_PHOTO_ASC",
   ProfilePhotoDesc = "PROFILE_PHOTO_DESC",
+  NotificationFrequencyAsc = "NOTIFICATION_FREQUENCY_ASC",
+  NotificationFrequencyDesc = "NOTIFICATION_FREQUENCY_DESC",
+  CreatedAtAsc = "CREATED_AT_ASC",
+  CreatedAtDesc = "CREATED_AT_DESC",
+  UpdatedAtAsc = "UPDATED_AT_ASC",
+  UpdatedAtDesc = "UPDATED_AT_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+
+export enum Frequency {
+  EveryDay = "EVERY_DAY",
+  ThreeTimesAWeek = "THREE_TIMES_A_WEEK",
+  TwoTimesAWeek = "TWO_TIMES_A_WEEK",
+  OnceAWeek = "ONCE_A_WEEK",
+  OnceEveryTwoWeeks = "ONCE_EVERY_TWO_WEEKS",
+  Never = "NEVER"
+}
+/** Methods to use when ordering `WatchedToAccount`. */
+export enum WatchedToAccountsOrderBy {
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
+  RegionAsc = "REGION_ASC",
+  RegionDesc = "REGION_DESC",
+  CityIdAsc = "CITY_ID_ASC",
+  CityIdDesc = "CITY_ID_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `Region`. */
+export enum RegionsOrderBy {
+  Natural = "NATURAL",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  DescriptionAsc = "DESCRIPTION_ASC",
+  DescriptionDesc = "DESCRIPTION_DESC",
+  PhotoAsc = "PHOTO_ASC",
+  PhotoDesc = "PHOTO_DESC",
+  CountryAsc = "COUNTRY_ASC",
+  CountryDesc = "COUNTRY_DESC",
+  CreatedAtAsc = "CREATED_AT_ASC",
+  CreatedAtDesc = "CREATED_AT_DESC",
+  UpdatedAtAsc = "UPDATED_AT_ASC",
+  UpdatedAtDesc = "UPDATED_AT_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `City`. */
+export enum CitiesOrderBy {
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  DescriptionAsc = "DESCRIPTION_ASC",
+  DescriptionDesc = "DESCRIPTION_DESC",
+  PhotoAsc = "PHOTO_ASC",
+  PhotoDesc = "PHOTO_DESC",
+  RegionAsc = "REGION_ASC",
+  RegionDesc = "REGION_DESC",
+  CreatedAtAsc = "CREATED_AT_ASC",
+  CreatedAtDesc = "CREATED_AT_DESC",
+  UpdatedAtAsc = "UPDATED_AT_ASC",
+  UpdatedAtDesc = "UPDATED_AT_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
+}
+/** Methods to use when ordering `Venue`. */
+export enum VenuesOrderBy {
+  Natural = "NATURAL",
+  NameAsc = "NAME_ASC",
+  NameDesc = "NAME_DESC",
+  DescriptionAsc = "DESCRIPTION_ASC",
+  DescriptionDesc = "DESCRIPTION_DESC",
+  LatAsc = "LAT_ASC",
+  LatDesc = "LAT_DESC",
+  LonAsc = "LON_ASC",
+  LonDesc = "LON_DESC",
+  CityAsc = "CITY_ASC",
+  CityDesc = "CITY_DESC",
+  AddressAsc = "ADDRESS_ASC",
+  AddressDesc = "ADDRESS_DESC",
+  PhotoAsc = "PHOTO_ASC",
+  PhotoDesc = "PHOTO_DESC",
+  LogoAsc = "LOGO_ASC",
+  LogoDesc = "LOGO_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -2295,63 +2623,15 @@ export enum EventType {
   Etix = "ETIX",
   Other = "OTHER"
 }
-/** Methods to use when ordering `City`. */
-export enum CitiesOrderBy {
+/** Methods to use when ordering `ArtistToEvent`. */
+export enum ArtistToEventsOrderBy {
   Natural = "NATURAL",
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
-  NameAsc = "NAME_ASC",
-  NameDesc = "NAME_DESC",
-  DescriptionAsc = "DESCRIPTION_ASC",
-  DescriptionDesc = "DESCRIPTION_DESC",
-  PhotoAsc = "PHOTO_ASC",
-  PhotoDesc = "PHOTO_DESC",
-  RegionAsc = "REGION_ASC",
-  RegionDesc = "REGION_DESC",
-  CreatedAtAsc = "CREATED_AT_ASC",
-  CreatedAtDesc = "CREATED_AT_DESC",
-  UpdatedAtAsc = "UPDATED_AT_ASC",
-  UpdatedAtDesc = "UPDATED_AT_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `Venue`. */
-export enum VenuesOrderBy {
-  Natural = "NATURAL",
-  NameAsc = "NAME_ASC",
-  NameDesc = "NAME_DESC",
-  DescriptionAsc = "DESCRIPTION_ASC",
-  DescriptionDesc = "DESCRIPTION_DESC",
-  LatAsc = "LAT_ASC",
-  LatDesc = "LAT_DESC",
-  LonAsc = "LON_ASC",
-  LonDesc = "LON_DESC",
-  CityAsc = "CITY_ASC",
-  CityDesc = "CITY_DESC",
-  AddressAsc = "ADDRESS_ASC",
-  AddressDesc = "ADDRESS_DESC",
-  PhotoAsc = "PHOTO_ASC",
-  PhotoDesc = "PHOTO_DESC",
-  LogoAsc = "LOGO_ASC",
-  LogoDesc = "LOGO_DESC",
-  CreatedAtAsc = "CREATED_AT_ASC",
-  CreatedAtDesc = "CREATED_AT_DESC",
-  UpdatedAtAsc = "UPDATED_AT_ASC",
-  UpdatedAtDesc = "UPDATED_AT_DESC",
-  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
-  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
-}
-/** Methods to use when ordering `FollowList`. */
-export enum FollowListsOrderBy {
-  Natural = "NATURAL",
-  IdAsc = "ID_ASC",
-  IdDesc = "ID_DESC",
-  AccountIdAsc = "ACCOUNT_ID_ASC",
-  AccountIdDesc = "ACCOUNT_ID_DESC",
   ArtistIdAsc = "ARTIST_ID_ASC",
   ArtistIdDesc = "ARTIST_ID_DESC",
-  VenueIdAsc = "VENUE_ID_ASC",
-  VenueIdDesc = "VENUE_ID_DESC",
+  EventIdAsc = "EVENT_ID_ASC",
+  EventIdDesc = "EVENT_ID_DESC",
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
@@ -2367,15 +2647,17 @@ export enum GenreToArtistsOrderBy {
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
-/** Methods to use when ordering `ArtistToEvent`. */
-export enum ArtistToEventsOrderBy {
+/** Methods to use when ordering `FollowList`. */
+export enum FollowListsOrderBy {
   Natural = "NATURAL",
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
   ArtistIdAsc = "ARTIST_ID_ASC",
   ArtistIdDesc = "ARTIST_ID_DESC",
-  EventIdAsc = "EVENT_ID_ASC",
-  EventIdDesc = "EVENT_ID_DESC",
+  VenueIdAsc = "VENUE_ID_ASC",
+  VenueIdDesc = "VENUE_ID_DESC",
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
@@ -2455,13 +2737,13 @@ export enum ArtistsOrderBy {
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
-/** Methods to use when ordering `Genre`. */
-export enum GenresOrderBy {
+/** Methods to use when ordering `Country`. */
+export enum CountriesOrderBy {
   Natural = "NATURAL",
+  CodeAsc = "CODE_ASC",
+  CodeDesc = "CODE_DESC",
   NameAsc = "NAME_ASC",
   NameDesc = "NAME_DESC",
-  DescriptionAsc = "DESCRIPTION_ASC",
-  DescriptionDesc = "DESCRIPTION_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -2469,17 +2751,13 @@ export enum GenresOrderBy {
   PrimaryKeyAsc = "PRIMARY_KEY_ASC",
   PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
-/** Methods to use when ordering `Region`. */
-export enum RegionsOrderBy {
+/** Methods to use when ordering `Genre`. */
+export enum GenresOrderBy {
   Natural = "NATURAL",
   NameAsc = "NAME_ASC",
   NameDesc = "NAME_DESC",
   DescriptionAsc = "DESCRIPTION_ASC",
   DescriptionDesc = "DESCRIPTION_DESC",
-  PhotoAsc = "PHOTO_ASC",
-  PhotoDesc = "PHOTO_DESC",
-  CountryAsc = "COUNTRY_ASC",
-  CountryDesc = "COUNTRY_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -2859,6 +3137,8 @@ export namespace CurrentAccount {
 
     username: string;
 
+    notificationFrequency: Frequency;
+
     profilePhoto: Maybe<string>;
 
     id: number;
@@ -3231,6 +3511,46 @@ export namespace SearchEventsByRegion {
     __typename?: "WatchList";
 
     id: number;
+  };
+}
+
+export namespace UpdateAccount {
+  export type Variables = {
+    userId: number;
+    profilePhoto?: Maybe<string>;
+    notificationFrequency?: Maybe<Frequency>;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    updateAccountById: Maybe<UpdateAccountById>;
+  };
+
+  export type UpdateAccountById = {
+    __typename?: "UpdateAccountPayload";
+
+    account: Maybe<Account>;
+  };
+
+  export type Account = {
+    __typename?: "Account";
+
+    username: string;
+
+    notificationFrequency: Frequency;
+
+    profilePhoto: Maybe<string>;
+
+    id: number;
+
+    watchListsByAccountId: WatchListsByAccountId;
+  };
+
+  export type WatchListsByAccountId = {
+    __typename?: "WatchListsConnection";
+
+    totalCount: Maybe<number>;
   };
 }
 
