@@ -211,6 +211,40 @@ export class CreateWatchListGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class CreateWatchedToAccountGQL extends Apollo.Mutation<
+  CreateWatchedToAccount.Mutation,
+  CreateWatchedToAccount.Variables
+> {
+  document: any = gql`
+    mutation createWatchedToAccount(
+      $accountId: Int!
+      $region: String
+      $cityId: Int
+    ) {
+      createWatchedToAccount(
+        input: {
+          watchedToAccount: {
+            accountId: $accountId
+            region: $region
+            cityId: $cityId
+          }
+        }
+      ) {
+        watchedToAccount {
+          id
+          region
+          cityByCityId {
+            id
+            name
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class CurrentAccountGQL extends Apollo.Query<
   CurrentAccount.Query,
   CurrentAccount.Variables
@@ -225,6 +259,21 @@ export class CurrentAccountGQL extends Apollo.Query<
         watchListsByAccountId {
           totalCount
         }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeleteWatchedByIdGQL extends Apollo.Mutation<
+  DeleteWatchedById.Mutation,
+  DeleteWatchedById.Variables
+> {
+  document: any = gql`
+    mutation deleteWatchedById($id: Int!) {
+      deleteWatchedToAccountById(input: { id: $id }) {
+        clientMutationId
       }
     }
   `;
@@ -561,6 +610,28 @@ export class VenueByNameGQL extends Apollo.Query<
                 }
               }
             }
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class WatchedLocationByAccountGQL extends Apollo.Query<
+  WatchedLocationByAccount.Query,
+  WatchedLocationByAccount.Variables
+> {
+  document: any = gql`
+    query watchedLocationByAccount($accountId: Int!) {
+      allWatchedToAccounts(filter: { accountId: { equalTo: $accountId } }) {
+        nodes {
+          id
+          region
+          cityByCityId {
+            id
+            name
           }
         }
       }
@@ -1626,9 +1697,9 @@ export interface WatchedToAccountInput {
   /** Id of the account */
   accountId: number;
   /** Name of the region */
-  region: string;
+  region?: Maybe<string>;
   /** Id of the city */
-  cityId: number;
+  cityId?: Maybe<number>;
 }
 /** All input for the create `AdminAccount` mutation. */
 export interface CreateAdminAccountInput {
@@ -3123,6 +3194,44 @@ export namespace CreateWatchList {
   };
 }
 
+export namespace CreateWatchedToAccount {
+  export type Variables = {
+    accountId: number;
+    region?: Maybe<string>;
+    cityId?: Maybe<number>;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createWatchedToAccount: Maybe<CreateWatchedToAccount>;
+  };
+
+  export type CreateWatchedToAccount = {
+    __typename?: "CreateWatchedToAccountPayload";
+
+    watchedToAccount: Maybe<WatchedToAccount>;
+  };
+
+  export type WatchedToAccount = {
+    __typename?: "WatchedToAccount";
+
+    id: number;
+
+    region: Maybe<string>;
+
+    cityByCityId: Maybe<CityByCityId>;
+  };
+
+  export type CityByCityId = {
+    __typename?: "City";
+
+    id: number;
+
+    name: Maybe<string>;
+  };
+}
+
 export namespace CurrentAccount {
   export type Variables = {};
 
@@ -3150,6 +3259,24 @@ export namespace CurrentAccount {
     __typename?: "WatchListsConnection";
 
     totalCount: Maybe<number>;
+  };
+}
+
+export namespace DeleteWatchedById {
+  export type Variables = {
+    id: number;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deleteWatchedToAccountById: Maybe<DeleteWatchedToAccountById>;
+  };
+
+  export type DeleteWatchedToAccountById = {
+    __typename?: "DeleteWatchedToAccountPayload";
+
+    clientMutationId: Maybe<string>;
   };
 }
 
@@ -3660,5 +3787,41 @@ export namespace VenueByName {
     __typename?: "Artist";
 
     photo: Maybe<string>;
+  };
+}
+
+export namespace WatchedLocationByAccount {
+  export type Variables = {
+    accountId: number;
+  };
+
+  export type Query = {
+    __typename?: "Query";
+
+    allWatchedToAccounts: Maybe<AllWatchedToAccounts>;
+  };
+
+  export type AllWatchedToAccounts = {
+    __typename?: "WatchedToAccountsConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "WatchedToAccount";
+
+    id: number;
+
+    region: Maybe<string>;
+
+    cityByCityId: Maybe<CityByCityId>;
+  };
+
+  export type CityByCityId = {
+    __typename?: "City";
+
+    id: number;
+
+    name: Maybe<string>;
   };
 }

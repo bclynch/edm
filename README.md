@@ -115,8 +115,6 @@
     - https://www.nativescript.org/nativescript-is-how-you-build-native-mobile-apps-with-angular/code-sharing-angular-and-nativescript
     - https://blog.angular.io/apps-that-work-natively-on-the-web-and-mobile-9b26852495e7
 
-### Name Ideas
-
 
 ## Development server
 

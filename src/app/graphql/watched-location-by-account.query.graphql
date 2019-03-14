@@ -1,0 +1,18 @@
+query watchedLocationByAccount($accountId: Int!) {
+  allWatchedToAccounts(
+    filter: {
+    	accountId: {
+        equalTo: $accountId
+      }
+  	}
+  ) {
+    nodes {
+      id,
+      region,
+      cityByCityId {
+        id,
+        name
+      }
+    }
+  }
+}

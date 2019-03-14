@@ -35,6 +35,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(change) {
     if (change.value && change.value.currentValue) this.myControl.setValue(change.value.currentValue);
+    if (change.value && change.value.currentValue && change.value.currentValue.split('-')[0] === 'reset') this.myControl.setValue('');
   }
 
   ngOnDestroy() {

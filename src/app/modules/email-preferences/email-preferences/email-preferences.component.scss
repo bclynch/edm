@@ -7,15 +7,22 @@
     padding-bottom: 20px;
     width: 100%;
   }
-  form {
+  .locationsContainer {
+
+    .locationRow {
+      display: flex;
+      align-items: center;
+    }
+    .removeBtn {
+      color: red;
+    }
+  }
+  .formWrapper {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
 
     .mat-form-field {
       display: block;
-    }
-    button[type='submit'] {
-      color: white;
     }
   }
 }

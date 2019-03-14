@@ -1,0 +1,9 @@
+mutation deleteWatchedById($id: Int!) {
+  deleteWatchedToAccountById(
+    input: {
+      id: $id
+    }
+  ) {
+    clientMutationId
+  }
+}
