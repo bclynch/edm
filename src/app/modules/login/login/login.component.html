@@ -7,7 +7,6 @@
           matInput
           placeholder="Email" 
           formControlName="email"
-          [errorStateMatcher]="matcher"
         />
       </mat-form-field>
       <mat-form-field>
@@ -16,7 +15,6 @@
           placeholder="Password"
           type="password" 
           formControlName="password"
-          [errorStateMatcher]="matcher"
         />
       </mat-form-field>
       <div class="linkWrapper"><a [routerLink]="['/password-reset']">Forgot your password?</a></div>

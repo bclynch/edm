@@ -27,7 +27,7 @@ export class EmailPreferencesComponent implements OnInit {
   initSubscription: SubscriptionLike;
 
   constructor(
-    private appService: AppService,
+    public appService: AppService,
     private updateAccountGQL: UpdateAccountGQL,
     private userService: UserService,
     private watchedLocationByAccountGQL: WatchedLocationByAccountGQL,
@@ -74,9 +74,7 @@ export class EmailPreferencesComponent implements OnInit {
           });
         }
       },
-      err => {
-        console.log(err);
-      }
+      err => console.log(err)
     );
   }
 

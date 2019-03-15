@@ -17,7 +17,7 @@ export class NavbarComponent {
   abc = 'assets/images/edm_flare.png';
 
   constructor(
-    private utilService: UtilService,
+    public utilService: UtilService,
     private userService: UserService,
     private location: Location,
     private router: Router

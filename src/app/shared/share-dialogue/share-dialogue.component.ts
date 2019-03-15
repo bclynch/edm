@@ -17,8 +17,8 @@ export class ShareDialogueComponent implements OnInit {
   ngOnInit() {
   }
 
-  dismiss(type: string) {
-    this.dialogRef.close(type);
+  dismiss() {
+    this.dialogRef.close();
   }
 
   copy() {

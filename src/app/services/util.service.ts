@@ -75,6 +75,16 @@ export class UtilService {
     }
   }
 
+  arrayBufferToBase64( buffer ) {
+    let binary = '';
+    const bytes = new Uint8Array( buffer );
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+  }
+
   private getMonthDateRange(year, month) {
     // month in moment is 0 based, so 9 is actually october, subtract 1 to compensate
     // array is 'year', 'month', 'day', etc

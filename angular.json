@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "edm": {
+    "edmflare": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/edm",
+            "outputPath": "dist/edmflare",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,7 +25,9 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/sw-master.js",
+              "src/sw-custom.js"
             ],
             "styles": [
               "src/styles.scss"
@@ -91,18 +93,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "edm:build"
+            "browserTarget": "edmflare:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "edm:build:production"
+              "browserTarget": "edmflare:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "edm:build"
+            "browserTarget": "edmflare:build"
           }
         },
         "test": {
@@ -119,7 +121,9 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/sw-master.js",
+              "src/sw-custom.js"
             ]
           }
         },
@@ -137,7 +141,7 @@
         }
       }
     },
-    "edm-e2e": {
+    "edmflare-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -146,11 +150,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "edm:serve"
+            "devServerTarget": "edmflare:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "edm:serve:production"
+              "devServerTarget": "edmflare:serve:production"
             }
           }
         },
@@ -166,5 +170,5 @@
       }
     }
   },
-  "defaultProject": "edm"
+  "defaultProject": "edmflare"
 }

@@ -7,7 +7,6 @@
           matInput
           placeholder="Email" 
           formControlName="email"
-          [errorStateMatcher]="matcher"
         />
         <mat-error *ngFor="let validation of formValidationMessages.email">
           <mat-error class="error-message" *ngIf="signupForm.get('email').hasError(validation.type) && (signupForm.get('email').dirty || signupForm.get('email').touched)">{{validation.message}}</mat-error>
@@ -18,7 +17,6 @@
           matInput
           placeholder="Username" 
           formControlName="username"
-          [errorStateMatcher]="matcher"
         />
         <mat-error *ngFor="let validation of formValidationMessages.username">
           <mat-error class="error-message" *ngIf="signupForm.get('username').hasError(validation.type) && (signupForm.get('username').dirty || signupForm.get('username').touched)">{{validation.message}}</mat-error>
@@ -31,7 +29,6 @@
             placeholder="Password"
             type="password" 
             formControlName="password"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngFor="let validation of formValidationMessages.password">
             <mat-error class="error-message" *ngIf="signupForm.get('matchingPassword').get('password').hasError(validation.type) && (signupForm.get('matchingPassword').get('password').dirty || signupForm.get('matchingPassword').get('password').touched)">{{validation.message}}</mat-error>
@@ -43,7 +40,6 @@
             placeholder="Confirm Password"
             type="password" 
             formControlName="confirmPassword"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngFor="let validation of formValidationMessages.confirmPassword">
             <mat-error class="error-message" *ngIf="(signupForm.get('matchingPassword').get('confirmPassword').hasError(validation.type)|| signupForm.get('matchingPassword').hasError(validation.type)) && (signupForm.get('matchingPassword').get('confirmPassword').dirty || signupForm.get('matchingPassword').get('confirmPassword').touched)">{{validation.message}}</mat-error>

@@ -1,13 +1,34 @@
 # EDM Flare
 
 ## Todos
+- Add genres to artist page
+    - Maybe some listing of artists by genre?
+    - Maybe a filter on events search?
 - Look at affiliate / ref links
-- Mailing setup
+- Upload apk to google play store + link on home page for play store + have directions for ios shortcut
+    - https://appmaker.xyz/pwa-to-apk/ - Auto create apk with directions for TWA
+- Push notifications
+    - https://blog.angular-university.io/angular-push-notifications/
+    - ~~Works for chrome and firefox~~
+    - Opens up a link on click
+        - Need to configure the link on server + setup something on front end to display
+    - Nothing works for ios / safari (yet - ever?)
+    - Have option in settings for email / push / both
+    - Need to check if already subbed and make it an unsub btn instead.
+    - If you say reject, but want to be asked again
+        - go to chrome://settings/content/notifications
+        - scroll down the Block list, containing all the websites that are blocked from emitting push notifications
+        - delete localhost from the Block list
+        - Click the Subscribe button again
+- ~~Add service worker~~
+    - https://blog.angular-university.io/angular-service-worker/
+    - Add native app prompt https://developers.google.com/web/fundamentals/app-install-banners/native
+    - Add to homescreen prompt https://developers.google.com/web/fundamentals/app-install-banners/
+- ~~Mailing setup~~
     - ~~Working with pomb + ses~~
     - ~~Create welcome email~~
         - ~~Nice image of on different devices~~
         - ~~Explain a bit about community~~
-        - Explain how to install as an app
         - ~~Make sure they know it's just updates from here on out~~
 - ~~Create watching table + functionality for users for an event. Only for logged in.~~
 - ~~Create follow table for artists and venues.~~
@@ -118,16 +139,29 @@
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `$ ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Testing PWA Features / Prod Build
+- Make sure http server is installed globally
+    - `$ npm install -g http-server`
+- **Change out prod env vars apolloBaseURL and apiBaseURL with their localhost dev equivalents**
+- Build prod bundle `$ ng build --prod` to create /dist folder
+```
+$ cd dist/edmflare
+$ http-server -c-1 .
+```
+- Head to http://localhost:8080 to see app in action 
+    - Must use localhost for serviceworker to work. Otherwise http isn't secure
+
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `$ ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
-- Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-- To run a staging build: `ng build --configuration=staging`
+- Run `$ ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- To run a staging build: `$ ng build --configuration=staging`
     - Staging setup env config https://angular.io/guide/build
 
 ## Running unit tests

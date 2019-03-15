@@ -40,7 +40,8 @@ import { EmailService } from './services/email.service';
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production }),
+    // enhancing the ngsw http://jakubcodes.pl/2018/06/13/enhancing-angular-ngsw/
+    ServiceWorkerModule.register('/sw-master.js', { enabled: ENV.production }),
   ],
   providers: [
     RoleGuardService,

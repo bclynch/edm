@@ -1,12 +1,17 @@
 {
   "name": "EDM Flare",
   "short_name": "EDM Flare",
+  "description": "Discover upcoming edm shows where you live and get in touch with the local community",
   "theme_color": "#546e7a",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32"
+    },
     {
       "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",

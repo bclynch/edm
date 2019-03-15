@@ -22,7 +22,6 @@
             matInput
             placeholder="Name" 
             formControlName="name"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngFor="let validation of formValidationMessages.name">
             <mat-error class="error-message" *ngIf="contactForm.get('name').hasError(validation.type) && (contactForm.get('name').dirty || contactForm.get('name').touched)">{{validation.message}}</mat-error>
@@ -33,7 +32,6 @@
             matInput
             placeholder="Email" 
             formControlName="email"
-            [errorStateMatcher]="matcher"
           />
           <mat-error *ngFor="let validation of formValidationMessages.email">
             <mat-error class="error-message" *ngIf="contactForm.get('email').hasError(validation.type) && (contactForm.get('email').dirty || contactForm.get('email').touched)">{{validation.message}}</mat-error>
@@ -46,7 +44,6 @@
             #input 
             maxlength="500" 
             formControlName="message" 
-            [errorStateMatcher]="matcher"
             rows="3"
           ></textarea>
           <mat-hint align="end">{{input.value?.length || 0}}/500</mat-hint>

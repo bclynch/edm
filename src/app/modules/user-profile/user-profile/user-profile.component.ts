@@ -11,7 +11,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private userService: UserService
+    public userService: UserService
   ) {
     this.appService.modPageMeta('User Profile Settings', 'Modify user settings for your EDM Flare account');
   }

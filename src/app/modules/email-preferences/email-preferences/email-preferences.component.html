@@ -1,6 +1,9 @@
 <app-pagewrapper>
   <app-settings-wrapper>
     <div class="preferencesContainer">
+      <button class="mat-flat-button" color="primary" (click)="appService.subscribeToPushNotifications()">
+        Test Sub to Push Notifcation
+      </button>
       <h1 class="settingsHeader">Email Preferences</h1>
       <div class="formWrapper">
         <div class="locationsContainer" *ngIf="frequency !== 'NEVER'">

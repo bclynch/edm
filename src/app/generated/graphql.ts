@@ -192,6 +192,36 @@ export class CreateFollowListGQL extends Apollo.Mutation<
 @Injectable({
   providedIn: "root"
 })
+export class CreatePushSubscriptionGQL extends Apollo.Mutation<
+  CreatePushSubscription.Mutation,
+  CreatePushSubscription.Variables
+> {
+  document: any = gql`
+    mutation createPushSubscription(
+      $accountId: Int!
+      $endpoint: String!
+      $p256Dh: String!
+      $auth: String!
+    ) {
+      createPushSubscription(
+        input: {
+          pushSubscription: {
+            accountId: $accountId
+            endpoint: $endpoint
+            expirationTime: null
+            p256Dh: $p256Dh
+            auth: $auth
+          }
+        }
+      ) {
+        clientMutationId
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
 export class CreateWatchListGQL extends Apollo.Mutation<
   CreateWatchList.Mutation,
   CreateWatchList.Variables
@@ -833,6 +863,50 @@ export interface DatetimeFilter {
   greaterThan?: Maybe<Datetime>;
   /** Greater than or equal to the specified value. */
   greaterThanOrEqualTo?: Maybe<Datetime>;
+}
+/** A condition to be used against `PushSubscription` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export interface PushSubscriptionCondition {
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<number>;
+  /** Checks for equality with the object’s `accountId` field. */
+  accountId?: Maybe<number>;
+  /** Checks for equality with the object’s `endpoint` field. */
+  endpoint?: Maybe<string>;
+  /** Checks for equality with the object’s `expirationTime` field. */
+  expirationTime?: Maybe<Datetime>;
+  /** Checks for equality with the object’s `p256Dh` field. */
+  p256Dh?: Maybe<string>;
+  /** Checks for equality with the object’s `auth` field. */
+  auth?: Maybe<string>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<BigInt>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: Maybe<Datetime>;
+}
+/** A filter to be used against `PushSubscription` object types. All fields are combined with a logical ‘and.’ */
+export interface PushSubscriptionFilter {
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<IntFilter>;
+  /** Filter by the object’s `accountId` field. */
+  accountId?: Maybe<IntFilter>;
+  /** Filter by the object’s `endpoint` field. */
+  endpoint?: Maybe<StringFilter>;
+  /** Filter by the object’s `expirationTime` field. */
+  expirationTime?: Maybe<DatetimeFilter>;
+  /** Filter by the object’s `p256Dh` field. */
+  p256Dh?: Maybe<StringFilter>;
+  /** Filter by the object’s `auth` field. */
+  auth?: Maybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: Maybe<DatetimeFilter>;
+  /** Checks for all expressions in this list. */
+  and?: Maybe<PushSubscriptionFilter[]>;
+  /** Checks for any expressions in this list. */
+  or?: Maybe<PushSubscriptionFilter[]>;
+  /** Negates the expression. */
+  not?: Maybe<PushSubscriptionFilter>;
 }
 /** A condition to be used against `WatchedToAccount` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface WatchedToAccountCondition {
@@ -1615,6 +1689,32 @@ export interface GenreToArtistInput {
   /** Id of the artist */
   artistId: string;
 }
+/** All input for the create `PushSubscription` mutation. */
+export interface CreatePushSubscriptionInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The `PushSubscription` to be created by this mutation. */
+  pushSubscription: PushSubscriptionInput;
+}
+/** An input for mutations affecting `PushSubscription` */
+export interface PushSubscriptionInput {
+  /** Serial primary key for subscription */
+  id?: Maybe<number>;
+  /** Who subscription is connected to */
+  accountId: number;
+  /** This contains a unique URL to a Firebase Cloud Messaging endpoint. This url is a public but unguessable endpoint to the Browser Push Service used by the application server to send push notifications to this subscription */
+  endpoint: string;
+  /** This is useful in certain cases, for example, if a message might contain an authentication code that expires after 1 minute */
+  expirationTime?: Maybe<Datetime>;
+  /** An encryption key that our server will use to encrypt the message */
+  p256Dh: string;
+  /** An authentication secret, which is one of the inputs of the message content encryption process */
+  auth: string;
+  /** When country created */
+  createdAt?: Maybe<BigInt>;
+  /** When country last updated */
+  updatedAt?: Maybe<Datetime>;
+}
 /** All input for the create `Region` mutation. */
 export interface CreateRegionInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -2055,6 +2155,43 @@ export interface UpdateGenreToArtistByIdInput {
   /** Id of the row */
   id: number;
 }
+/** All input for the `updatePushSubscription` mutation. */
+export interface UpdatePushSubscriptionInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `PushSubscription` to be updated. */
+  nodeId: string;
+  /** An object where the defined keys will be set on the `PushSubscription` being updated. */
+  pushSubscriptionPatch: PushSubscriptionPatch;
+}
+/** Represents an update to a `PushSubscription`. Fields that are set will be updated. */
+export interface PushSubscriptionPatch {
+  /** Serial primary key for subscription */
+  id?: Maybe<number>;
+  /** Who subscription is connected to */
+  accountId?: Maybe<number>;
+  /** This contains a unique URL to a Firebase Cloud Messaging endpoint. This url is a public but unguessable endpoint to the Browser Push Service used by the application server to send push notifications to this subscription */
+  endpoint?: Maybe<string>;
+  /** This is useful in certain cases, for example, if a message might contain an authentication code that expires after 1 minute */
+  expirationTime?: Maybe<Datetime>;
+  /** An encryption key that our server will use to encrypt the message */
+  p256Dh?: Maybe<string>;
+  /** An authentication secret, which is one of the inputs of the message content encryption process */
+  auth?: Maybe<string>;
+  /** When country created */
+  createdAt?: Maybe<BigInt>;
+  /** When country last updated */
+  updatedAt?: Maybe<Datetime>;
+}
+/** All input for the `updatePushSubscriptionById` mutation. */
+export interface UpdatePushSubscriptionByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** An object where the defined keys will be set on the `PushSubscription` being updated. */
+  pushSubscriptionPatch: PushSubscriptionPatch;
+  /** Serial primary key for subscription */
+  id: number;
+}
 /** All input for the `updateRegion` mutation. */
 export interface UpdateRegionInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -2390,6 +2527,20 @@ export interface DeleteGenreToArtistByIdInput {
   /** Id of the row */
   id: number;
 }
+/** All input for the `deletePushSubscription` mutation. */
+export interface DeletePushSubscriptionInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** The globally unique `ID` which will identify a single `PushSubscription` to be deleted. */
+  nodeId: string;
+}
+/** All input for the `deletePushSubscriptionById` mutation. */
+export interface DeletePushSubscriptionByIdInput {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: Maybe<string>;
+  /** Serial primary key for subscription */
+  id: number;
+}
 /** All input for the `deleteRegion` mutation. */
 export interface DeleteRegionInput {
   /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
@@ -2572,6 +2723,28 @@ export enum Frequency {
   OnceAWeek = "ONCE_A_WEEK",
   OnceEveryTwoWeeks = "ONCE_EVERY_TWO_WEEKS",
   Never = "NEVER"
+}
+/** Methods to use when ordering `PushSubscription`. */
+export enum PushSubscriptionsOrderBy {
+  Natural = "NATURAL",
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  AccountIdAsc = "ACCOUNT_ID_ASC",
+  AccountIdDesc = "ACCOUNT_ID_DESC",
+  EndpointAsc = "ENDPOINT_ASC",
+  EndpointDesc = "ENDPOINT_DESC",
+  ExpirationTimeAsc = "EXPIRATION_TIME_ASC",
+  ExpirationTimeDesc = "EXPIRATION_TIME_DESC",
+  P256DhAsc = "P256DH_ASC",
+  P256DhDesc = "P256DH_DESC",
+  AuthAsc = "AUTH_ASC",
+  AuthDesc = "AUTH_DESC",
+  CreatedAtAsc = "CREATED_AT_ASC",
+  CreatedAtDesc = "CREATED_AT_DESC",
+  UpdatedAtAsc = "UPDATED_AT_ASC",
+  UpdatedAtDesc = "UPDATED_AT_DESC",
+  PrimaryKeyAsc = "PRIMARY_KEY_ASC",
+  PrimaryKeyDesc = "PRIMARY_KEY_DESC"
 }
 /** Methods to use when ordering `WatchedToAccount`. */
 export enum WatchedToAccountsOrderBy {
@@ -3166,6 +3339,27 @@ export namespace CreateFollowList {
     __typename?: "FollowList";
 
     id: number;
+  };
+}
+
+export namespace CreatePushSubscription {
+  export type Variables = {
+    accountId: number;
+    endpoint: string;
+    p256Dh: string;
+    auth: string;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    createPushSubscription: Maybe<CreatePushSubscription>;
+  };
+
+  export type CreatePushSubscription = {
+    __typename?: "CreatePushSubscriptionPayload";
+
+    clientMutationId: Maybe<string>;
   };
 }
 
