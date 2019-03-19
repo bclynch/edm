@@ -1,6 +1,6 @@
 <app-pagewrapper [collapsibleNav]="false">
   <div class="eventsContainer">
-    <div class="toggleContainer" (click)="collapsed = !collapsed">
+    <div class="toggleContainer boldFont" (click)="collapsed = !collapsed">
       <div>{{collapsed ? 'Expand Search' : 'Collapse Search'}}</div>
       <mat-icon>search</mat-icon>
     </div>
@@ -26,7 +26,7 @@
             ></app-location-search>
           </div>
           <div class="dateWrapper">
-            <app-select-date (date)="selectDate($event)" [value]="dateRange"></app-select-date>
+            <app-select-date (date)="selectDate($event)" [value]="dateRange" placeholder="Select Date Range"></app-select-date>
           </div>
         </div>
         <button mat-button class="searchBtn" type="submit"><mat-icon>search</mat-icon></button>

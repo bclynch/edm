@@ -54,6 +54,7 @@ export class UtilService {
 
   calculateDateRange(filter): { min: number, max: number } {
     switch (filter) {
+      case null:
       case 'any':
         // if this thing is alive and breaks in 2099 then fuck it why not
         return { min: moment().startOf('day').valueOf(), max: 4102358400000 };
@@ -72,6 +73,32 @@ export class UtilService {
       // if they select their own range
       default:
         return { min: moment(filter, 'DD-MM-YYYY').startOf('day').valueOf(), max: moment(filter, 'DD-MM-YYYY').endOf('day').valueOf() };
+    }
+  }
+
+  // creating values for filter by create date for events. This is only for push notifications really
+  calculateNewRange(filter): { min: number, max: number } {
+    switch (filter) {
+      case 'everyDay':
+        // min is right now minus 24 hours in ms
+        return { min: moment().subtract(1, 'days').valueOf(), max: Date.now() };
+      case 'threePerWeek':
+        // want to send mon, thurs, and sat
+        // so subtracting two days unless its thurs (4) in which case it's three
+        return { min: moment().subtract(moment().day() === 4 ? 3 : 2, 'days').valueOf(), max: Date.now() };
+      case 'twoPerWeek':
+        // want to send mon, thurs
+        // so subtracting three days from thurs (4) and four from mon
+        return { min: moment().subtract(moment().day() === 4 ? 3 : 4, 'days').valueOf(), max: Date.now() };
+      case 'onePerWeek':
+        // subtract 7 days
+        return { min: moment().subtract(7, 'days').valueOf(), max: Date.now() };
+      case 'everyTwoWeeks':
+        // subtract 14 days
+        return { min: moment().subtract(14, 'days').valueOf(), max: Date.now() };
+      default:
+        // if there is no filter for this return everything
+        return { min: 10, max: Date.now() };
     }
   }
 

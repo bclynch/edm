@@ -1,4 +1,13 @@
-query searchEventsByCity($query: String!, $cityId: Int!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!, $count: Int) {
+query searchEventsByCity(
+    $query: String!,
+    $cityId: Int!,
+    $accountId: Int!,
+    $greaterThan: BigInt!,
+    $lessThan: BigInt!,
+    $recentGreaterThan: BigInt!,
+    $recentLessThan: BigInt!,
+    $count: Int
+  ) {
   searchEvents(
     query: $query, 
     cityid: $cityId,
@@ -6,6 +15,10 @@ query searchEventsByCity($query: String!, $cityId: Int!, $accountId: Int!, $grea
       startDate: {
         greaterThanOrEqualTo: $greaterThan,
         lessThanOrEqualTo: $lessThan
+      },
+      createdAt: {
+        greaterThanOrEqualTo: $recentGreaterThan,
+        lessThanOrEqualTo: $recentLessThan
       }
     },
     first: $count

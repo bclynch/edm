@@ -31,6 +31,10 @@
             *ngIf="artist?.followListsByArtistId.nodes.length"
           >Following</button>
         </div>
+        <div class="genresContainer" *ngIf="artist?.genreToArtistsByArtistId.nodes.length">
+          <div>Genres:</div>
+          <a *ngFor="let genre of artist.genreToArtistsByArtistId.nodes"><button mat-button>#{{genre.genreId}}</button></a>
+        </div>
       </div>
       <div class="contentWrapper">
         <div class="infoContainer">

@@ -1,19 +1,26 @@
 # EDM Flare
 
 ## Todos
-- Add genres to artist page
+- ~~Make events page able to filter by new shows added within last x days for use by push notifcation based on query params~~
+    - Eventually would be nice within filter/search itself, but we need this for launch
+- ~~Add genres to artist page~~
     - Maybe some listing of artists by genre?
     - Maybe a filter on events search?
-- Look at affiliate / ref links
+- Look at affiliate / ref links after live
 - Upload apk to google play store + link on home page for play store + have directions for ios shortcut
     - https://appmaker.xyz/pwa-to-apk/ - Auto create apk with directions for TWA
 - Push notifications
     - https://blog.angular-university.io/angular-push-notifications/
     - ~~Works for chrome and firefox~~
-    - Opens up a link on click
-        - Need to configure the link on server + setup something on front end to display
-    - Nothing works for ios / safari (yet - ever?)
+    - ~~Opens up a link on click~~
+        - ~~Need to configure the link on server + setup something on front end to display~~
+        - ~~Can probably do a custom time period like 'new' but isn't user selectable.~~
+        - ~~Use query params to identify what time period we are looking for new from (one day, three day, etc)~~
+    - ~~Nothing works for ios / safari (yet - ever?)~~
     - Have option in settings for email / push / both
+        - The frequency option can apply to both email and push notifcations.
+        - Need to make the locations option only for email until we set something up on front end to handle it
+        - Set up email notification
     - Need to check if already subbed and make it an unsub btn instead.
     - If you say reject, but want to be asked again
         - go to chrome://settings/content/notifications

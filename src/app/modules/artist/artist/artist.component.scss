@@ -10,13 +10,14 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    color: white;
 
     h1 {
-      color: white;
       margin-top: 0;
     }
     .socialOptions {
       display: flex;
+      flex-wrap: wrap;
       margin-bottom: .6em;
 
       .socialOption {
@@ -37,11 +38,16 @@
     }
     .followContainer {
       button {
-        color: white;
         font-size: 1.2em;
         line-height: 2em;
         padding: 0 1.2em;
+        color: white;
       }
+    }
+    .genresContainer {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
   }
   .contentWrapper {

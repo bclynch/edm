@@ -1,4 +1,13 @@
-query searchEventsByRegion($query: String!, $regionName: String!, $accountId: Int!, $greaterThan: BigInt!, $lessThan: BigInt!, $count: Int) {
+query searchEventsByRegion(
+    $query: String!,
+    $regionName: String!,
+    $accountId: Int!,
+    $greaterThan: BigInt!,
+    $lessThan: BigInt!,
+    $recentGreaterThan: BigInt!,
+    $recentLessThan: BigInt!,
+    $count: Int
+  ) {
   regionByName(name: $regionName) {
     name,
     citiesByRegion {
@@ -23,6 +32,10 @@ query searchEventsByRegion($query: String!, $regionName: String!, $accountId: In
                 startDate: {
                   greaterThanOrEqualTo: $greaterThan,
                   lessThanOrEqualTo: $lessThan
+                },
+                createdAt: {
+                  greaterThanOrEqualTo: $recentGreaterThan,
+                  lessThanOrEqualTo: $recentLessThan
                 }
               },
               first: $count

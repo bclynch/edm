@@ -84,6 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (inited) {
           // fetch featured
           const range = this.utilService.calculateDateRange('any');
+          const recentRange = this.utilService.calculateDateRange(null);
           if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
             this.searchEventsByCityGQL.fetch({
               query: '',
@@ -91,6 +92,8 @@ export class HomeComponent implements OnInit, OnDestroy {
               accountId: this.userService.user ? this.userService.user.id : 0,
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
+              recentGreaterThan: recentRange.min.toString(),
+              recentLessThan: recentRange.max.toString(),
               count: 12
             }).subscribe(
               ({ data }) => this.featuredEvents = data.searchEvents.nodes
@@ -102,6 +105,8 @@ export class HomeComponent implements OnInit, OnDestroy {
               accountId: this.userService.user ? this.userService.user.id : 0,
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
+              recentGreaterThan: recentRange.min.toString(),
+              recentLessThan: recentRange.max.toString(),
               count: 12
             }).subscribe(
               ({ data }) => {

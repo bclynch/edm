@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 class Event {
   id: string;
@@ -32,6 +33,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   // search props
   location: string;
   dateRange: string;
+  recentFilter: string;
   searchQueryControl = new FormControl();
 
   events: Event[];
@@ -67,18 +69,26 @@ export class EventsComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private eventService: EventService,
     private cookieService: CookieService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar
   ) {
-    this.appService.modPageMeta(`${this.routerService.params.location} EDM Shows`, `Listing of upcoming edm events in ${this.routerService.params.location}`);
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
           // if params change need to fire off a new search
           this.paramsSubscription = this.route.queryParams.subscribe((params) => {
-            this.location = params.location;
-            this.dateRange = params.dates ? params.dates : 'any';
+            // grab location off cookie if not in url
+            this.location = params.location ? params.location : this.cookieService.get('edm-location');
+            this.dateRange = params.dates ? params.dates : params.new ? null : 'any';
+            // if there is a date range in the query we didn't create it. Not using new filter then
+            this.recentFilter = params.dates ? null : params.new ? params.new : null;
+            if (this.recentFilter) {
+              // notification to user these are recent shows
+              this.snackBar.open('New Shows Added Since Last Time', 'Close');
+            }
             this.searchQueryControl.setValue(params.query ? params.query : '');
             this.selectedLocation = this.location;
+            this.appService.modPageMeta(`${this.selectedLocation} EDM Shows`, `Listing of upcoming edm events in ${this.selectedLocation}`);
             this.searchEvents();
           });
           if (this.location) {
@@ -114,18 +124,22 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   searchEvents() {
     const range = this.utilService.calculateDateRange(this.dateRange);
+    const recentRange = this.utilService.calculateNewRange(this.recentFilter);
     // if location does not exist then make empty arr
     if (!this.appService.locationsObj[this.selectedLocation]) {
       this.eventsObservable.next([]);
       this.eventsInited = true;
     } else {
+      // checking whether need to search cities or regions
       if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
         this.searchEventsByCityGQL.fetch({
           query: this.searchQueryControl.value,
           cityId: this.appService.locationsObj[this.selectedLocation],
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
-          lessThan: range.max.toString()
+          lessThan: range.max.toString(),
+          recentGreaterThan: recentRange.min.toString(),
+          recentLessThan: recentRange.max.toString()
         }).subscribe(
           ({ data }) => {
             this.events = this.processEvents(data.searchEvents.nodes);
@@ -141,7 +155,9 @@ export class EventsComponent implements OnInit, OnDestroy {
           regionName: this.appService.locationsObj[this.selectedLocation],
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
-          lessThan: range.max.toString()
+          lessThan: range.max.toString(),
+          recentGreaterThan: recentRange.min.toString(),
+          recentLessThan: recentRange.max.toString()
         }).subscribe(
           ({ data }) => {
             const eventsArr = [];
@@ -198,10 +214,13 @@ export class EventsComponent implements OnInit, OnDestroy {
   changeUrlPath() {
     console.log(this.selectedLocation);
     // add query params to address and also kicks off search events in the router subscription
-    if (this.searchQueryControl.value) {
-      this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange, query: this.searchQueryControl.value });
-    } else {
-      this.routerService.navigateToPage('/events', { location: this.selectedLocation, dates: this.dateRange });
-    }
+    this.routerService.navigateToPage(
+      '/events',
+      {
+        location: this.selectedLocation,
+        dates: this.dateRange ? this.dateRange : null,
+        query: this.searchQueryControl.value ? this.searchQueryControl.value : null,
+        new: this.recentFilter ? this.recentFilter : null
+      });
   }
 }

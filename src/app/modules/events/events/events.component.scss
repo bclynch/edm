@@ -10,7 +10,8 @@
     width: 100vw;
     position: relative;
     top: var(--height-navbar);
-    background: white;
+    background: var(--color-primary);
+    color: white;
   }
   .searchContainer {
     width: 100vw;

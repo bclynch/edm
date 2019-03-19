@@ -117,6 +117,11 @@ export class ArtistByNameGQL extends Apollo.Query<
         youtubeUrl
         spotifyUrl
         homepage
+        genreToArtistsByArtistId {
+          nodes {
+            genreId
+          }
+        }
         followListsByArtistId(filter: { accountId: { equalTo: $accountId } }) {
           nodes {
             id
@@ -429,6 +434,8 @@ export class SearchEventsByCityGQL extends Apollo.Query<
       $accountId: Int!
       $greaterThan: BigInt!
       $lessThan: BigInt!
+      $recentGreaterThan: BigInt!
+      $recentLessThan: BigInt!
       $count: Int
     ) {
       searchEvents(
@@ -438,6 +445,10 @@ export class SearchEventsByCityGQL extends Apollo.Query<
           startDate: {
             greaterThanOrEqualTo: $greaterThan
             lessThanOrEqualTo: $lessThan
+          }
+          createdAt: {
+            greaterThanOrEqualTo: $recentGreaterThan
+            lessThanOrEqualTo: $recentLessThan
           }
         }
         first: $count
@@ -485,6 +496,8 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
       $accountId: Int!
       $greaterThan: BigInt!
       $lessThan: BigInt!
+      $recentGreaterThan: BigInt!
+      $recentLessThan: BigInt!
       $count: Int
     ) {
       regionByName(name: $regionName) {
@@ -503,6 +516,10 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
                     startDate: {
                       greaterThanOrEqualTo: $greaterThan
                       lessThanOrEqualTo: $lessThan
+                    }
+                    createdAt: {
+                      greaterThanOrEqualTo: $recentGreaterThan
+                      lessThanOrEqualTo: $recentLessThan
                     }
                   }
                   first: $count
@@ -3237,18 +3254,32 @@ export namespace ArtistByName {
 
     homepage: Maybe<string>;
 
+    genreToArtistsByArtistId: GenreToArtistsByArtistId;
+
     followListsByArtistId: FollowListsByArtistId;
 
     artistToEventsByArtistId: ArtistToEventsByArtistId;
   };
 
-  export type FollowListsByArtistId = {
-    __typename?: "FollowListsConnection";
+  export type GenreToArtistsByArtistId = {
+    __typename?: "GenreToArtistsConnection";
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
+    __typename?: "GenreToArtist";
+
+    genreId: string;
+  };
+
+  export type FollowListsByArtistId = {
+    __typename?: "FollowListsConnection";
+
+    nodes: (Maybe<_Nodes>)[];
+  };
+
+  export type _Nodes = {
     __typename?: "FollowList";
 
     id: number;
@@ -3257,10 +3288,10 @@ export namespace ArtistByName {
   export type ArtistToEventsByArtistId = {
     __typename?: "ArtistToEventsConnection";
 
-    nodes: (Maybe<_Nodes>)[];
+    nodes: (Maybe<__Nodes>)[];
   };
 
-  export type _Nodes = {
+  export type __Nodes = {
     __typename?: "ArtistToEvent";
 
     eventByEventId: Maybe<EventByEventId>;
@@ -3287,10 +3318,10 @@ export namespace ArtistByName {
   export type WatchListsByEventId = {
     __typename?: "WatchListsConnection";
 
-    nodes: (Maybe<__Nodes>)[];
+    nodes: (Maybe<___Nodes>)[];
   };
 
-  export type __Nodes = {
+  export type ___Nodes = {
     __typename?: "WatchList";
 
     id: number;
@@ -3638,6 +3669,8 @@ export namespace SearchEventsByCity {
     accountId: number;
     greaterThan: BigInt;
     lessThan: BigInt;
+    recentGreaterThan: BigInt;
+    recentLessThan: BigInt;
     count?: Maybe<number>;
   };
 
@@ -3723,6 +3756,8 @@ export namespace SearchEventsByRegion {
     accountId: number;
     greaterThan: BigInt;
     lessThan: BigInt;
+    recentGreaterThan: BigInt;
+    recentLessThan: BigInt;
     count?: Maybe<number>;
   };
 
