@@ -83,6 +83,10 @@ const routes: Routes = [
     path: 'unsubscribe',
     loadChildren: './modules/unsubscribe/unsubscribe.module#UnsubscribeModule',
   },
+  {
+    path: 'faqs',
+    loadChildren: './modules/faqs/faqs.module#FaqsModule',
+  },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];
 

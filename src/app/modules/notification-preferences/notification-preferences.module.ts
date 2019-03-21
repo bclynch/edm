@@ -4,11 +4,13 @@ import { NotificationPreferencesComponent } from './notification-preferences/not
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { AnonGuardService as AnonGuard } from '../../services/anonGuard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: NotificationPreferencesComponent
+    component: NotificationPreferencesComponent,
+    canActivate: [AnonGuard]
   }
 ];
 

@@ -40,17 +40,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       icon: faCompactDisc,
       header: 'Discover New Artists',
-      content: 'Distillery tofu succulents kogi glossier shaman lo-fi. Banjo pitchfork cloud bread, leggings pickled forage marfa. Air plant neutra next level, coloring book slow-carb adaptogen art party. Chillwave beard pork belly locavore ethical raclette.'
+      content: 'It\'s impossible to stay up to date with all the new artists on the scene, but we can help. In addition to checking out upcoming shows see artist bios, social media, and music to see if they are the DJ you\'re looking for.'
     },
     {
       icon: faUsers,
       header: 'Find Community',
-      content: 'Try-hard pop-up iPhone venmo vexillologist tumeric. Coloring book dreamcatcher everyday carry readymade, whatever prism butcher pork belly 90\'s. Flannel ugh kogi shabby chic glossier occupy vape banh mi live-edge, af hexagon photo booth jianbing.'
+      content: 'Got questions about a gig coming up? Leave a comment and get help from fellow EDM Flare users on event and venue pages with tips and answers to help make your show a smooth, memorable time.'
     },
     {
       icon: faBell,
       header: 'Get Updates On New Shows',
-      content: 'Occupy venmo roof party biodiesel beard thundercats. Next level iPhone fixie church-key everyday carry etsy mustache roof party affogato portland authentic. Chambray literally brunch, marfa food truck freegan chicharrones letterpress jean shorts vinyl.'
+      content: 'Get updates straight to your device about new shows coming to town. Whether you want an email once every few weeks or a notification to your phone every day, we\'ve got you covered. <a href="/signup">Sign up</a> to get started.'
     },
   ];
 
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (inited) {
           // fetch featured
           const range = this.utilService.calculateDateRange('any');
-          const recentRange = this.utilService.calculateDateRange(null);
+          const recentRange = this.utilService.calculateNewRange(null);
           if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
             this.searchEventsByCityGQL.fetch({
               query: '',

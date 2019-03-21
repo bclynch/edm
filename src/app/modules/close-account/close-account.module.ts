@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { CloseAccountComponent } from './close-account/close-account.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { AnonGuardService as AnonGuard } from '../../services/anonGuard.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: CloseAccountComponent
+    component: CloseAccountComponent,
+    canActivate: [AnonGuard]
   }
 ];
 

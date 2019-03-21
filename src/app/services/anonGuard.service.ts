@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { RouterService } from './router.service';
 
 @Injectable()
 export class AnonGuardService implements CanActivate {
 
   constructor(
-    public router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private routerService: RouterService
   ) {}
 
   canActivate(
@@ -18,7 +19,7 @@ export class AnonGuardService implements CanActivate {
     // checks if there is a token and does not proceed if not
     const token = this.cookieService.get('edm-token');
     if (token) return true;
-    this.router.navigate(['/']);
+    this.routerService.navigateToPage('/login', { redirect: state.url });
     return false;
   }
 }

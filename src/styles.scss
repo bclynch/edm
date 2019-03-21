@@ -47,7 +47,7 @@ html {
 }
 @media (min-width: 1200px) {
   html { 
-    font-size: calc(112.5% + 0.3vw) !important;
+    // font-size: calc(112.5% + 0.3vw) !important;
 
     mat-icon {
       font-size: 3em !important;
@@ -248,5 +248,11 @@ share-button {
       font-size: 1.5em;
       padding: .25em 1.5em;
     }
+  }
+}
+
+.featureContent {
+  a {
+    color: #3659e3;
   }
 }

@@ -1,0 +1,13 @@
+<app-pagewrapper>
+  <div class="faqsContainer">
+    <div class="wrapper">
+      <h1>FAQs</h1>
+      <mat-expansion-panel *ngFor="let faq of faqs;">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{faq.title}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{faq.content}}</p>
+      </mat-expansion-panel>
+    </div>
+  </div>
+</app-pagewrapper>

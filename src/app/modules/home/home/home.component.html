@@ -49,7 +49,7 @@
         <div class="featureContainer" *ngFor="let feature of features">
           <fa-icon [icon]="feature.icon"></fa-icon>
           <h3 class="featureHeader">{{feature.header}}</h3>
-          <div class="featureContent">{{feature.content}}</div>
+          <div class="featureContent" [innerHTML]="feature.content"></div>
         </div>
       </div>
       <div class="featuredContainer">
