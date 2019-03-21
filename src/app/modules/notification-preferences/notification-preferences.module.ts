@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmailPreferencesComponent } from './email-preferences/email-preferences.component';
+import { NotificationPreferencesComponent } from './notification-preferences/notification-preferences.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -8,12 +8,12 @@ import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
-    component: EmailPreferencesComponent
+    component: NotificationPreferencesComponent
   }
 ];
 
 @NgModule({
-  declarations: [EmailPreferencesComponent],
+  declarations: [NotificationPreferencesComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -21,4 +21,4 @@ const routes: Routes = [
     FormsModule
   ]
 })
-export class EmailPreferencesModule { }
+export class NotificationPreferencesModule { }

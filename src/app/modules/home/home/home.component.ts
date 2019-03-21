@@ -93,7 +93,6 @@ export class HomeComponent implements OnInit, OnDestroy {
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),
-              recentLessThan: recentRange.max.toString(),
               count: 12
             }).subscribe(
               ({ data }) => this.featuredEvents = data.searchEvents.nodes
@@ -106,7 +105,6 @@ export class HomeComponent implements OnInit, OnDestroy {
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),
-              recentLessThan: recentRange.max.toString(),
               count: 12
             }).subscribe(
               ({ data }) => {

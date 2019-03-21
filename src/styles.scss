@@ -32,16 +32,18 @@ html {
     font-size: 2em;
   }
   
-  h2 {font-size: 1.8em;}
+  h2 {font-size: 1.8em; margin: 1em 0;}
   
-  h3 {font-size: 1.6em;}
+  h3 {font-size: 1.6em; margin: 1em 0;}
   
   h4 {
     font-size: 1.4em;
     margin: 1em 0;
   }
   
-  h5 {font-size: 1.2em;}
+  h5 {font-size: 1.2em; margin: 1em 0;}
+
+  h6 {font-size: 1.05em; margin: 1em 0;}
 }
 @media (min-width: 1200px) {
   html { 

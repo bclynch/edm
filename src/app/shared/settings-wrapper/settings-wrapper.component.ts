@@ -23,8 +23,8 @@ export class SettingsWrapperComponent implements OnInit, OnDestroy {
       path: '/settings/password'
     },
     {
-      label: 'Email Preferences',
-      path: '/settings/email-preferences'
+      label: 'Notification Preferences',
+      path: '/settings/notification-preferences'
     },
     {
       label: 'Close Account',

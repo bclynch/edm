@@ -77,28 +77,28 @@ export class UtilService {
   }
 
   // creating values for filter by create date for events. This is only for push notifications really
-  calculateNewRange(filter): { min: number, max: number } {
+  calculateNewRange(filter): { min: number } {
     switch (filter) {
       case 'everyDay':
         // min is right now minus 24 hours in ms
-        return { min: moment().subtract(1, 'days').valueOf(), max: Date.now() };
+        return { min: moment().subtract(1, 'days').valueOf() };
       case 'threePerWeek':
         // want to send mon, thurs, and sat
         // so subtracting two days unless its thurs (4) in which case it's three
-        return { min: moment().subtract(moment().day() === 4 ? 3 : 2, 'days').valueOf(), max: Date.now() };
+        return { min: moment().subtract(moment().day() === 4 ? 3 : 2, 'days').valueOf() };
       case 'twoPerWeek':
         // want to send mon, thurs
         // so subtracting three days from thurs (4) and four from mon
-        return { min: moment().subtract(moment().day() === 4 ? 3 : 4, 'days').valueOf(), max: Date.now() };
+        return { min: moment().subtract(moment().day() === 4 ? 3 : 4, 'days').valueOf() };
       case 'onePerWeek':
         // subtract 7 days
-        return { min: moment().subtract(7, 'days').valueOf(), max: Date.now() };
+        return { min: moment().subtract(7, 'days').valueOf() };
       case 'everyTwoWeeks':
         // subtract 14 days
-        return { min: moment().subtract(14, 'days').valueOf(), max: Date.now() };
+        return { min: moment().subtract(14, 'days').valueOf() };
       default:
         // if there is no filter for this return everything
-        return { min: 10, max: Date.now() };
+        return { min: 10 };
     }
   }
 

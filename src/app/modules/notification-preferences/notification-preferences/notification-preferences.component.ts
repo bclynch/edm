@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
-import { UpdateAccountGQL, Frequency, WatchedLocationByAccountGQL, DeleteWatchedByIdGQL, CreateWatchedToAccountGQL } from 'src/app/generated/graphql';
+import { UpdateAccountGQL, Frequency, WatchedLocationByAccountGQL, DeleteWatchedByIdGQL, CreateWatchedToAccountGQL, DeletePushSubscriptionByIdGQL } from 'src/app/generated/graphql';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'app-email-preferences',
-  templateUrl: './email-preferences.component.html',
-  styleUrls: ['./email-preferences.component.scss']
+  selector: 'app-notification-preferences',
+  templateUrl: './notification-preferences.component.html',
+  styleUrls: ['./notification-preferences.component.scss']
 })
-export class EmailPreferencesComponent implements OnInit {
+export class NotificationPreferencesComponent implements OnInit {
 
   locationValue: string;
   locations: { id: number, label: string, locationId: number | string }[] = [];
@@ -26,6 +26,9 @@ export class EmailPreferencesComponent implements OnInit {
   ];
   initSubscription: SubscriptionLike;
 
+  pushNotification;
+  emailNotification;
+
   constructor(
     public appService: AppService,
     private updateAccountGQL: UpdateAccountGQL,
@@ -33,14 +36,17 @@ export class EmailPreferencesComponent implements OnInit {
     private watchedLocationByAccountGQL: WatchedLocationByAccountGQL,
     private snackBar: MatSnackBar,
     private deleteWatchedByIdGQL: DeleteWatchedByIdGQL,
-    private createWatchedToAccountGQL: CreateWatchedToAccountGQL
+    private createWatchedToAccountGQL: CreateWatchedToAccountGQL,
+    private deletePushSubscriptionByIdGQL: DeletePushSubscriptionByIdGQL
   ) {
-    this.appService.modPageMeta('Email Preference Settings', 'Modify email settings for your EDM Flare account');
+    this.appService.modPageMeta('Notification Preference Settings', 'Modify notification settings for your EDM Flare account');
 
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
           this.frequency = this.userService.user.notificationFrequency;
+          this.pushNotification = this.userService.user.pushNotification;
+          this.emailNotification = this.userService.user.emailNotification;
 
           this.watchedLocationByAccountGQL.fetch({
             accountId: this.userService.user.id
@@ -64,7 +70,10 @@ export class EmailPreferencesComponent implements OnInit {
 
   changeFrequency() {
     console.log(this.frequency);
-    this.updateAccountGQL.mutate({ userId: this.userService.user.id, profilePhoto: this.userService.user.profilePhoto, notificationFrequency: this.frequency })
+    this.updateAccountGQL.mutate({
+      userId: this.userService.user.id,
+      notificationFrequency: this.frequency
+    })
     .subscribe(
       (result) => {
         console.log(result);
@@ -124,5 +133,58 @@ export class EmailPreferencesComponent implements OnInit {
         () => this.locations.splice(index, 1),
         err => console.log(err)
       );
+  }
+
+  togglePushNotifications() {
+    console.log(this.pushNotification);
+    // if it's true we make sure the user selects it and creates subscription before adding updated pushnotification prop to db
+    if (this.pushNotification) {
+      this.appService.subscribeToPushNotifications().then(
+        () => {
+          this.updateAccountGQL.mutate({
+            userId: this.userService.user.id,
+            pushNotification: this.pushNotification
+          })
+          .subscribe(
+            (result) => {
+              console.log(result);
+            },
+            err => console.log(err)
+          );
+        }
+      );
+    } else {
+      // delete the subscription in the db
+      this.deletePushSubscriptionByIdGQL.mutate({ id: this.userService.user.pushSubscriptionsByAccountId.nodes[0].id })
+      .subscribe(
+        () => {
+          this.updateAccountGQL.mutate({
+            userId: this.userService.user.id,
+            pushNotification: this.pushNotification
+          })
+          .subscribe(
+            (result) => {
+              console.log(result);
+            },
+            err => console.log(err)
+          );
+        },
+        err => console.log(err)
+      );
+    }
+  }
+
+  toggleEmailNotifications() {
+    console.log(this.emailNotification);
+    this.updateAccountGQL.mutate({
+      userId: this.userService.user.id,
+      emailNotification: this.emailNotification
+    })
+    .subscribe(
+      (result) => {
+        console.log(result);
+      },
+      err => console.log(err)
+    );
   }
 }

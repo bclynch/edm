@@ -289,11 +289,33 @@ export class CurrentAccountGQL extends Apollo.Query<
       currentAccount {
         username
         notificationFrequency
+        pushNotification
+        emailNotification
         profilePhoto
         id
         watchListsByAccountId {
           totalCount
         }
+        pushSubscriptionsByAccountId {
+          nodes {
+            id
+          }
+        }
+      }
+    }
+  `;
+}
+@Injectable({
+  providedIn: "root"
+})
+export class DeletePushSubscriptionByIdGQL extends Apollo.Mutation<
+  DeletePushSubscriptionById.Mutation,
+  DeletePushSubscriptionById.Variables
+> {
+  document: any = gql`
+    mutation deletePushSubscriptionById($id: Int!) {
+      deletePushSubscriptionById(input: { id: $id }) {
+        clientMutationId
       }
     }
   `;
@@ -435,7 +457,6 @@ export class SearchEventsByCityGQL extends Apollo.Query<
       $greaterThan: BigInt!
       $lessThan: BigInt!
       $recentGreaterThan: BigInt!
-      $recentLessThan: BigInt!
       $count: Int
     ) {
       searchEvents(
@@ -446,10 +467,7 @@ export class SearchEventsByCityGQL extends Apollo.Query<
             greaterThanOrEqualTo: $greaterThan
             lessThanOrEqualTo: $lessThan
           }
-          createdAt: {
-            greaterThanOrEqualTo: $recentGreaterThan
-            lessThanOrEqualTo: $recentLessThan
-          }
+          createdAt: { greaterThanOrEqualTo: $recentGreaterThan }
         }
         first: $count
       ) {
@@ -497,7 +515,6 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
       $greaterThan: BigInt!
       $lessThan: BigInt!
       $recentGreaterThan: BigInt!
-      $recentLessThan: BigInt!
       $count: Int
     ) {
       regionByName(name: $regionName) {
@@ -517,10 +534,7 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
                       greaterThanOrEqualTo: $greaterThan
                       lessThanOrEqualTo: $lessThan
                     }
-                    createdAt: {
-                      greaterThanOrEqualTo: $recentGreaterThan
-                      lessThanOrEqualTo: $recentLessThan
-                    }
+                    createdAt: { greaterThanOrEqualTo: $recentGreaterThan }
                   }
                   first: $count
                 ) {
@@ -572,6 +586,8 @@ export class UpdateAccountGQL extends Apollo.Mutation<
       $userId: Int!
       $profilePhoto: String
       $notificationFrequency: Frequency
+      $pushNotification: Boolean
+      $emailNotification: Boolean
     ) {
       updateAccountById(
         input: {
@@ -579,6 +595,8 @@ export class UpdateAccountGQL extends Apollo.Mutation<
           accountPatch: {
             notificationFrequency: $notificationFrequency
             profilePhoto: $profilePhoto
+            pushNotification: $pushNotification
+            emailNotification: $emailNotification
           }
         }
       ) {
@@ -586,6 +604,8 @@ export class UpdateAccountGQL extends Apollo.Mutation<
           username
           notificationFrequency
           profilePhoto
+          pushNotification
+          emailNotification
           id
           watchListsByAccountId {
             totalCount
@@ -702,6 +722,10 @@ export interface AccountCondition {
   profilePhoto?: Maybe<string>;
   /** Checks for equality with the object’s `notificationFrequency` field. */
   notificationFrequency?: Maybe<Frequency>;
+  /** Checks for equality with the object’s `pushNotification` field. */
+  pushNotification?: Maybe<boolean>;
+  /** Checks for equality with the object’s `emailNotification` field. */
+  emailNotification?: Maybe<boolean>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
@@ -717,6 +741,10 @@ export interface AccountFilter {
   profilePhoto?: Maybe<StringFilter>;
   /** Filter by the object’s `notificationFrequency` field. */
   notificationFrequency?: Maybe<FrequencyFilter>;
+  /** Filter by the object’s `pushNotification` field. */
+  pushNotification?: Maybe<BooleanFilter>;
+  /** Filter by the object’s `emailNotification` field. */
+  emailNotification?: Maybe<BooleanFilter>;
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
@@ -830,6 +858,23 @@ export interface FrequencyFilter {
   in?: Maybe<Frequency[]>;
   /** Not included in the specified list. */
   notIn?: Maybe<Frequency[]>;
+}
+/** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
+export interface BooleanFilter {
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<boolean>;
+  /** Equal to the specified value. */
+  equalTo?: Maybe<boolean>;
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<boolean>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<boolean>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<boolean>;
+  /** Included in the specified list. */
+  in?: Maybe<boolean[]>;
+  /** Not included in the specified list. */
+  notIn?: Maybe<boolean[]>;
 }
 /** A filter to be used against BigInt fields. All fields are combined with a logical ‘and.’ */
 export interface BigIntFilter {
@@ -1191,23 +1236,6 @@ export interface EventTypeFilter {
   /** Not included in the specified list. */
   notIn?: Maybe<EventType[]>;
 }
-/** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
-export interface BooleanFilter {
-  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: Maybe<boolean>;
-  /** Equal to the specified value. */
-  equalTo?: Maybe<boolean>;
-  /** Not equal to the specified value. */
-  notEqualTo?: Maybe<boolean>;
-  /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: Maybe<boolean>;
-  /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: Maybe<boolean>;
-  /** Included in the specified list. */
-  in?: Maybe<boolean[]>;
-  /** Not included in the specified list. */
-  notIn?: Maybe<boolean[]>;
-}
 /** A condition to be used against `ArtistToEvent` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface ArtistToEventCondition {
   /** Checks for equality with the object’s `id` field. */
@@ -1509,6 +1537,10 @@ export interface AccountInput {
   profilePhoto?: Maybe<string>;
   /** Frequency of requested notification for new events */
   notificationFrequency?: Maybe<Frequency>;
+  /** Whether account wants push notifications or not */
+  pushNotification?: Maybe<boolean>;
+  /** Whether account wants email notifications or not */
+  emailNotification?: Maybe<boolean>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -1869,6 +1901,10 @@ export interface AccountPatch {
   profilePhoto?: Maybe<string>;
   /** Frequency of requested notification for new events */
   notificationFrequency?: Maybe<Frequency>;
+  /** Whether account wants push notifications or not */
+  pushNotification?: Maybe<boolean>;
+  /** Whether account wants email notifications or not */
+  emailNotification?: Maybe<boolean>;
   /** When account created */
   createdAt?: Maybe<BigInt>;
   /** When account last updated */
@@ -2725,6 +2761,10 @@ export enum AccountsOrderBy {
   ProfilePhotoDesc = "PROFILE_PHOTO_DESC",
   NotificationFrequencyAsc = "NOTIFICATION_FREQUENCY_ASC",
   NotificationFrequencyDesc = "NOTIFICATION_FREQUENCY_DESC",
+  PushNotificationAsc = "PUSH_NOTIFICATION_ASC",
+  PushNotificationDesc = "PUSH_NOTIFICATION_DESC",
+  EmailNotificationAsc = "EMAIL_NOTIFICATION_ASC",
+  EmailNotificationDesc = "EMAIL_NOTIFICATION_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -3473,17 +3513,53 @@ export namespace CurrentAccount {
 
     notificationFrequency: Frequency;
 
+    pushNotification: Maybe<boolean>;
+
+    emailNotification: Maybe<boolean>;
+
     profilePhoto: Maybe<string>;
 
     id: number;
 
     watchListsByAccountId: WatchListsByAccountId;
+
+    pushSubscriptionsByAccountId: PushSubscriptionsByAccountId;
   };
 
   export type WatchListsByAccountId = {
     __typename?: "WatchListsConnection";
 
     totalCount: Maybe<number>;
+  };
+
+  export type PushSubscriptionsByAccountId = {
+    __typename?: "PushSubscriptionsConnection";
+
+    nodes: (Maybe<Nodes>)[];
+  };
+
+  export type Nodes = {
+    __typename?: "PushSubscription";
+
+    id: number;
+  };
+}
+
+export namespace DeletePushSubscriptionById {
+  export type Variables = {
+    id: number;
+  };
+
+  export type Mutation = {
+    __typename?: "Mutation";
+
+    deletePushSubscriptionById: Maybe<DeletePushSubscriptionById>;
+  };
+
+  export type DeletePushSubscriptionById = {
+    __typename?: "DeletePushSubscriptionPayload";
+
+    clientMutationId: Maybe<string>;
   };
 }
 
@@ -3670,7 +3746,6 @@ export namespace SearchEventsByCity {
     greaterThan: BigInt;
     lessThan: BigInt;
     recentGreaterThan: BigInt;
-    recentLessThan: BigInt;
     count?: Maybe<number>;
   };
 
@@ -3757,7 +3832,6 @@ export namespace SearchEventsByRegion {
     greaterThan: BigInt;
     lessThan: BigInt;
     recentGreaterThan: BigInt;
-    recentLessThan: BigInt;
     count?: Maybe<number>;
   };
 
@@ -3875,6 +3949,8 @@ export namespace UpdateAccount {
     userId: number;
     profilePhoto?: Maybe<string>;
     notificationFrequency?: Maybe<Frequency>;
+    pushNotification?: Maybe<boolean>;
+    emailNotification?: Maybe<boolean>;
   };
 
   export type Mutation = {
@@ -3897,6 +3973,10 @@ export namespace UpdateAccount {
     notificationFrequency: Frequency;
 
     profilePhoto: Maybe<string>;
+
+    pushNotification: Maybe<boolean>;
+
+    emailNotification: Maybe<boolean>;
 
     id: number;
 

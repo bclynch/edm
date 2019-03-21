@@ -78,35 +78,37 @@ export class AppService {
   }
 
   subscribeToPushNotifications() {
-    this.swPush.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY })
-      .then((sub) => {
-        console.log(sub);
-        // save sub to the db
-        this.createPushSubscriptionGQL.mutate({
-          accountId: this.userService.user.id,
-          endpoint: sub.endpoint,
-          p256Dh: this.utilService.arrayBufferToBase64(sub.getKey('p256dh')),
-          auth: this.utilService.arrayBufferToBase64(sub.getKey('auth'))
+    return new Promise((resolve, reject) => {
+      this.swPush.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY })
+        .then((sub) => {
+          console.log(sub);
+          // save sub to the db
+          this.createPushSubscriptionGQL.mutate({
+            accountId: this.userService.user.id,
+            endpoint: sub.endpoint,
+            p256Dh: this.utilService.arrayBufferToBase64(sub.getKey('p256dh')),
+            auth: this.utilService.arrayBufferToBase64(sub.getKey('auth'))
+          })
+            .subscribe(
+              (result) => resolve(),
+              err => reject(err)
+            );
         })
-          .subscribe(
-            (result) => {
-              console.log(result);
-            },
-            err => console.log(err)
-          );
-      })
-      .catch((err) => console.error('Could not subscribe to notifications', err)
-    );
+        .catch((err) => reject(err)
+      );
+    });
   }
 
   unsubscribeToPushNotifications() {
-    this.swPush.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY })
-      .then((sub) => {
-        sub.unsubscribe().then(
-          () => {} // remove from db
-        );
-      })
-      .catch((err) => console.error('Could not unsubscribe to notifications', err)
-    );
+    return new Promise((resolve, reject) => {
+      this.swPush.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY })
+        .then((sub) => {
+          sub.unsubscribe().then(
+            () => resolve()
+          );
+        })
+        .catch((err) => reject(err)
+      );
+    });
   }
 }

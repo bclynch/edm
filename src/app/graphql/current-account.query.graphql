@@ -2,10 +2,17 @@ query currentAccount {
   currentAccount {
     username,
     notificationFrequency,
+    pushNotification,
+    emailNotification,
     profilePhoto,
     id,
     watchListsByAccountId {
       totalCount
+    },
+    pushSubscriptionsByAccountId {
+      nodes {
+        id
+      }
     }
   }
 }

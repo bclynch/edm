@@ -5,7 +5,6 @@ query searchEventsByCity(
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
     $recentGreaterThan: BigInt!,
-    $recentLessThan: BigInt!,
     $count: Int
   ) {
   searchEvents(
@@ -18,7 +17,6 @@ query searchEventsByCity(
       },
       createdAt: {
         greaterThanOrEqualTo: $recentGreaterThan,
-        lessThanOrEqualTo: $recentLessThan
       }
     },
     first: $count

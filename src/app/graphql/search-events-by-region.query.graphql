@@ -5,7 +5,6 @@ query searchEventsByRegion(
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
     $recentGreaterThan: BigInt!,
-    $recentLessThan: BigInt!,
     $count: Int
   ) {
   regionByName(name: $regionName) {
@@ -35,7 +34,6 @@ query searchEventsByRegion(
                 },
                 createdAt: {
                   greaterThanOrEqualTo: $recentGreaterThan,
-                  lessThanOrEqualTo: $recentLessThan
                 }
               },
               first: $count

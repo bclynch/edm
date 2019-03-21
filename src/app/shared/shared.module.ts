@@ -21,7 +21,8 @@ import {
   MatAutocompleteModule,
   MatSelectModule,
   MatTabsModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { AgmCoreModule } from '@agm/core';
@@ -78,6 +79,7 @@ import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.co
     MatSelectModule,
     MatTabsModule,
     MatSidenavModule,
+    MatCheckboxModule,
     DirectivesModule,
     RouterModule,
     ReactiveFormsModule,
@@ -105,6 +107,7 @@ import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.co
     MatSelectModule,
     MatTabsModule,
     MatSidenavModule,
+    MatCheckboxModule,
     PagewrapperComponent,
     FooterComponent,
     NavbarComponent,

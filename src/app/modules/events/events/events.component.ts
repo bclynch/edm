@@ -138,8 +138,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
-          recentGreaterThan: recentRange.min.toString(),
-          recentLessThan: recentRange.max.toString()
+          recentGreaterThan: recentRange.min.toString()
         }).subscribe(
           ({ data }) => {
             this.events = this.processEvents(data.searchEvents.nodes);
@@ -156,8 +155,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
-          recentGreaterThan: recentRange.min.toString(),
-          recentLessThan: recentRange.max.toString()
+          recentGreaterThan: recentRange.min.toString()
         }).subscribe(
           ({ data }) => {
             const eventsArr = [];

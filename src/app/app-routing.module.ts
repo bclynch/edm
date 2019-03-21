@@ -68,8 +68,8 @@ const routes: Routes = [
     loadChildren: './modules/password/password.module#PasswordModule',
   },
   {
-    path: 'settings/email-preferences',
-    loadChildren: './modules/email-preferences/email-preferences.module#EmailPreferencesModule',
+    path: 'settings/notification-preferences',
+    loadChildren: './modules/notification-preferences/notification-preferences.module#NotificationPreferencesModule',
   },
   {
     path: 'settings/close-account',
@@ -78,6 +78,10 @@ const routes: Routes = [
   {
     path: 'password-reset',
     loadChildren: './modules/password-reset/password-reset.module#PasswordResetModule',
+  },
+  {
+    path: 'unsubscribe',
+    loadChildren: './modules/unsubscribe/unsubscribe.module#UnsubscribeModule',
   },
   { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
 ];

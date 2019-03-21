@@ -1,15 +1,19 @@
-mutation updateAccount($userId: Int!, $profilePhoto: String, $notificationFrequency: Frequency) {
+mutation updateAccount($userId: Int!, $profilePhoto: String, $notificationFrequency: Frequency, $pushNotification: Boolean, $emailNotification: Boolean) {
   updateAccountById(input: {
     id: $userId,
     accountPatch: {
       notificationFrequency: $notificationFrequency,
-      profilePhoto: $profilePhoto
+      profilePhoto: $profilePhoto,
+      pushNotification: $pushNotification,
+      emailNotification: $emailNotification
     }
   }) {
     account {
       username,
       notificationFrequency,
       profilePhoto,
+      pushNotification,
+      emailNotification,
       id,
       watchListsByAccountId {
         totalCount

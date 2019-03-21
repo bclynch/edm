@@ -1,6 +1,7 @@
 # EDM Flare
 
 ## Todos
+- ~~Create unsubscribe route for emails and add to the footer of email. Would just incude their account id in the route and remove it based on that (turn off mail notifications)~~
 - ~~Make events page able to filter by new shows added within last x days for use by push notifcation based on query params~~
     - Eventually would be nice within filter/search itself, but we need this for launch
 - ~~Add genres to artist page~~
