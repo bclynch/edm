@@ -1,6 +1,12 @@
 # EDM Flare
 
 ## Todos
+- Work on index.html stuff
+    - ~~https://github.com/thedaviddias/Front-End-Checklist~~
+    - Social meta images
+- Make sure analytics going
+- Give each region a lat and lon and show a map on the events page a user can click. Nice to screenshot on the home page too of this to show where shows are at
+    - Could probably run a location proximity fn on this too for a near me option in the search results 
 - ~~Create unsubscribe route for emails and add to the footer of email. Would just incude their account id in the route and remove it based on that (turn off mail notifications)~~
 - ~~Make events page able to filter by new shows added within last x days for use by push notifcation based on query params~~
     - Eventually would be nice within filter/search itself, but we need this for launch
@@ -143,6 +149,7 @@
 - App store apps
     - https://www.nativescript.org/nativescript-is-how-you-build-native-mobile-apps-with-angular/code-sharing-angular-and-nativescript
     - https://blog.angular.io/apps-that-work-natively-on-the-web-and-mobile-9b26852495e7
+- Add ig to home page + directions for add to homescreen
 
 
 ## Development server
@@ -184,7 +191,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 - Web app uses a service worked so we need to break the cache when we update. Change the cache version in service-worker.js to do this and prompt users to do the same.
 - Run `$ ng build --prod` to run an AoT build
-- Use SFTP (cyber duck) to replace the www folder in /var/www/decorasaurus.com/html on the server
+- Use SFTP (cyber duck) to replace the www folder in /var/www/edmflare.com/html on the server
 
 #### Analytics
 

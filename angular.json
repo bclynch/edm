@@ -27,7 +27,8 @@
               "src/assets",
               "src/manifest.json",
               "src/sw-master.js",
-              "src/sw-custom.js"
+              "src/sw-custom.js",
+              "src/robots.txt"
             ],
             "styles": [
               "src/styles.scss"

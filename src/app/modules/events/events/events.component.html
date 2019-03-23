@@ -61,7 +61,8 @@
       </div> -->
     </div>
     <div *ngIf="!location">Select a city to search for shows in to get started</div>
-    <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="50" [ngClass]="collapsed ? 'collapsed' : ''">
+    <!-- item size is number of pixels in height for ea item -->
+    <cdk-virtual-scroll-viewport class="eventsWrapper" itemSize="135" [ngClass]="collapsed ? 'collapsed' : ''">
       <app-event-card
         *cdkVirtualFor="let event of eventsObservable | async"
         [name]="event.name"
@@ -77,7 +78,7 @@
       ></app-event-card>
       <div class="eventFallback" *ngIf="!(eventsObservable | async)?.length && eventsInited">
         <div class="wrapper">
-          <img class="logoImg" src="assets/icons/icon-192x192.png" />
+          <img class="logoImg" src="assets/icons/icon-192x192.png" alt="EDM Flare Logo" />
         </div>
         <h2>No events. Try a new search.</h2>
       </div>

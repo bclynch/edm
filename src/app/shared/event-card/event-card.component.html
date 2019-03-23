@@ -2,7 +2,7 @@
   <div class="imageWrapper">
     <a [routerLink]="['/event/' + id]">
       <div *ngIf="image" class="img" [ngStyle]="{ 'background-image': 'url(' + image + ')'}"></div>
-      <img *ngIf="!image" class="backupImg img" src="assets/icons/icon-96x96.png"/>
+      <img *ngIf="!image" class="backupImg img" src="assets/icons/icon-96x96.png" alt="EDM Flare Logo" />
     </a>
   </div>
   <div class="eventInfo">

@@ -75,8 +75,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.selectedLocation = location;
     } else {
       // default location for users
-      this.cookieService.set('edm-location', 'Madison');
-      this.selectedLocation = 'Madison';
+      this.cookieService.set('edm-location', 'New York');
+      this.selectedLocation = 'New York';
     }
 
     this.initSubscription = this.appService.appInited.subscribe(

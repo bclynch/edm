@@ -51,7 +51,7 @@
               <div class="imageWrapper">
                 <a [routerLink]="['/event/' + id]">
                   <div *ngIf="follow.venueByVenueId.photo" class="img venue" [ngStyle]="{ 'background-image': 'url(' + follow.venueByVenueId.photo + ')'}"></div>
-                  <img *ngIf="!follow.venueByVenueId.photo" class="backupImg img" src="assets/icons/icon-96x96.png"/>
+                  <img *ngIf="!follow.venueByVenueId.photo" class="backupImg img" src="assets/icons/icon-96x96.png" alt="EDM Flare Logo" />
                 </a>
               </div>
               <a [routerLink]="['/venue/' + follow.venueByVenueId.name]"><h3>{{follow.venueByVenueId.name}}</h3></a>

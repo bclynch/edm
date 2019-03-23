@@ -75,6 +75,12 @@ export class AppService {
     this.meta.removeTag('name="description"');
     this.titleService.setTitle(`${title} | EDM Flare`);
     this.meta.addTag({ name: 'description', content: `${description}. Discover upcoming edm shows where you live and get in touch with the local community.`});
+    this.meta.addTag({ name: 'og:url', content: window.location.href });
+    this.meta.addTag({ name: 'og:title', content: `${title} | EDM Flare`});
+    this.meta.addTag({ name: 'og:description', content: `${description}. Discover upcoming edm shows where you live and get in touch with the local community.`});
+    this.meta.addTag({ name: 'twitter:url', content: window.location.href });
+    this.meta.addTag({ name: 'twitter:title', content: `${title} | EDM Flare`});
+    this.meta.addTag({ name: 'twitter:description', content: `${description}. Discover upcoming edm shows where you live and get in touch with the local community.`});
   }
 
   subscribeToPushNotifications() {
