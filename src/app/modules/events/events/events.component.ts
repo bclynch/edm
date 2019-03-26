@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewChild } from '@angular/core';
 import { RouterService } from 'src/app/services/router.service';
 import { SearchEventsByCityGQL, SearchEventsByRegionGQL } from 'src/app/generated/graphql';
 import { BehaviorSubject, SubscriptionLike } from 'rxjs';
@@ -11,6 +11,7 @@ import { EventService } from 'src/app/services/event.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 class Event {
   id: string;
@@ -27,6 +28,8 @@ class Event {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport: CdkVirtualScrollViewport;
 
   collapsed = true;
 
@@ -36,34 +39,24 @@ export class EventsComponent implements OnInit, OnDestroy {
   recentFilter: string;
   searchQueryControl = new FormControl();
 
-  events: Event[];
+  events: Event[] = [];
   eventsObservable = new BehaviorSubject<Event[]>([]);
   eventsInited = false;
+  offset = 0;
+  batchSize = 10;
+  totalEvents;
+  fetchingBatch = false;
+
   selectedLocation: string;
+
+
   initSubscription: SubscriptionLike;
   paramsSubscription: SubscriptionLike;
-
-  // map props
-  coords: { lat: number; lon: number; } = { lat: null, lon: null };
-  zoomLevel: number;
-  latlngBounds;
-  geoJsonObject: any = null;
-  mapStyle;
-  boundedZoom: number;
-  fullscreen = false;
-  eventMarkers = [];
-  clusterOptions = {
-    gridSize: 10,
-    minimumClusterSize: 2,
-    averageCenter: true
-  };
-  mapInited = false;
 
   constructor(
     private routerService: RouterService,
     private searchEventsByCityGQL: SearchEventsByCityGQL,
     private searchEventsbyRegionGQL: SearchEventsByRegionGQL,
-    // private mapsAPILoader: MapsAPILoader,
     private utilService: UtilService,
     private userService: UserService,
     private appService: AppService,
@@ -89,6 +82,10 @@ export class EventsComponent implements OnInit, OnDestroy {
             this.searchQueryControl.setValue(params.query ? params.query : '');
             this.selectedLocation = this.location;
             this.appService.modPageMeta(`${this.selectedLocation} EDM Shows`, `Listing of upcoming edm events in ${this.selectedLocation}`);
+
+            // reset events arr
+            this.events = [];
+            this.offset = 0;
             this.searchEvents();
           });
           if (this.location) {
@@ -123,12 +120,15 @@ export class EventsComponent implements OnInit, OnDestroy {
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
-          recentGreaterThan: recentRange.min.toString()
+          recentGreaterThan: recentRange.min.toString(),
+          batchSize: this.batchSize,
+          offset: this.offset
         }).subscribe(
           ({ data }) => {
-            this.events = this.processEvents(data.searchEvents.nodes);
-            console.log('Events: ', this.events);
+            this.totalEvents = data.searchEventsByCity.totalCount;
+            this.events = this.events.concat(this.processEvents(data.searchEventsByCity.nodes));
             this.eventsObservable.next(this.events);
+            this.fetchingBatch = false;
             this.eventsInited = true;
             this.collapsed = true;
           }
@@ -140,21 +140,15 @@ export class EventsComponent implements OnInit, OnDestroy {
           accountId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
-          recentGreaterThan: recentRange.min.toString()
+          recentGreaterThan: recentRange.min.toString(),
+          batchSize: this.batchSize,
+          offset: this.offset
         }).subscribe(
           ({ data }) => {
-            const eventsArr = [];
-            data.regionByName.citiesByRegion.nodes.forEach((city) => {
-              city.venuesByCity.nodes.forEach((venue) => {
-                venue.eventsByVenue.nodes.forEach((event) => {
-                  eventsArr.push(event);
-                });
-              });
-            });
-
-            this.events = this.processEvents(eventsArr);
-            console.log('Events: ', this.events);
+            this.totalEvents = data.searchEventsByRegion.totalCount;
+            this.events = this.events.concat(this.processEvents(data.searchEventsByRegion.nodes));
             this.eventsObservable.next(this.events);
+            this.fetchingBatch = false;
             this.eventsInited = true;
             this.collapsed = true;
           }
@@ -164,15 +158,9 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   processEvents(events) {
-    // loop through and create marker arr. Sort of borked atm
-    // if (+venue.lat) this.eventMarkers.push({ name: event.name, lat: +venue.lat, lon: +venue.lon });
-
     // identify if it is newly added
     const eventsCheckedNew = this.eventService.identifyNew(events);
-
-    // sort based on start date
-    const processedEvents = eventsCheckedNew.sort((a, b) => (a.startDate > b.startDate) ? 1 : ((b.startDate > a.startDate) ? -1 : 0));
-    return processedEvents;
+    return eventsCheckedNew;
   }
 
   submitSearch(e) {
@@ -204,6 +192,20 @@ export class EventsComponent implements OnInit, OnDestroy {
         dates: this.dateRange ? this.dateRange : null,
         query: this.searchQueryControl.value ? this.searchQueryControl.value : null,
         new: this.recentFilter ? this.recentFilter : null
-      });
+      }
+    );
+  }
+
+  nextBatch() {
+    if (this.offset + this.batchSize >= this.totalEvents || this.fetchingBatch) return;
+
+    const end = this.viewport.getRenderedRange().end;
+    const total = this.viewport.getDataLength();
+    // console.log(`${end}, '>=', ${total}`);
+    if (total && end === total) {
+      this.fetchingBatch = true;
+      this.offset = this.offset + this.batchSize;
+      this.searchEvents();
+    }
   }
 }

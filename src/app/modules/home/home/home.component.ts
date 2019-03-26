@@ -20,11 +20,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   carouselSlides = [
     {
-      image: 'assets/images/splash1.jpeg',
+      image: 'assets/images/splash1.jpg',
       tagline: 'The Next Rager'
     },
     {
-      image: 'assets/images/splash2.jpeg',
+      image: 'assets/images/splash2.jpg',
       tagline: 'Your New Favorite Artist'
     },
     {
@@ -93,9 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),
-              count: 12
+              batchSize: 12
             }).subscribe(
-              ({ data }) => this.featuredEvents = data.searchEvents.nodes
+              ({ data }) => this.featuredEvents = data.searchEventsByCity.nodes
             );
           } else {
             this.searchEventsByRegionGQL.fetch({
@@ -105,19 +105,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),
-              count: 12
+              batchSize: 12
             }).subscribe(
-              ({ data }) => {
-                const eventsArr = [];
-                data.regionByName.citiesByRegion.nodes.forEach((city) => {
-                  city.venuesByCity.nodes.forEach((venue) => {
-                    venue.eventsByVenue.nodes.forEach((event) => {
-                      eventsArr.push(event);
-                    });
-                  });
-                });
-                this.featuredEvents = eventsArr.length > 12 ? eventsArr.slice(0, 12) : eventsArr;
-              }
+              ({ data }) => this.featuredEvents = data.searchEventsByRegion.nodes
             );
           }
         }

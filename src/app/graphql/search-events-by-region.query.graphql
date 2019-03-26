@@ -5,72 +5,53 @@ query searchEventsByRegion(
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
     $recentGreaterThan: BigInt!,
-    $count: Int
+    $batchSize: Int,
+    $offset: Int
   ) {
-  regionByName(name: $regionName) {
-    name,
-    citiesByRegion {
-      nodes {
-        name,
-      	venuesByCity {
-          nodes {
-            eventsByVenue(
-              filter: {
-                or: [
-                  {
-                    name: {
-                  		includesInsensitive: $query
-                		}
-                  },
-                  {
-                    venue: {
-                      includesInsensitive: $query
-                    }
-                  }
-                ],
-                startDate: {
-                  greaterThanOrEqualTo: $greaterThan,
-                  lessThanOrEqualTo: $lessThan
-                },
-                createdAt: {
-                  greaterThanOrEqualTo: $recentGreaterThan,
-                }
-              },
-              first: $count
-            ) {
-              nodes {
-                id,
-                name,
-                startDate,
-                ticketproviderurl,
-                ticketproviderid,
-                venue,
-                createdAt,
-                venueByVenue {
-                  lat,
-                  lon
-                }
-                artistToEventsByEventId(first: 1) {
-                  nodes {
-                    artistByArtistId {
-                      photo
-                    }
-                  }
-                },
-                watchListsByEventId(
-                  filter: {
-                    accountId: {
-                      equalTo: $accountId
-                    }
-                  }
-                ) {
-                  nodes {
-                    id
-                  }
-                }
-              }
-            }
+  searchEventsByRegion(
+    query: $query, 
+    regionName: $regionName,
+  	filter: {
+      startDate: {
+        greaterThanOrEqualTo: $greaterThan,
+        lessThanOrEqualTo: $lessThan
+      },
+      createdAt: {
+        greaterThanOrEqualTo: $recentGreaterThan,
+      }
+    },
+    first: $batchSize,
+    offset: $offset
+  ) {
+    totalCount,
+    nodes {
+      id,
+      name,
+      startDate,
+      ticketproviderurl,
+      ticketproviderid,
+      venue,
+      createdAt,
+      venueByVenue {
+        lat,
+        lon
+      }
+      artistToEventsByEventId(first: 1) {
+        nodes {
+          artistByArtistId {
+            photo
           }
+        }
+      },
+      watchListsByEventId(
+        filter: {
+          accountId: {
+            equalTo: $accountId
+          }
+        }
+      ) {
+        nodes {
+          id
         }
       }
     }

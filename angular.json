@@ -28,7 +28,8 @@
               "src/manifest.json",
               "src/sw-master.js",
               "src/sw-custom.js",
-              "src/robots.txt"
+              "src/robots.txt",
+              "src/sitemap.xml"
             ],
             "styles": [
               "src/styles.scss",

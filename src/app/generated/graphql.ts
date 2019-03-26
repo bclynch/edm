@@ -470,9 +470,10 @@ export class SearchEventsByCityGQL extends Apollo.Query<
       $greaterThan: BigInt!
       $lessThan: BigInt!
       $recentGreaterThan: BigInt!
-      $count: Int
+      $batchSize: Int
+      $offset: Int
     ) {
-      searchEvents(
+      searchEventsByCity(
         query: $query
         cityid: $cityId
         filter: {
@@ -482,8 +483,10 @@ export class SearchEventsByCityGQL extends Apollo.Query<
           }
           createdAt: { greaterThanOrEqualTo: $recentGreaterThan }
         }
-        first: $count
+        first: $batchSize
+        offset: $offset
       ) {
+        totalCount
         nodes {
           id
           name
@@ -528,58 +531,45 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
       $greaterThan: BigInt!
       $lessThan: BigInt!
       $recentGreaterThan: BigInt!
-      $count: Int
+      $batchSize: Int
+      $offset: Int
     ) {
-      regionByName(name: $regionName) {
-        name
-        citiesByRegion {
-          nodes {
-            name
-            venuesByCity {
-              nodes {
-                eventsByVenue(
-                  filter: {
-                    or: [
-                      { name: { includesInsensitive: $query } }
-                      { venue: { includesInsensitive: $query } }
-                    ]
-                    startDate: {
-                      greaterThanOrEqualTo: $greaterThan
-                      lessThanOrEqualTo: $lessThan
-                    }
-                    createdAt: { greaterThanOrEqualTo: $recentGreaterThan }
-                  }
-                  first: $count
-                ) {
-                  nodes {
-                    id
-                    name
-                    startDate
-                    ticketproviderurl
-                    ticketproviderid
-                    venue
-                    createdAt
-                    venueByVenue {
-                      lat
-                      lon
-                    }
-                    artistToEventsByEventId(first: 1) {
-                      nodes {
-                        artistByArtistId {
-                          photo
-                        }
-                      }
-                    }
-                    watchListsByEventId(
-                      filter: { accountId: { equalTo: $accountId } }
-                    ) {
-                      nodes {
-                        id
-                      }
-                    }
-                  }
-                }
+      searchEventsByRegion(
+        query: $query
+        regionName: $regionName
+        filter: {
+          startDate: {
+            greaterThanOrEqualTo: $greaterThan
+            lessThanOrEqualTo: $lessThan
+          }
+          createdAt: { greaterThanOrEqualTo: $recentGreaterThan }
+        }
+        first: $batchSize
+        offset: $offset
+      ) {
+        totalCount
+        nodes {
+          id
+          name
+          startDate
+          ticketproviderurl
+          ticketproviderid
+          venue
+          createdAt
+          venueByVenue {
+            lat
+            lon
+          }
+          artistToEventsByEventId(first: 1) {
+            nodes {
+              artistByArtistId {
+                photo
               }
+            }
+          }
+          watchListsByEventId(filter: { accountId: { equalTo: $accountId } }) {
+            nodes {
+              id
             }
           }
         }
@@ -3805,17 +3795,20 @@ export namespace SearchEventsByCity {
     greaterThan: BigInt;
     lessThan: BigInt;
     recentGreaterThan: BigInt;
-    count?: Maybe<number>;
+    batchSize?: Maybe<number>;
+    offset?: Maybe<number>;
   };
 
   export type Query = {
     __typename?: "Query";
 
-    searchEvents: SearchEvents;
+    searchEventsByCity: SearchEventsByCity;
   };
 
-  export type SearchEvents = {
+  export type SearchEventsByCity = {
     __typename?: "EventsConnection";
+
+    totalCount: Maybe<number>;
 
     nodes: (Maybe<Nodes>)[];
   };
@@ -3891,56 +3884,25 @@ export namespace SearchEventsByRegion {
     greaterThan: BigInt;
     lessThan: BigInt;
     recentGreaterThan: BigInt;
-    count?: Maybe<number>;
+    batchSize?: Maybe<number>;
+    offset?: Maybe<number>;
   };
 
   export type Query = {
     __typename?: "Query";
 
-    regionByName: Maybe<RegionByName>;
+    searchEventsByRegion: SearchEventsByRegion;
   };
 
-  export type RegionByName = {
-    __typename?: "Region";
+  export type SearchEventsByRegion = {
+    __typename?: "EventsConnection";
 
-    name: string;
-
-    citiesByRegion: CitiesByRegion;
-  };
-
-  export type CitiesByRegion = {
-    __typename?: "CitiesConnection";
+    totalCount: Maybe<number>;
 
     nodes: (Maybe<Nodes>)[];
   };
 
   export type Nodes = {
-    __typename?: "City";
-
-    name: Maybe<string>;
-
-    venuesByCity: VenuesByCity;
-  };
-
-  export type VenuesByCity = {
-    __typename?: "VenuesConnection";
-
-    nodes: (Maybe<_Nodes>)[];
-  };
-
-  export type _Nodes = {
-    __typename?: "Venue";
-
-    eventsByVenue: EventsByVenue;
-  };
-
-  export type EventsByVenue = {
-    __typename?: "EventsConnection";
-
-    nodes: (Maybe<__Nodes>)[];
-  };
-
-  export type __Nodes = {
     __typename?: "Event";
 
     id: string;
@@ -3975,10 +3937,10 @@ export namespace SearchEventsByRegion {
   export type ArtistToEventsByEventId = {
     __typename?: "ArtistToEventsConnection";
 
-    nodes: (Maybe<___Nodes>)[];
+    nodes: (Maybe<_Nodes>)[];
   };
 
-  export type ___Nodes = {
+  export type _Nodes = {
     __typename?: "ArtistToEvent";
 
     artistByArtistId: Maybe<ArtistByArtistId>;
@@ -3993,10 +3955,10 @@ export namespace SearchEventsByRegion {
   export type WatchListsByEventId = {
     __typename?: "WatchListsConnection";
 
-    nodes: (Maybe<____Nodes>)[];
+    nodes: (Maybe<__Nodes>)[];
   };
 
-  export type ____Nodes = {
+  export type __Nodes = {
     __typename?: "WatchList";
 
     id: number;

@@ -4,12 +4,17 @@
 - Work on index.html stuff
     - ~~https://github.com/thedaviddias/Front-End-Checklist~~
     - Social meta images
+- ~~Compress carousel/ background images~~
 - Logo svg is low res......
-- Should set up load more or infinite scroll for events page maybe
+- Skeleton loading
+    - https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba
+- ~~Should set up load more or infinite scroll for events page maybe~~
+    - ~~https://angularfirebase.com/lessons/infinite-virtual-scroll-angular-cdk/~~
 - Add lazy load for events on artist / venue pages
 - Make sure analytics going
-- Give each region a lat and lon and show a map on the events page a user can click. Nice to screenshot on the home page too of this to show where shows are at
-    - Could probably run a location proximity fn on this too for a near me option in the search results 
+- Consider quick links to parent region or child cities in the events search box
+- ~~Give each region a lat and lon and show a map on the events page a user can click. Nice to screenshot on the home page too of this to show where shows are at~~
+    - ~~Could probably run a location proximity fn on this too for a near me option in the search results~~
 - ~~Create unsubscribe route for emails and add to the footer of email. Would just incude their account id in the route and remove it based on that (turn off mail notifications)~~
 - ~~Make events page able to filter by new shows added within last x days for use by push notifcation based on query params~~
     - Eventually would be nice within filter/search itself, but we need this for launch
@@ -152,8 +157,6 @@
     - https://github.com/web-push-libs/web-push
 - Featured / hot / lifted events up top
 - Maybe pull api stuff for artists from youtube / insta / etc if they have it
-- Skeleton loading
-    - https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba
 - App store apps
     - https://www.nativescript.org/nativescript-is-how-you-build-native-mobile-apps-with-angular/code-sharing-angular-and-nativescript
     - https://blog.angular.io/apps-that-work-natively-on-the-web-and-mobile-9b26852495e7

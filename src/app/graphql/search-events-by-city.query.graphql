@@ -5,9 +5,10 @@ query searchEventsByCity(
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
     $recentGreaterThan: BigInt!,
-    $count: Int
+    $batchSize: Int,
+    $offset: Int
   ) {
-  searchEvents(
+  searchEventsByCity(
     query: $query, 
     cityid: $cityId,
   	filter: {
@@ -19,8 +20,10 @@ query searchEventsByCity(
         greaterThanOrEqualTo: $recentGreaterThan,
       }
     },
-    first: $count
+    first: $batchSize,
+    offset: $offset
   ) {
+    totalCount,
     nodes {
       id,
       name,
