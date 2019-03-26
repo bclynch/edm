@@ -6,6 +6,7 @@ import { UserService } from './user.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { SwPush } from '@angular/service-worker';
 import { UtilService } from './util.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class AppService {
@@ -48,7 +49,7 @@ export class AppService {
 
   fetchAllLocations() {
     return new Promise((resolve, reject) => {
-      this.allLocationsGQL.fetch().subscribe(
+      this.allLocationsGQL.fetch({ currentDate: moment().startOf('day').valueOf() }).subscribe(
         ({ data }) => {
           // creating an array of strings with both cities + regions
           const locationsArr = [];

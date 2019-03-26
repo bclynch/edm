@@ -60,7 +60,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
 
       filteredArr = this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
-    // filteredArr.unshift('📍 Use my current location');
+    filteredArr.unshift('📍 Use my current location');
     return filteredArr;
   }
 
@@ -75,17 +75,19 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
       this.myControl.setValue('Finding Location...');
       navigator.geolocation.getCurrentPosition(
         (data) => {
-          console.log(data.coords);
-          // find city based on coords
-          this.locationService.reverseGeocodeCoords(data.coords.latitude, data.coords.longitude).subscribe(
-            result => {
-              console.log(result.results);
-              this.myControl.setValue(result.results[0].formatted_address.split(',')[1]);
-
-              // will need to run an algorithm to find nearest region / city to the location
-              this.selected.emit(this.myControl.value);
+          let closestRegion;
+          let closestDistance = 100000;
+          // identify which region is closest to user
+          this.appService.locationDirectory.forEach((location) => {
+            const distance = this.calculateDistance({ lat: location.lat, lon: location.lon }, { lat: data.coords.latitude, lon: data.coords.longitude });
+            // if region is closer than current one replace above vars
+            if (distance < closestDistance) {
+              closestRegion = location.name;
+              closestDistance = distance;
             }
-          );
+          });
+          this.myControl.setValue(closestRegion);
+          this.selected.emit(this.myControl.value);
         },
         (err) => {
           console.log(err);
@@ -95,5 +97,14 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
     } else {
       this.selected.emit(this.myControl.value);
     }
+  }
+
+  calculateDistance(pair1: { lat: number, lon: number }, pair2: { lat: number, lon: number }): number {
+    const R = 6371; // Radius of the earth in km
+    const dLat = (pair2.lat - pair1.lat) * Math.PI / 180;  // deg2rad below
+    const dLon = (pair2.lon - pair1.lon) * Math.PI / 180;
+    const a = 0.5 - Math.cos(dLat) / 2 + Math.cos(pair1.lat * Math.PI / 180) * Math.cos(pair2.lat * Math.PI / 180) * (1 - Math.cos(dLon)) / 2;
+
+    return R * 2 * Math.asin(Math.sqrt(a));
   }
 }

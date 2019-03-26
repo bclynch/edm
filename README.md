@@ -4,6 +4,9 @@
 - Work on index.html stuff
     - ~~https://github.com/thedaviddias/Front-End-Checklist~~
     - Social meta images
+- Logo svg is low res......
+- Should set up load more or infinite scroll for events page maybe
+- Add lazy load for events on artist / venue pages
 - Make sure analytics going
 - Give each region a lat and lon and show a map on the events page a user can click. Nice to screenshot on the home page too of this to show where shows are at
     - Could probably run a location proximity fn on this too for a near me option in the search results 
@@ -13,7 +16,12 @@
 - ~~Add genres to artist page~~
     - Maybe some listing of artists by genre?
     - Maybe a filter on events search?
-- Look at affiliate / ref links after live
+- **Look at affiliate / ref links after live**
+    - Shareasale signup - pending
+    - Ticketfly via shareasale - pending
+    - eventbrite - Trying to figure out aff prop on iframe...
+    - axs
+    - Seetickets - Email sent
 - Upload apk to google play store + link on home page for play store + have directions for ios shortcut
     - https://appmaker.xyz/pwa-to-apk/ - Auto create apk with directions for TWA
 - Push notifications

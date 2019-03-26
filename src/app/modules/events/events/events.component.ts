@@ -63,7 +63,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     private routerService: RouterService,
     private searchEventsByCityGQL: SearchEventsByCityGQL,
     private searchEventsbyRegionGQL: SearchEventsByRegionGQL,
-    private mapsAPILoader: MapsAPILoader,
+    // private mapsAPILoader: MapsAPILoader,
     private utilService: UtilService,
     private userService: UserService,
     private appService: AppService,
@@ -93,7 +93,6 @@ export class EventsComponent implements OnInit, OnDestroy {
           });
           if (this.location) {
             this.changeUrlPath();
-            // this.generateMap();
           }
         }
       }
@@ -106,20 +105,6 @@ export class EventsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.initSubscription.unsubscribe();
     this.paramsSubscription.unsubscribe();
-  }
-
-  generateMap() {
-    // fitting the map to the markers
-    this.mapsAPILoader.load().then(() => {
-      this.latlngBounds = new window['google'].maps.LatLngBounds();
-      this.eventMarkers.forEach((event) => this.latlngBounds.extend(new window['google'].maps.LatLng(event.lat, event.lon)));
-
-      // grab map style
-      this.utilService.getJSON('../../assets/mapStyles/unsaturated.json').subscribe( (data) => {
-        this.mapStyle = data;
-        this.mapInited = true;
-      });
-    });
   }
 
   searchEvents() {

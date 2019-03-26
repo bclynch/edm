@@ -11,7 +11,7 @@ export class EventbriteCheckoutComponent implements OnInit {
 
   eventId: number;
   // move these to env vars
-  domain = 'localhost:4200';
+  domain = 'edmflare.com';
   affiliate = 'ebdimtedmtrain';
   eventbriteUrl: SafeResourceUrl;
 

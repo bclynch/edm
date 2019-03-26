@@ -39,47 +39,47 @@ export class FooterComponent {
     {
       label: 'New York Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'New York' }
+      queryParams: { location: 'New York', dates: 'any' }
     },
     {
       label: 'Bay Area Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Bay Area' }
+      queryParams: { location: 'Bay Area', dates: 'any' }
     },
     {
       label: 'Miami Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Miami' }
+      queryParams: { location: 'Miami', dates: 'any' }
     },
     {
       label: 'Chicago Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Chicago' }
+      queryParams: { location: 'Chicago', dates: 'any' }
     },
     {
       label: 'Washington Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Washington' }
+      queryParams: { location: 'Washington', dates: 'any' }
     },
     {
-      label: 'Atlanta Shows',
+      label: 'Georgia Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Atlanta' }
+      queryParams: { location: 'Georgia', dates: 'any' }
     },
     {
       label: 'Los Angeles Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Los Angeles' }
+      queryParams: { location: 'Los Angeles', dates: 'any' }
     },
     {
       label: 'Nevada Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Nevada' }
+      queryParams: { location: 'Nevada', dates: 'any' }
     },
     {
       label: 'Wisconsin Shows',
       path: '/events',
-      queryParams: { dates: 'any', location: 'Wisconsin' }
+      queryParams: { location: 'Wisconsin', dates: 'any' }
     },
     {
       label: 'All Locations',

@@ -77,14 +77,27 @@ export class AllLocationsGQL extends Apollo.Query<
   AllLocations.Variables
 > {
   document: any = gql`
-    query allLocations {
+    query allLocations($currentDate: BigInt!) {
       allRegions {
         nodes {
           name
+          lat
+          lon
           citiesByRegion(orderBy: NAME_ASC) {
             nodes {
               id
               name
+              venuesByCity {
+                nodes {
+                  eventsByVenue(
+                    filter: {
+                      startDate: { greaterThanOrEqualTo: $currentDate }
+                    }
+                  ) {
+                    totalCount
+                  }
+                }
+              }
             }
           }
         }
@@ -1008,6 +1021,10 @@ export interface RegionCondition {
   photo?: Maybe<string>;
   /** Checks for equality with the object’s `country` field. */
   country?: Maybe<string>;
+  /** Checks for equality with the object’s `lat` field. */
+  lat?: Maybe<BigFloat>;
+  /** Checks for equality with the object’s `lon` field. */
+  lon?: Maybe<BigFloat>;
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<BigInt>;
   /** Checks for equality with the object’s `updatedAt` field. */
@@ -1023,6 +1040,10 @@ export interface RegionFilter {
   photo?: Maybe<StringFilter>;
   /** Filter by the object’s `country` field. */
   country?: Maybe<StringFilter>;
+  /** Filter by the object’s `lat` field. */
+  lat?: Maybe<BigFloatFilter>;
+  /** Filter by the object’s `lon` field. */
+  lon?: Maybe<BigFloatFilter>;
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<BigIntFilter>;
   /** Filter by the object’s `updatedAt` field. */
@@ -1033,6 +1054,31 @@ export interface RegionFilter {
   or?: Maybe<RegionFilter[]>;
   /** Negates the expression. */
   not?: Maybe<RegionFilter>;
+}
+/** A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’ */
+export interface BigFloatFilter {
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<boolean>;
+  /** Equal to the specified value. */
+  equalTo?: Maybe<BigFloat>;
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<BigFloat>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<BigFloat>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<BigFloat>;
+  /** Included in the specified list. */
+  in?: Maybe<BigFloat[]>;
+  /** Not included in the specified list. */
+  notIn?: Maybe<BigFloat[]>;
+  /** Less than the specified value. */
+  lessThan?: Maybe<BigFloat>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: Maybe<BigFloat>;
+  /** Greater than the specified value. */
+  greaterThan?: Maybe<BigFloat>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: Maybe<BigFloat>;
 }
 /** A condition to be used against `City` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface CityCondition {
@@ -1125,31 +1171,6 @@ export interface VenueFilter {
   or?: Maybe<VenueFilter[]>;
   /** Negates the expression. */
   not?: Maybe<VenueFilter>;
-}
-/** A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’ */
-export interface BigFloatFilter {
-  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: Maybe<boolean>;
-  /** Equal to the specified value. */
-  equalTo?: Maybe<BigFloat>;
-  /** Not equal to the specified value. */
-  notEqualTo?: Maybe<BigFloat>;
-  /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: Maybe<BigFloat>;
-  /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: Maybe<BigFloat>;
-  /** Included in the specified list. */
-  in?: Maybe<BigFloat[]>;
-  /** Not included in the specified list. */
-  notIn?: Maybe<BigFloat[]>;
-  /** Less than the specified value. */
-  lessThan?: Maybe<BigFloat>;
-  /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: Maybe<BigFloat>;
-  /** Greater than the specified value. */
-  greaterThan?: Maybe<BigFloat>;
-  /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: Maybe<BigFloat>;
 }
 /** A condition to be used against `Event` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export interface EventCondition {
@@ -1781,6 +1802,10 @@ export interface RegionInput {
   photo?: Maybe<string>;
   /** Country for region */
   country?: Maybe<string>;
+  /** Latitude for region */
+  lat?: Maybe<BigFloat>;
+  /** Longitdue for region */
+  lon?: Maybe<BigFloat>;
   /** When region created */
   createdAt?: Maybe<BigInt>;
   /** When region last updated */
@@ -2264,6 +2289,10 @@ export interface RegionPatch {
   photo?: Maybe<string>;
   /** Country for region */
   country?: Maybe<string>;
+  /** Latitude for region */
+  lat?: Maybe<BigFloat>;
+  /** Longitdue for region */
+  lon?: Maybe<BigFloat>;
   /** When region created */
   createdAt?: Maybe<BigInt>;
   /** When region last updated */
@@ -2828,6 +2857,10 @@ export enum RegionsOrderBy {
   PhotoDesc = "PHOTO_DESC",
   CountryAsc = "COUNTRY_ASC",
   CountryDesc = "COUNTRY_DESC",
+  LatAsc = "LAT_ASC",
+  LatDesc = "LAT_DESC",
+  LonAsc = "LON_ASC",
+  LonDesc = "LON_DESC",
   CreatedAtAsc = "CREATED_AT_ASC",
   CreatedAtDesc = "CREATED_AT_DESC",
   UpdatedAtAsc = "UPDATED_AT_ASC",
@@ -3212,7 +3245,9 @@ export namespace AccountByUsername {
 }
 
 export namespace AllLocations {
-  export type Variables = {};
+  export type Variables = {
+    currentDate: BigInt;
+  };
 
   export type Query = {
     __typename?: "Query";
@@ -3231,6 +3266,10 @@ export namespace AllLocations {
 
     name: string;
 
+    lat: Maybe<BigFloat>;
+
+    lon: Maybe<BigFloat>;
+
     citiesByRegion: CitiesByRegion;
   };
 
@@ -3246,6 +3285,26 @@ export namespace AllLocations {
     id: number;
 
     name: Maybe<string>;
+
+    venuesByCity: VenuesByCity;
+  };
+
+  export type VenuesByCity = {
+    __typename?: "VenuesConnection";
+
+    nodes: (Maybe<__Nodes>)[];
+  };
+
+  export type __Nodes = {
+    __typename?: "Venue";
+
+    eventsByVenue: EventsByVenue;
+  };
+
+  export type EventsByVenue = {
+    __typename?: "EventsConnection";
+
+    totalCount: Maybe<number>;
   };
 }
 

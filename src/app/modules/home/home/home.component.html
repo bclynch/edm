@@ -20,7 +20,14 @@
         </div>
         <form class="searchContainer" (submit)="searchShows($event)">
           <div class="section">
-            <div class="label">Looking for shows in</div>
+            <div class="label">
+              Looking for shows in 
+              <a [routerLink]="['/map']">
+                <button mat-button matTooltip="Use map view" type="button">
+                  <mat-icon>map</mat-icon>
+                </button>
+              </a>
+            </div>
             <div>
               <app-location-search
                 placeholder="Location"
@@ -69,7 +76,7 @@
           ></app-event-card-alt>
         </div>
         <div class="moreWrapper">
-          <a [routerLink]="['/events']" [queryParams]="{ dates: 'any', location: selectedLocation }" class="more">See More Shows</a>
+          <a [routerLink]="['/events']" [queryParams]="{ location: selectedLocation, dates: 'any' }" class="more">See More Shows</a>
         </div>
       </div>
     </div>

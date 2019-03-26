@@ -6,13 +6,13 @@
       </div>
       <div class="regionContainer" *ngFor="let region of locations;">
         <div class="linkWrapper">
-          <a [routerLink]="['/events']" [queryParams]="{ dates: 'any', location: region.name }">
+          <a [routerLink]="['/events']" [queryParams]="{ location: region.name, dates: 'any' }">
             <h3>{{region.name}}</h3>
           </a>
         </div>
         <div class="citiesContainer">
           <div class="linkWrapper" *ngFor="let city of region.citiesByRegion.nodes">
-            <a [routerLink]="['/events']" [queryParams]="{ dates: 'any', location: city.name }">{{city.name}}</a>
+            <a [routerLink]="['/events']" [queryParams]="{ location: city.name, dates: 'any' }">{{city.name}}</a>
           </div>
         </div>
       </div>

@@ -82,6 +82,15 @@
             background: var(--color-accent);
           }
         }
+        a {
+          color: white;
+          font-size: .5em;
+
+          button {
+            min-width: auto;
+            padding: 0 4px;
+          }
+        }
       }
     }
   }
@@ -161,7 +170,9 @@
           padding: 1em;
 
           .label {
-            margin-bottom: 1em;
+            height: 2.5em;
+            display: flex;
+            align-items: center;
           }
         }
         .section:first-child {

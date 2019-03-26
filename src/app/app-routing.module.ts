@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: './modules/event/event.module#EventModule',
   },
   {
+    path: 'map',
+    loadChildren: './modules/map/map.module#MapModule',
+  },
+  {
     path: 'login',
     loadChildren: './modules/login/login.module#LoginModule',
   },
