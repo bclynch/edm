@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewChild } from
 import { RouterService } from 'src/app/services/router.service';
 import { SearchEventsByCityGQL, SearchEventsByRegionGQL } from 'src/app/generated/graphql';
 import { BehaviorSubject, SubscriptionLike } from 'rxjs';
-import { MapsAPILoader } from '@agm/core';
 import { UtilService } from 'src/app/services/util.service';
 import { UserService } from 'src/app/services/user.service';
 import { AppService } from 'src/app/services/app.service';
@@ -12,6 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { trigger } from '@angular/animations';
+import { fadeOut } from 'src/app/shared/fade-animations';
 
 class Event {
   id: string;
@@ -24,6 +25,9 @@ class Event {
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
+  animations: [
+    trigger('fadeOut', fadeOut())
+  ],
   styleUrls: ['./events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -53,6 +57,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   initSubscription: SubscriptionLike;
   paramsSubscription: SubscriptionLike;
 
+  ghosts = [];
+
   constructor(
     private routerService: RouterService,
     private searchEventsByCityGQL: SearchEventsByCityGQL,
@@ -65,6 +71,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public snackBar: MatSnackBar
   ) {
+    this.ghosts = new Array(4);       // Mock Ghost items
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
@@ -125,6 +132,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           offset: this.offset
         }).subscribe(
           ({ data }) => {
+            this.ghosts = [];
             this.totalEvents = data.searchEventsByCity.totalCount;
             this.events = this.events.concat(this.processEvents(data.searchEventsByCity.nodes));
             this.eventsObservable.next(this.events);
@@ -145,6 +153,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           offset: this.offset
         }).subscribe(
           ({ data }) => {
+            this.ghosts = [];
             this.totalEvents = data.searchEventsByRegion.totalCount;
             this.events = this.events.concat(this.processEvents(data.searchEventsByRegion.nodes));
             this.eventsObservable.next(this.events);
@@ -183,6 +192,11 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   changeUrlPath() {
+    this.eventsInited = false;
+    this.events = [];
+    this.eventsObservable.next(this.events);
+    this.ghosts = new Array(4);       // Mock Ghost items
+
     console.log(this.selectedLocation);
     // add query params to address and also kicks off search events in the router subscription
     this.routerService.navigateToPage(

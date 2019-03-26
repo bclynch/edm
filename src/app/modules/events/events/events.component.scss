@@ -32,21 +32,6 @@
         transition: .3s;
       }
     }
-    .mapContainer {
-      height: 56vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      display: none;
-  
-      .mapWrapper {
-        height: 100%;
-
-        agm-map {
-          height: 100%;
-        }
-      }
-    }
     form {
       display: flex;
       flex-direction: column;

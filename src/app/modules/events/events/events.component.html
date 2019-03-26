@@ -46,7 +46,7 @@
       (scrolledIndexChange)="nextBatch()"
     >
       <app-event-card
-        *cdkVirtualFor="let event of eventsObservable | async"
+      *cdkVirtualFor="let event of eventsObservable | async"
         [name]="event.name"
         [location]="event.venue"
         [date]="event.startDate"
@@ -65,5 +65,9 @@
         <h2>No events. Try a new search.</h2>
       </div>
     </cdk-virtual-scroll-viewport>
+    <app-ghost-list
+      [ghosts]="ghosts" 
+      [@fadeOut]="!ghosts.length"
+    ></app-ghost-list>
   </div>
 </app-pagewrapper>

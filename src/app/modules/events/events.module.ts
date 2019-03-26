@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { GhostListComponent } from './events/ghost/ghost-list.component';
 
 const routes: Routes = [
   {
@@ -14,14 +15,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [EventsComponent],
+  declarations: [EventsComponent, GhostListComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     ScrollDispatchModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule
   ]
 })
 export class EventsModule { }

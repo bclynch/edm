@@ -6,8 +6,8 @@
     - Social meta images
 - ~~Compress carousel/ background images~~
 - Logo svg is low res......
-- Skeleton loading
-    - https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba
+- ~~Skeleton loading~~
+    - ~~https://blog.angularindepth.com/https-medium-com-thomasburleson-animated-ghosts-bfc045a51fba~~
 - ~~Should set up load more or infinite scroll for events page maybe~~
     - ~~https://angularfirebase.com/lessons/infinite-virtual-scroll-angular-cdk/~~
 - Add lazy load for events on artist / venue pages
@@ -151,7 +151,6 @@
 - Affiliate links for accomodation https://www.stay22.com/
 
 ## Down the line
-- Map view the world over. Would be for a certain date and a user can modify the date to refresh map
 - PWA available with push notifications for followed artists or venues.
     - https://blog.angular-university.io/angular-push-notifications/
     - https://github.com/web-push-libs/web-push
