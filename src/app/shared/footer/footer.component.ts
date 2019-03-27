@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faTwitter, faGooglePlay, faApple } from '@fortawesome/free-brands-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -31,7 +31,21 @@ export class FooterComponent {
   usageLinks = [
     {
       label: 'FAQs',
-      path: '/faqs'
+      path: '/faqs',
+      type: 'internal'
+    },
+    {
+      label: 'Install With iOS',
+      path: '/faqs',
+      queryParams: { expanded: 1 },
+      icon: faApple,
+      type: 'internal'
+    },
+    {
+      label: 'Download For Android',
+      path: 'https://play.google.com/store/apps/details?id=xyz.appmaker.lushoi&rdid=xyz.appmaker.lushoi',
+      icon: faGooglePlay,
+      type: 'external'
     }
   ];
 

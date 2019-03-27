@@ -5,7 +5,17 @@
         <h4>Use EDM Flare</h4>
         <div class="linksContainer">
           <div *ngFor="let usageLink of usageLinks;">
-            <a [routerLink]="[usageLink.path]">{{usageLink.label}}</a>
+            <a 
+              [routerLink]="[usageLink.path]" 
+              [queryParams]="usageLink.queryParams"
+              *ngIf="usageLink.type === 'internal'"
+            ><span *ngIf="usageLink.icon"><fa-icon [icon]="usageLink.icon"></fa-icon></span> {{usageLink.label}}</a>
+            <a
+              *ngIf="usageLink.type === 'external'"
+              [href]="usageLink.path"
+              target="_blank" 
+              rel="nofollow"
+            ><fa-icon [icon]="usageLink.icon"></fa-icon> {{usageLink.label}}</a>
           </div>
         </div>
       </div>

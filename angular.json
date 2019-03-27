@@ -29,7 +29,12 @@
               "src/sw-master.js",
               "src/sw-custom.js",
               "src/robots.txt",
-              "src/sitemap.xml"
+              "src/sitemap.xml",
+              {
+                "glob": "assetlinks.json",
+                "input": "src/",
+                "output": ".well-known/"
+              }
             ],
             "styles": [
               "src/styles.scss",

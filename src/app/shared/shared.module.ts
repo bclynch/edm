@@ -42,6 +42,7 @@ import { EventbriteCheckoutComponent } from './eventbrite-checkout/eventbrite-ch
 import { SelectDateComponent } from './select-date/select-date.component';
 import { EventCardAltComponent } from './event-card-alt/event-card-alt.component';
 import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.component';
+import { GetAppComponent } from './get-app/get-app.component';
 
 @NgModule({
   entryComponents: [
@@ -59,7 +60,8 @@ import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.co
     EventbriteCheckoutComponent,
     SelectDateComponent,
     EventCardAltComponent,
-    SettingsWrapperComponent
+    SettingsWrapperComponent,
+    GetAppComponent
   ],
   imports: [
     CommonModule,
@@ -116,7 +118,8 @@ import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.co
     VenueMapComponent,
     SelectDateComponent,
     EventCardAltComponent,
-    SettingsWrapperComponent
+    SettingsWrapperComponent,
+    GetAppComponent
   ],
   providers: [
     {provide: OverlayContainer, useClass: FullscreenOverlayContainer}

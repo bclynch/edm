@@ -1,6 +1,7 @@
 # EDM Flare
 
 ## Todos
+- Get push notification sub / unsub working
 - Work on index.html stuff
     - ~~https://github.com/thedaviddias/Front-End-Checklist~~
     - Social meta images
@@ -11,7 +12,7 @@
 - ~~Should set up load more or infinite scroll for events page maybe~~
     - ~~https://angularfirebase.com/lessons/infinite-virtual-scroll-angular-cdk/~~
 - Add lazy load for events on artist / venue pages
-- Make sure analytics going
+- ~~Make sure analytics going~~
 - Consider quick links to parent region or child cities in the events search box
 - ~~Give each region a lat and lon and show a map on the events page a user can click. Nice to screenshot on the home page too of this to show where shows are at~~
     - ~~Could probably run a location proximity fn on this too for a near me option in the search results~~
@@ -22,13 +23,13 @@
     - Maybe some listing of artists by genre?
     - Maybe a filter on events search?
 - **Look at affiliate / ref links after live**
-    - Shareasale signup - pending
+    - ~~Shareasale signup - complete~~
     - Ticketfly via shareasale - pending
     - eventbrite - Trying to figure out aff prop on iframe...
     - axs
     - Seetickets - Email sent
-- Upload apk to google play store + link on home page for play store + have directions for ios shortcut
-    - https://appmaker.xyz/pwa-to-apk/ - Auto create apk with directions for TWA
+- ~~Upload apk to google play store + link on home page for play store + have directions for ios shortcut~~
+    - ~~https://appmaker.xyz/pwa-to-apk/ - Auto create apk with directions for TWA~~
 - Push notifications
     - https://blog.angular-university.io/angular-push-notifications/
     - ~~Works for chrome and firefox~~
@@ -83,7 +84,7 @@
     - About page
     - ~~Contact Page~~
     - Terms / privacy
-    - faqs
+    - ~~faqs~~
 - Create Event Page
     - 
 - Home page
