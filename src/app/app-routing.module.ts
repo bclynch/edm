@@ -4,59 +4,59 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './modules/home/home.module#HomeModule',
+    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
   },
   {
     path: 'artist',
-    loadChildren: './modules/artist/artist.module#ArtistModule',
+    loadChildren: () => import('./modules/artist/artist.module').then(m => m.ArtistModule),
   },
   {
     path: 'venue',
-    loadChildren: './modules/venue/venue.module#VenueModule',
+    loadChildren: () => import('./modules/venue/venue.module').then(m => m.VenueModule),
   },
   {
     path: 'events',
-    loadChildren: './modules/events/events.module#EventsModule',
+    loadChildren: () => import('./modules/events/events.module').then(m => m.EventsModule),
   },
   {
     path: 'event',
-    loadChildren: './modules/event/event.module#EventModule',
+    loadChildren: () => import('./modules/event/event.module').then(m => m.EventModule),
   },
   {
     path: 'map',
-    loadChildren: './modules/map/map.module#MapModule',
+    loadChildren: () => import('./modules/map/map.module').then(m => m.MapModule),
   },
   {
     path: 'login',
-    loadChildren: './modules/login/login.module#LoginModule',
+    loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
   },
   {
     path: 'signup',
-    loadChildren: './modules/signup/signup.module#SignupModule',
+    loadChildren: () => import('./modules/signup/signup.module').then(m => m.SignupModule),
   },
   {
     path: 'user',
-    loadChildren: './modules/user/user.module#UserModule',
+    loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule),
   },
   {
     path: 'create-event',
-    loadChildren: './modules/create/create.module#CreateModule',
+    loadChildren: () => import('./modules/create/create.module').then(m => m.CreateModule),
   },
   {
     path: 'locations',
-    loadChildren: './modules/locations/locations.module#LocationsModule',
+    loadChildren: () => import('./modules/locations/locations.module').then(m => m.LocationsModule),
   },
   {
     path: 'policies',
-    loadChildren: './modules/policies/policies.module#PoliciesModule',
+    loadChildren: () => import('./modules/policies/policies.module').then(m => m.PoliciesModule),
   },
   {
     path: 'about',
-    loadChildren: './modules/about/about.module#AboutModule',
+    loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule),
   },
   {
     path: 'contact',
-    loadChildren: './modules/contact/contact.module#ContactModule',
+    loadChildren: () => import('./modules/contact/contact.module').then(m => m.ContactModule),
   },
   {
     path: 'settings',
@@ -65,33 +65,33 @@ const routes: Routes = [
   },
   {
     path: 'settings/user-profile',
-    loadChildren: './modules/user-profile/user-profile.module#UserProfileModule',
+    loadChildren: () => import('./modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
   },
   {
     path: 'settings/password',
-    loadChildren: './modules/password/password.module#PasswordModule',
+    loadChildren: () => import('./modules/password/password.module').then(m => m.PasswordModule),
   },
   {
     path: 'settings/notification-preferences',
-    loadChildren: './modules/notification-preferences/notification-preferences.module#NotificationPreferencesModule',
+    loadChildren: () => import('./modules/notification-preferences/notification-preferences.module').then(m => m.NotificationPreferencesModule),
   },
   {
     path: 'settings/close-account',
-    loadChildren: './modules/close-account/close-account.module#CloseAccountModule',
+    loadChildren: () => import('./modules/close-account/close-account.module').then(m => m.CloseAccountModule),
   },
   {
     path: 'password-reset',
-    loadChildren: './modules/password-reset/password-reset.module#PasswordResetModule',
+    loadChildren: () => import('./modules/password-reset/password-reset.module').then(m => m.PasswordResetModule),
   },
   {
     path: 'unsubscribe',
-    loadChildren: './modules/unsubscribe/unsubscribe.module#UnsubscribeModule',
+    loadChildren: () => import('./modules/unsubscribe/unsubscribe.module').then(m => m.UnsubscribeModule),
   },
   {
     path: 'faqs',
-    loadChildren: './modules/faqs/faqs.module#FaqsModule',
+    loadChildren: () => import('./modules/faqs/faqs.module').then(m => m.FaqsModule),
   },
-  { path: '**', loadChildren: './modules/not-found/not-found.module#NotFoundModule' }
+  { path: '**', loadChildren: () => import('./modules/not-found/not-found.module').then(m => m.NotFoundModule) }
 ];
 
 @NgModule({

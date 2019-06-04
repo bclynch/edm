@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ENV } from '../../environments/environment';
-import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class EmailService {
 
   constructor(
-    private http: Http
+    private http: HttpClient
   ) {
 
   }
@@ -16,45 +16,30 @@ export class EmailService {
   sendResetEmail(email: string, pw: string) {
     return this.http.post(`${ENV.apiBaseURL}/mailing/reset`, { email, pw })
       .pipe(map(
-        (response: Response) => {
-          const data = response.json();
-          return data;
-        }
+        response => (response)
       )
       ).pipe(catchError(
-        (error: Response) => {
-          return Observable.throw('Something went wrong');
-        }
+        error => (Observable.throw('Something went wrong'))
     ));
   }
 
   sendContactEmail(data: { why: string; name: string; email: string; content: string; }) {
     return this.http.post(`${ENV.apiBaseURL}/mailing/contact`, { data })
       .pipe(map(
-        (response: Response) => {
-          const json = response.json();
-          return json;
-        }
+        response => (response)
       )
       ).pipe(catchError(
-        (error: Response) => {
-          return Observable.throw('Something went wrong');
-        }
+        error => (Observable.throw('Something went wrong'))
       ));
   }
 
   sendRegistrationEmail(email: string) {
     return this.http.post(`${ENV.apiBaseURL}/mailing/registration`, { email })
       .pipe(map(
-        (response: Response) => {
-          const json = response.json();
-          return json;
-        }
+        response => (response)
       )
       ).pipe(catchError(
-        (error: Response) => {
-          return Observable.throw('Something went wrong');
-        }
+        error => (Observable.throw('Something went wrong'))
       ));
   }
 }

@@ -10,7 +10,7 @@ export class SelectDateComponent implements OnInit, OnChanges {
   @Input() placeholder = '';
   @Input() value: string;
   @Output() date: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('dateSelect') dateSelect;
+  @ViewChild('dateSelect', { static: true }) dateSelect;
 
   pickedDate: any = 'Pick a Date';
   dateOptions = [

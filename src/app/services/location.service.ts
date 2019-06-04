@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ENV } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 declare let ga: Function;
 
@@ -12,7 +12,7 @@ export class LocationService {
 
   constructor(
     private router: Router,
-    private http: Http
+    private http: HttpClient
   ) {
 
   }
@@ -20,13 +20,10 @@ export class LocationService {
   reverseGeocodeCoords(lat: number, lon: number) {
     return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&sensor=true&key=${ENV.googleAPIKey}`)
       .pipe(map(
-        (response) => {
-          const data = response.json();
-          return data;
-        }
+        response => (response)
       )
       ).pipe(catchError(
-        (error: Response) => {
+        (error) => {
           console.log(error);
           return Observable.throw('Something went wrong');
         }

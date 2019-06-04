@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ShareDialogueComponent } from '../shared/share-dialogue/share-dialogue.component';
-import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UtilService {
@@ -20,7 +20,7 @@ export class UtilService {
 
   constructor(
     public dialog: MatDialog,
-    private http: Http
+    private http: HttpClient
   ) {
     this.infiniteActiveSubject = new BehaviorSubject(null);
     this.infiniteActive$ = this.infiniteActiveSubject.asObservable();
@@ -44,7 +44,7 @@ export class UtilService {
   }
 
   getJSON(path: string) {
-    return this.http.get(path).pipe(map((res) => res.json()));
+    return this.http.get(path).pipe(map(res => (res)));
   }
 
   addToCalendar(title: string, eventUrl: string, venueAddress: string, date: string) {

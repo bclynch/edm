@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -36,7 +35,6 @@ import { EmailService } from './services/email.service';
     BrowserModule,
     AppRoutingModule,
     GraphQLModule,
-    HttpModule,
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
