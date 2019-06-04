@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { trigger } from '@angular/animations';
 import { fadeOut } from 'src/app/shared/fade-animations';

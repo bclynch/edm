@@ -3,7 +3,7 @@ import { AppService } from 'src/app/services/app.service';
 import { UpdateAccountGQL, Frequency, WatchedLocationByAccountGQL, DeleteWatchedByIdGQL, CreateWatchedToAccountGQL, DeletePushSubscriptionByIdGQL } from 'src/app/generated/graphql';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-notification-preferences',

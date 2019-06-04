@@ -5,7 +5,7 @@ import { EventbriteCheckoutComponent } from '../shared/eventbrite-checkout/event
 import { CONTAINER_DATA } from '../shared/eventbrite-checkout/eventbrite-overlay.token';
 import { CreateWatchListGQL, RemoveWatchlistGQL } from '../generated/graphql';
 import { UserService } from './user.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class EventService {

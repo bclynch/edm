@@ -71,7 +71,7 @@
             [id]="event.id"
             [externalUrl]="event.ticketproviderurl"
             [ticketProviderId]="event.ticketproviderid"
-            [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+            [image]="event.artistToEventsByEventId.nodes[0]?.artistByArtistId.photo"
             [watchId]="event.watchListsByEventId.nodes[0]"
           ></app-event-card-alt>
         </div>

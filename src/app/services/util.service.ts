@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ShareDialogueComponent } from '../shared/share-dialogue/share-dialogue.component';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';

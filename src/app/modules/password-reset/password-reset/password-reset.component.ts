@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResetPasswordGQL } from 'src/app/generated/graphql';
 import { EmailService } from 'src/app/services/email.service';
 import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-password-reset',
@@ -43,7 +43,7 @@ export class PasswordResetComponent implements OnInit {
       .subscribe(
         (result) => {
           this.emailService.sendResetEmail(this.resetForm.value.email, result.data.resetPassword.string).subscribe(
-            data => {
+            (data: any) => {
               console.log(data);
               if (data.result === 'Forgot email sent') {
                 this.resetForm.reset();

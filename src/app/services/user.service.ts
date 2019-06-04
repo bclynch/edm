@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL, CreateFollowListGQL, RemoveFollowlistGQL } from '../generated/graphql';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmailService } from './email.service';
 
 @Injectable()
