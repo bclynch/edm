@@ -110,6 +110,17 @@
   }
   .commentContainer {
     margin: 0 5%;
+
+    &.notLoaded {
+      display: flex;
+      justify-content: center;
+    }
+    .load {
+      color: var(--color-accent);
+      font-size: 1.75em;
+      cursor: pointer;
+      margin-bottom: 1em;
+    }
   }
   @media (min-width: 768px) {
 

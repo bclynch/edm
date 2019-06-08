@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-// Apollo
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
@@ -42,32 +41,3 @@ export class GraphQLModule {
     });
   }
 }
-
-// import { NgModule } from '@angular/core';
-// import { HttpClientModule } from '@angular/common/http';
-// import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-// import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-// import { InMemoryCache } from 'apollo-cache-inmemory';
-// import { BrowserModule } from '@angular/platform-browser';
-
-// @NgModule({
-//   imports: [
-//     BrowserModule,
-//     HttpClientModule,
-//     ApolloModule,
-//     HttpLinkModule
-//   ],
-//   providers: [{
-//     provide: APOLLO_OPTIONS,
-//     useFactory(httpLink: HttpLink) {
-//       return {
-//         cache: new InMemoryCache(),
-//         link: httpLink.create({
-//           uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'
-//         })
-//       };
-//     },
-//     deps: [HttpLink]
-//   }],
-// })
-// export class GraphQLModule {}

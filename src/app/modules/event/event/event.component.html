@@ -88,8 +88,14 @@
           [eventName]="event.name"
         ></app-venue-map>
       </div>
-      <div class="commentContainer">
-        <disqus [identifier]="disqusId" *ngIf="disqusId"></disqus>
+      <div class="commentContainer" [ngClass]="!loadComments && 'notLoaded'">
+        <div 
+          class="load" 
+          mat-button 
+          *ngIf="!loadComments" 
+          (click)="loadComments = true"
+        >Load Comments</div>
+        <disqus [identifier]="disqusId" *ngIf="disqusId && loadComments"></disqus>
       </div>
     </div>
   </div>

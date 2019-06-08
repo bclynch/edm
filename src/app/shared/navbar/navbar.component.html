@@ -20,7 +20,7 @@
           </div>
           <div *ngIf="signedIn">
             <a [routerLink]="['/user/' + userService.user.username]"><button mat-menu-item>Feed</button></a>
-            <a [routerLink]="['/create-event']"><button mat-menu-item>Create Event</button></a>
+            <!-- <a [routerLink]="['/create-event']"><button mat-menu-item>Create Event</button></a> -->
             <a [routerLink]="['/settings']"><button mat-menu-item>Account Settings</button></a>
             <button mat-menu-item (click)="userService.logoutUser()">Log out</button>
           </div>

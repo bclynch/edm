@@ -20,6 +20,7 @@ export class EventComponent implements OnInit {
   disqusId: string;
   calendarLink: string;
   watchId;
+  loadComments = false;
 
   initSubscription: SubscriptionLike;
 
