@@ -651,7 +651,7 @@ export class VenueByNameGQL extends Apollo.Query<
   VenueByName.Variables
 > {
   document: any = gql`
-    query venueByName($name: String!, $accountId: Int!) {
+    query venueByName($name: String!, $accountId: Int!, $currentDate: BigInt!) {
       venueByName(name: $name) {
         name
         description
@@ -666,7 +666,10 @@ export class VenueByNameGQL extends Apollo.Query<
             id
           }
         }
-        eventsByVenue(orderBy: START_DATE_ASC) {
+        eventsByVenue(
+          orderBy: START_DATE_ASC
+          filter: { startDate: { greaterThanOrEqualTo: $currentDate } }
+        ) {
           nodes {
             name
             startDate
@@ -4035,6 +4038,7 @@ export namespace VenueByName {
   export type Variables = {
     name: string;
     accountId: number;
+    currentDate: BigInt;
   };
 
   export type Query = {

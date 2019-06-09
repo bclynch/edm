@@ -31,7 +31,7 @@
             [id]="event.id"
             [externalUrl]="event.ticketproviderurl"
             [ticketProviderId]="event.ticketproviderid"
-            [image]="event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+            [image]="event.artistToEventsByEventId.nodes.length && event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
           ></app-event-card>
         </div>
       </div>

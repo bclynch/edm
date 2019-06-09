@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-artist',
@@ -37,11 +38,13 @@ export class ArtistComponent implements OnInit, OnDestroy {
           this.artistByNameGQL.fetch({
             name: artist,
             accountId: this.userService.user ? this.userService.user.id : 0,
+            // currentDate: moment().startOf('day').valueOf()
           }).subscribe(
             ({ data }) => {
               this.artist = data.artistByName;
               console.log(this.artist);
-              this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId);
+              // this is annoying, but cannot really use sql to get this correctly because junction table so front end filter / sort
+              this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId).filter((e) => e.startDate > moment().startOf('day').valueOf()).sort((a, b) => (a.startDate - b.startDate));
               this.socialOptions = this.generateSocialOptions();
               // generate iframe url for soundcloud widget
               if (this.artist.soundcloudUsername) this.soundcloudUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://w.soundcloud.com/player/?url=https://soundcloud.com/${this.artist.soundcloudUsername}&amp;auto_play=false&amp;buying=false&amp;liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=true&amp;show_comments=false&amp;show_playcount=false&amp;show_user=true&amp;hide_related=false&amp;visual=true&amp;start_track=0&amp;callback=true`);

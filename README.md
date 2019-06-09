@@ -1,6 +1,9 @@
 # EDM Flare
 
 ## Todos
+- ~~Make tickets btn to just outbound page on event page (for now versus the eventbrite)~~
+- ~~Venue page is showing old events. Need to make sure only from today and on~~
+- ~~Artist page events not sorted + showing old~~
 - Get push notification sub / unsub working
 - Work on index.html stuff
     - ~~https://github.com/thedaviddias/Front-End-Checklist~~

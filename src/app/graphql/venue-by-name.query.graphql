@@ -1,4 +1,4 @@
-query venueByName($name: String!, $accountId: Int!) {
+query venueByName($name: String!, $accountId: Int!, $currentDate: BigInt!) {
   venueByName(name: $name) {
     name,
     description,
@@ -19,7 +19,14 @@ query venueByName($name: String!, $accountId: Int!) {
         id
       }
     }
-    eventsByVenue(orderBy: START_DATE_ASC) {
+    eventsByVenue(
+      orderBy: START_DATE_ASC,
+      filter: {
+        startDate: {
+          greaterThanOrEqualTo: $currentDate
+        }
+      }
+    ) {
       nodes {
         name,
         startDate,

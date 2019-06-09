@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-venue',
@@ -30,6 +31,7 @@ export class VenueComponent implements OnInit, OnDestroy {
           this.venueByNameGQL.fetch({
             name: venue,
             accountId: this.userService.user ? this.userService.user.id : 0,
+            currentDate: moment().startOf('day').valueOf()
           }).subscribe(
             (result) => {
               this.venue = result.data.venueByName;

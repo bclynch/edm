@@ -41,12 +41,24 @@
               <mat-icon>star_border</mat-icon>
             </button>
           </div>
-          <button
+          <a 
+            [href]="event?.ticketproviderurl" 
+            target="_blank" 
+            rel="nofollow"
+            *ngIf="event?.ticketproviderurl"
+          >
+            <button 
+              class="ticketBtn" 
+              mat-flat-button 
+              color="accent"
+            >Tickets</button>
+          </a>
+          <!-- <button
             class="ticketBtn" 
             mat-flat-button 
             color="accent" 
             (click)="buyTickets()"
-          >Tickets</button>
+          >Tickets</button> -->
         </div>
       </div>
       <div class="infoContainer" *ngIf="event">
