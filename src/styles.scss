@@ -5,12 +5,8 @@
 
 // global css4 vars
 :root {
-  --color-primary: #546e7a;
-  --color-accent: #ffc107;
-  --color-border: #ddd;
   --height-navbar: 9vh;
   --height-footer: 350px;
-  --color-background: radial-gradient(circle farthest-side, #fff602, #ffb600);
 }
 
 // fluid fonts / scaling
@@ -19,6 +15,7 @@
 
 html { 
   font-size: calc(112.5% + 0.25vw) !important;
+  background: var(--color-background);
 
   mat-icon {
     font-size: 2em !important;
@@ -44,6 +41,22 @@ html {
   h5 {font-size: 1.2em; margin: 1em 0;}
 
   h6 {font-size: 1.05em; margin: 1em 0;}
+
+  input,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  div,
+  .mat-select-value {
+    color: var(--color-font);
+  }
+
+  .mat-drawer-container {
+    background: var(--color-background);
+  }
 }
 @media (min-width: 1200px) {
   html { 
@@ -129,7 +142,7 @@ app-pagewrapper {
 
 .wrapper {
   width: 100%;
-  background: white;
+  background: var(--color-background);
 }
 @media (min-width: 1200px) {
   .wrapper {

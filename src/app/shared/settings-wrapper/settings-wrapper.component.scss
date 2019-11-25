@@ -17,6 +17,9 @@ mat-sidenav-container {
       }
     }
   }
+  mat-sidenav-content button {
+      color: var(--color-font);
+  }
   @media (min-width: 768px) {
     mat-sidenav {
       width: 300px;

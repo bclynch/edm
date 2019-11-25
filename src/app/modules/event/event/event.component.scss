@@ -2,7 +2,6 @@
   width: 100vw;
   display: flex;
   justify-content: center;
-  background: var(--color-background);
 
   a:visited,
   a { 
@@ -31,7 +30,7 @@
           padding: 30px;
           z-index: 99;
           background: rgba(0,0,0,.5);
-          color: white;
+          color: white!important;
   
           a {
             color: white;

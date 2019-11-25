@@ -15,6 +15,7 @@ export class LocationSearchComponent implements OnInit, OnDestroy, OnChanges {
   @Input() placeholder = '';
   @Input() value = '';
   @Input() floatLabel = true;
+  @Input() color;
   @Output() selected: EventEmitter<string> = new EventEmitter<string>();
 
   myControl = new FormControl();

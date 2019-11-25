@@ -3,6 +3,7 @@ import { AllLocationsGQL, CreatePushSubscriptionGQL } from '../generated/graphql
 import { BehaviorSubject, Observable} from 'rxjs';
 import { AnalyticsService } from './analytics.service';
 import { UserService } from './user.service';
+import { ThemeService } from './theme.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { SwPush } from '@angular/service-worker';
 import { UtilService } from './util.service';
@@ -28,13 +29,17 @@ export class AppService {
     private meta: Meta,
     private swPush: SwPush,
     private createPushSubscriptionGQL: CreatePushSubscriptionGQL,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private themeService: ThemeService
   ) {
     this._subject = new BehaviorSubject<boolean>(false);
     this.appInited = this._subject;
 
     // init tracking
     this.analyticsService.trackViews();
+
+    // kick in the theme
+    this.themeService.getUserTheme();
   }
 
   appInit() {

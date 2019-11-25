@@ -83,7 +83,7 @@
             <a (click)="scrollTo('locationAnchor')">View Map</a>
           </div>
         </div>
-        <div class="description">
+        <div class="description" *ngIf="event.description">
           <div class="section">
             <h3 class="sectionHeader">Description</h3>
             <div [innerHTML]="event.description"></div>

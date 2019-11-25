@@ -2,7 +2,6 @@
   width: 100vw;
   display: flex;
   justify-content: center;
-  background: var(--color-background);
   position: relative;
 
   .carousel {
@@ -36,7 +35,10 @@
           font-size: 1.75em;
           top: 10%;
           left: 5%;
-          color: white;
+
+          > div {
+            color: white!important;
+          }
 
           .tagline {
             transition: top .5s ease-in;
@@ -70,6 +72,7 @@
         .label {
           font-size: .8em;
           margin-bottom: .6em;
+          color: white;
         }
         &.btnSection {
           display: flex;
@@ -107,7 +110,7 @@
       padding: 15px;
       font-weight: 400;
       line-height: 1.5em;
-      color: #525f7f;
+      color: var(--color-font);
 
       fa-icon {
         color: var(--color-accent);
@@ -120,9 +123,11 @@
   }
   .featuredContainer {
     padding: 5%;
-    background: white;
     margin: 0 auto;
 
+    h1 {
+      color: var(--color-font);
+    }
     app-event-card-alt {
       width: 100%;
       padding: 10px;
@@ -134,7 +139,7 @@
       text-align: center;
 
       a {
-        color: black;
+        color: var(--color-font);
         transition: .3s;
       }
       a:hover {

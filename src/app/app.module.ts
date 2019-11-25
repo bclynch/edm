@@ -26,6 +26,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { LocationService } from './services/location.service';
 import { UserService } from './services/user.service';
 import { EmailService } from './services/email.service';
+import { ThemeService } from './services/theme.service';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { EmailService } from './services/email.service';
     LocationService,
     UserService,
     EmailService,
+    ThemeService,
     { provide: DISQUS_SHORTNAME, useValue: ENV.disqusShortname }
   ],
   bootstrap: [AppComponent]

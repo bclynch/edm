@@ -3,7 +3,6 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  background: white;
 
   mat-tab-group {
     max-height: calc(100vh - var(--height-navbar) - 2em);

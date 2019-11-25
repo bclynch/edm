@@ -53,9 +53,12 @@
       }
       &.connect {
         margin-top: 20px;
+        display: flex;
+        flex-direction: column;
       }
       h4 {
         margin: .3em 0 .6em;
+        color: #aaa;
       }
       .linksContainer {
         >div {
@@ -75,6 +78,17 @@
       > a {
         text-align: center;
       }
+    }
+    .copyright {
+      color: #aaa;
+    }
+  }
+  .themeToggle {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #aaa;
+    span {
+      margin-left: 5px;
     }
   }
   @media (min-width: 768px) {
