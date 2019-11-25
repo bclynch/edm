@@ -133,7 +133,7 @@ export class FooterComponent {
   ];
 
   constructor(
-    private themeService: ThemeService
+    public themeService: ThemeService
   ) { }
 
 }
