@@ -37,12 +37,10 @@ export class UserService {
             if (result.data.currentAccount) {
               this.user = result.data.currentAccount;
               this.signedInSubject.next(true);
-            } else {
-              // if it doesnt exist dump the token
-              this.cookieService.delete('edm-token');
             }
             resolve();
-          }
+          },
+          (err) => resolve()
         );
       } else {
         resolve();

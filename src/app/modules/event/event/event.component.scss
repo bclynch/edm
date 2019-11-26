@@ -30,8 +30,11 @@
           padding: 30px;
           z-index: 99;
           background: rgba(0,0,0,.5);
-          color: white!important;
   
+          h1,
+          div {
+            color: white;
+          }
           a {
             color: white;
             text-decoration: underline;

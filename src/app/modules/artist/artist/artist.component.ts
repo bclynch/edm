@@ -42,7 +42,6 @@ export class ArtistComponent implements OnInit, OnDestroy {
           }).subscribe(
             ({ data }) => {
               this.artist = data.artistByName;
-              console.log(this.artist);
               // this is annoying, but cannot really use sql to get this correctly because junction table so front end filter / sort
               this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId).filter((e) => e.startDate > moment().startOf('day').valueOf()).sort((a, b) => (a.startDate - b.startDate));
               this.socialOptions = this.generateSocialOptions();

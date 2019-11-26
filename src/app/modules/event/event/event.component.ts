@@ -41,7 +41,6 @@ export class EventComponent implements OnInit {
           }).subscribe(
             (result) => {
               this.event = result.data.eventById;
-              console.log(this.event);
               this.appService.modPageMeta(`${this.event.name.trim()} Event Information - ${this.event.venueByVenue.name.split('-')[0].trim()}`, `Check out artist, venue, and ticket information for ${this.event.name.trim()} at ${this.event.venueByVenue.name.split('-')[0].trim()} on ${moment(+this.event.startDate).format('MMMM Do, YYYY')}`);
               this.disqusId = `event/${this.event.id}`;
               // generate add to calendar link

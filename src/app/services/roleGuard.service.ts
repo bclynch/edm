@@ -16,9 +16,9 @@ export class RoleGuardService implements CanActivate {
     // this will be passed from the route config
     // on the data property
     const expectedRole: string[] = route.data.expectedRole;
-    if (this.cookieService.get('decorasaurus-token')) {
+    if (this.cookieService.get('edm-token')) {
       // decode the token to get its payload
-      const tokenPayload = decode(this.cookieService.get('decorasaurus-token'));
+      const tokenPayload = decode(this.cookieService.get('edm-token'));
       console.log(tokenPayload);
       if (!tokenPayload) return false;
 

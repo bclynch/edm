@@ -54,7 +54,8 @@ html {
     color: var(--color-font);
   }
 
-  .mat-drawer-container {
+  .mat-drawer-container,
+  .mat-option {
     background: var(--color-background);
   }
 }

@@ -84,7 +84,7 @@
     - ~~Maybe some nice links to popular regions~~
         - ~~Would be nice to have a page with all countries, regions, cities like https://www.eventbrite.com/directory/sitemap/~~
     - ~~Fix / create social links~~
-    - About page
+    - ~~About page~~
     - ~~Contact Page~~
     - Terms / privacy
     - ~~faqs~~
