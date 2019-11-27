@@ -11,7 +11,11 @@
     position: relative;
     top: var(--height-navbar);
     background: var(--color-primary);
-    color: white;
+    
+    > div,
+    mat-icon {
+      color: white;
+    }
   }
   .searchContainer {
     width: 100vw;

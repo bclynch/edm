@@ -9,10 +9,10 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    color: white;
 
     h1 {
       margin-top: 0;
+      color: white;
     }
     .socialOptions {
       display: flex;
@@ -47,6 +47,10 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+
+      > div, a {
+        color: white;
+      }
     }
   }
   .contentWrapper {

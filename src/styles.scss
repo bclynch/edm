@@ -50,12 +50,16 @@ html {
   h5,
   h6,
   div,
-  .mat-select-value {
+  .mat-select-value,
+  .mat-expansion-panel-header-title,
+  .mat-expansion-indicator:after,
+  .mat-option {
     color: var(--color-font);
   }
 
   .mat-drawer-container,
-  .mat-option {
+  .mat-option,
+  .mat-expansion-panel {
     background: var(--color-background);
   }
 }
@@ -281,14 +285,14 @@ agm-map {
     // margin-left: -20px;
     height: 30vh;
     width: 300px;
-    background: white;
 
     .si-content-wrapper {
       padding: 0;
       height: 100%;
+      background: var(--color-background);
 
       button {
-        color: white;
+        color: var(--color-font);
         opacity: .85;
       }
       .si-content {
@@ -309,6 +313,7 @@ agm-map {
           }
           button {
             margin-top: 10%;
+            color: white;
           }
         }
       }
