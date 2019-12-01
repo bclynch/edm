@@ -1,5 +1,5 @@
-query eventById($eventId: String!, $accountId: Int!) {
-  eventById(id: $eventId) {
+query eventById($eventId: String!, $userId: Int!) {
+  event(id: $eventId) {
     id,
     name,
     startDate,
@@ -15,10 +15,10 @@ query eventById($eventId: String!, $accountId: Int!) {
       city,
       address
     },
-    watchListsByEventId(
+    watchLists(
       filter: {
-        accountId: {
-          equalTo: $accountId
+        userId: {
+          equalTo: $userId
         }
       }
     ) {
@@ -26,9 +26,9 @@ query eventById($eventId: String!, $accountId: Int!) {
         id
       }
     },
-    artistToEventsByEventId {
+    artistToEvents {
       nodes {
-        artistByArtistId {
+        artist {
           name
         }
       }

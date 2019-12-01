@@ -1,5 +1,5 @@
-query venueByName($name: String!, $accountId: Int!, $currentDate: BigInt!) {
-  venueByName(name: $name) {
+query venueByName($name: String!, $userId: Int!, $currentDate: BigInt!) {
+  venue(name: $name) {
     name,
     description,
     lat,
@@ -8,10 +8,10 @@ query venueByName($name: String!, $accountId: Int!, $currentDate: BigInt!) {
     address,
     photo,
     logo,
-    followListsByVenueId(
+    followLists(
       filter: {
-        accountId: {
-          equalTo: $accountId
+        userId: {
+          equalTo: $userId
         }
       }
     ) {
@@ -33,9 +33,9 @@ query venueByName($name: String!, $accountId: Int!, $currentDate: BigInt!) {
         ticketproviderurl,
         ticketproviderid,
         id,
-        artistToEventsByEventId(first: 1) {
+        artistToEvents(first: 1) {
           nodes {
-            artistByArtistId {
+            artist {
               photo
             }
           }

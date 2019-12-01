@@ -1,6 +1,7 @@
 # EDM Flare
 
 ## Todos
+- Fix createdAt filter for search queries
 - ~~Make tickets btn to just outbound page on event page (for now versus the eventbrite)~~
 - ~~Venue page is showing old events. Need to make sure only from today and on~~
 - ~~Artist page events not sorted + showing old~~

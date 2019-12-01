@@ -1,5 +1,5 @@
 mutation deletePushSubscriptionById($id: Int!) {
-  deletePushSubscriptionById (
+  deletePushSubscription (
     input: {
       id: $id
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CookieService } from 'ngx-cookie-service';
-import { AuthenticateUserAccountGQL, RegisterUserAccountGQL, CurrentAccountGQL, CreateFollowListGQL, RemoveFollowlistGQL } from '../generated/graphql';
+import { CurrentUserGQL, CreateFollowListGQL, RemoveFollowlistGQL, LoginUserGQL, RegisterUserGQL } from '../generated/graphql';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmailService } from './email.service';
@@ -15,9 +15,9 @@ export class UserService {
   constructor(
     private apollo: Apollo,
     private cookieService: CookieService,
-    private authenticateUserAccountGQL: AuthenticateUserAccountGQL,
-    private registerUserAccountGQL: RegisterUserAccountGQL,
-    private currentAccountGQL: CurrentAccountGQL,
+    private loginUserGQL: LoginUserGQL,
+    private registerUserGQL: RegisterUserGQL,
+    private currentUserGQL: CurrentUserGQL,
     private createFollowListGQL: CreateFollowListGQL,
     private removeFollowlistGQL: RemoveFollowlistGQL,
     private snackBar: MatSnackBar,
@@ -29,37 +29,33 @@ export class UserService {
 
   fetchUser(): Promise<string> {
     return new Promise((resolve, reject) => {
-      if (this.cookieService.get('edm-token')) {
-        // uses token to check if logged in / expired
-        this.currentAccountGQL.fetch().subscribe(
-          (result) => {
-            console.log(result.data);
-            if (result.data.currentAccount) {
-              this.user = result.data.currentAccount;
-              this.signedInSubject.next(true);
-            }
-            resolve();
-          },
-          (err) => resolve()
-        );
-      } else {
-        resolve();
-      }
+      this.currentUserGQL.fetch().subscribe(
+        ({ data }) => {
+          console.log(data);
+          if (data && data.currentUser) {
+            this.user = data.currentUser;
+            this.signedInSubject.next(true);
+          }
+          resolve();
+        },
+        (err) => resolve()
+      );
     });
   }
 
-  loginUser(model) {
+  loginUser({ username, password }) {
     return new Promise<string>((resolve, reject) => {
-      this.authUserAccount({ email: model.email, password: model.password }).then((token) => {
-        // need to get current user function rolling for other pertinent info
-        const userObj: any = {};
-        userObj.token = token;
-
-        // save user to local storage
-        this.cookieService.set('edm-token', token);
-
+      this.loginUserGQL.mutate({ username, password }).subscribe(({ data }) => {
+        console.log('got data', data);
+        // if (authData.authenticateUserAccount.jwtToken) {
+        //   this.signedInSubject.next(true);
+        //   // reset apollo cache and refetch queries
+        //   this.apollo.getClient().resetStore();
+        //   resolve(authData.authenticateUserAccount.jwtToken);
+        //  }
         resolve();
-      }, (err) => {
+      }, (error) => {
+        console.log('there was an error sending the query', error);
         alert('The email or password is incorrect. Please check your account information and login again');
         reject();
       });
@@ -75,50 +71,31 @@ export class UserService {
     window.location.reload();
   }
 
-  private authUserAccount(loginCredentials): Promise<string> {
+  registerUserAccount({ username, email, matchingPassword }) {
     return new Promise<string>((resolve, reject) => {
-      this.authenticateUserAccountGQL.mutate({ email: loginCredentials.email, password: loginCredentials.password }).subscribe(({ data }) => {
-        // console.log('got data', data);
-        const authData = <any>data;
-        if (authData.authenticateUserAccount.jwtToken) {
-          this.signedInSubject.next(true);
-          // reset apollo cache and refetch queries
-          this.apollo.getClient().resetStore();
-          resolve(authData.authenticateUserAccount.jwtToken);
-        } else {
-          // incorrect login warning
-          reject('invalid login');
-        }
-      }, (error) => {
-        console.log('there was an error sending the query', error);
-        reject(error);
-      });
-    });
-  }
-
-  registerUserAccount(model) {
-    return new Promise<string>((resolve, reject) => {
-      this.registerUserAccountGQL.mutate({ username: model.username, email: model.email, password: model.matchingPassword.password }).subscribe(
+      console.log({ username, email, matchingPassword });
+      this.registerUserGQL.mutate({ username, email, password: matchingPassword.password }).subscribe(
         ({ data }) => {
           const userObj = data as any;
 
           // send welcome registration email
-          console.log(model.email);
-          this.emailService.sendRegistrationEmail(model.email).subscribe(
-            (result) => {}
-          );
+          console.log(email);
+          // this.emailService.sendRegistrationEmail(email).subscribe(
+          //   (result) => {}
+          // );
 
           // auth to snag token
-          this.authUserAccount({ email: model.email, password: model.matchingPassword.password }).then((token) => {
-            userObj.token = token;
-            // save user token to local storage
-            this.cookieService.set('edm-token', token);
+          // this.authUserAccount({ email: model.email, password: model.matchingPassword.password }).then((token) => {
+          //   userObj.token = token;
+          //   // save user token to local storage
+          //   this.cookieService.set('edm-token', token);
 
             resolve();
-          }, () => {
-            console.log('err');
-          });
+          // }, () => {
+          //   console.log('err');
+          // });
         }, err => {
+          console.log('err', err);
           switch (err.message) {
             case 'GraphQL error: duplicate key value violates unique constraint "account_username_key"':
               alert('That username already exists, please select a new one!');
@@ -141,7 +118,7 @@ export class UserService {
   follow(artistId: string, venueId: string, name: string) {
     return new Promise((resolve, reject) => {
       if (this.user) {
-        this.createFollowListGQL.mutate({ accountId: this.user.id, artistId, venueId }).subscribe(
+        this.createFollowListGQL.mutate({ userId: this.user.id, artistId, venueId }).subscribe(
           ({ data }) => {
             this.snackBar.open(`You are now following ${name}`, 'Close', {
               duration: 3000,

@@ -1,15 +1,15 @@
-query watchedLocationByAccount($accountId: Int!) {
-  allWatchedToAccounts(
+query watchedLocationByAccount($userId: Int!) {
+  watchedToAccounts(
     filter: {
-    	accountId: {
-        equalTo: $accountId
+    	userId: {
+        equalTo: $userId
       }
   	}
   ) {
     nodes {
       id,
       region,
-      cityByCityId {
+      city {
         id,
         name
       }

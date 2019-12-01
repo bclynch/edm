@@ -1,10 +1,10 @@
 query allLocations($currentDate: BigInt!) {
-  allRegions {
+  regions {
     nodes {
       name,
       lat,
       lon,
-      citiesByRegion(orderBy: NAME_ASC) {
+      citiesByRegion(orderBy: REGION_ASC) {
         nodes {
           id,
           name,

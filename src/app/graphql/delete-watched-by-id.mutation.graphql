@@ -1,5 +1,5 @@
 mutation deleteWatchedById($id: Int!) {
-  deleteWatchedToAccountById(
+  deleteWatchedToAccount (
     input: {
       id: $id
     }

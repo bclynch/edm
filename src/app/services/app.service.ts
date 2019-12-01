@@ -58,8 +58,8 @@ export class AppService {
         ({ data }) => {
           // creating an array of strings with both cities + regions
           const locationsArr = [];
-          this.locationDirectory = data.allRegions.nodes;
-          for (const region of data.allRegions.nodes) {
+          this.locationDirectory = data.regions.nodes;
+          for (const region of data.regions.nodes) {
             this.locationsObj[region.name] = region.name;
             locationsArr.push(region.name);
 
@@ -96,7 +96,7 @@ export class AppService {
           console.log(sub);
           // save sub to the db
           this.createPushSubscriptionGQL.mutate({
-            accountId: this.userService.user.id,
+            userId: this.userService.user.id,
             endpoint: sub.endpoint,
             p256Dh: this.utilService.arrayBufferToBase64(sub.getKey('p256dh')),
             auth: this.utilService.arrayBufferToBase64(sub.getKey('auth'))

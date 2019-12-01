@@ -1,8 +1,8 @@
-mutation createWatchedToAccount($accountId: Int!, $region: String, $cityId: Int) {
+mutation createWatchedToAccount($userId: Int!, $region: String, $cityId: Int) {
   createWatchedToAccount(
     input: {
       watchedToAccount: {
-        accountId: $accountId,
+        userId: $userId,
         region: $region,
         cityId: $cityId
       }
@@ -11,7 +11,7 @@ mutation createWatchedToAccount($accountId: Int!, $region: String, $cityId: Int)
     watchedToAccount {
       id,
       region,
-      cityByCityId {
+      city {
         id,
         name
       }

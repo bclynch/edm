@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { FormGroup, Validators, FormControl, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpdatePasswordGQL } from 'src/app/generated/graphql';
+// import { UpdatePasswordGQL } from 'src/app/generated/graphql';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -53,7 +53,7 @@ export class PasswordComponent implements OnInit {
     private appService: AppService,
     private fb: FormBuilder,
     public snackBar: MatSnackBar,
-    private updatePasswordGQL: UpdatePasswordGQL,
+    // private updatePasswordGQL: UpdatePasswordGQL,
     private userService: UserService,
   ) {
     this.appService.modPageMeta('Password Settings', 'Modify password settings for your EDM Flare account');
@@ -63,22 +63,22 @@ export class PasswordComponent implements OnInit {
   }
 
   changePassword(formDirective: FormGroupDirective) {
-    this.updatePasswordGQL.mutate({ userId: this.userService.user.id, password: this.changeForm.value.currentPassword, newPassword: this.changeForm.value.matchingPassword.password })
-      .subscribe(
-        (result) => {
-          if (result.data.updatePassword.boolean) {
-            this.snackBar.open('Password changed', 'Close', {
-              duration: 3000,
-            });
-            formDirective.resetForm();
-            this.changeForm.reset();
-          } else {
-            this.snackBar.open('Something went wrong. Make sure you have the correct current password', 'Close', {
-              duration: 3000,
-            });
-          }
-        }
-      );
+    // this.updatePasswordGQL.mutate({ userId: this.userService.user.id, password: this.changeForm.value.currentPassword, newPassword: this.changeForm.value.matchingPassword.password })
+    //   .subscribe(
+    //     (result) => {
+    //       if (result.data.updatePassword.boolean) {
+    //         this.snackBar.open('Password changed', 'Close', {
+    //           duration: 3000,
+    //         });
+    //         formDirective.resetForm();
+    //         this.changeForm.reset();
+    //       } else {
+    //         this.snackBar.open('Something went wrong. Make sure you have the correct current password', 'Close', {
+    //           duration: 3000,
+    //         });
+    //       }
+    //     }
+    //   );
   }
 }
 

@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UnsubscribeComponent implements OnInit, OnDestroy {
 
   paramsSubscription: SubscriptionLike;
-  accountId: number;
+  userId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +22,7 @@ export class UnsubscribeComponent implements OnInit, OnDestroy {
     private userService: UserService
   ) {
     this.paramsSubscription = this.route.queryParams.subscribe((params) => {
-      this.accountId = +params.accountId;
+      this.userId = +params.accountId;
     });
   }
 
@@ -34,9 +34,9 @@ export class UnsubscribeComponent implements OnInit, OnDestroy {
   }
 
   unsubscribe() {
-    if (this.accountId) {
+    if (this.userId) {
       this.updateAccountGQL.mutate({
-        userId: this.accountId,
+        userId: this.userId,
         emailNotification: false
       })
       .subscribe(

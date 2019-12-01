@@ -1,5 +1,5 @@
-query artistByName($name: String!, $accountId: Int!) {
-  artistByName(name: $name) {
+query artistByName($name: String!, $userId: Int!) {
+  artist(name: $name) {
     name,
     description,
     photo,
@@ -15,15 +15,15 @@ query artistByName($name: String!, $accountId: Int!) {
     youtubeUrl,
     spotifyUrl, 
     homepage,
-    genreToArtistsByArtistId {
+    genreToArtists {
       nodes {
         genreId
       }
     },
-    followListsByArtistId(
+    followLists(
       filter: {
-        accountId: {
-          equalTo: $accountId
+        userId: {
+          equalTo: $userId
         }
     	}
     ) {
@@ -31,19 +31,19 @@ query artistByName($name: String!, $accountId: Int!) {
         id
       }
     },
-    artistToEventsByArtistId {
+    artistToEvents {
       nodes {
-        eventByEventId {
+        event {
           name,
           venue,
           startDate,
           id,
           ticketproviderurl,
           ticketproviderid,
-          watchListsByEventId(
+          watchLists(
             filter: {
-              accountId: {
-                equalTo: $accountId
+              userId: {
+                equalTo: $userId
               }
             }
           ) {

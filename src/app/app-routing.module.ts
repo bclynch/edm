@@ -91,6 +91,10 @@ const routes: Routes = [
     path: 'faqs',
     loadChildren: () => import('./modules/faqs/faqs.module').then(m => m.FaqsModule),
   },
+  {
+    path: 'verify-email',
+    loadChildren: () => import('./modules/verify-email/verify-email.module').then(m => m.VerifyEmailModule),
+  },
   { path: '**', loadChildren: () => import('./modules/not-found/not-found.module').then(m => m.NotFoundModule) }
 ];
 

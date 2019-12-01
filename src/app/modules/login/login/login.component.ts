@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   redirect: string;
   loginForm: FormGroup = this.fb.group({
-    email: ['', Validators.required],
+    username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
@@ -51,10 +51,15 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/');
         }
 
-        // reload window to update db role
-        setTimeout(() => window.location.reload(), 200);
+        // // reload window to update db role
+        // setTimeout(() => window.location.reload(), 200);
       },
       () => {}
     );
+  }
+
+  github(e) {
+    e.preventDefault();
+    window.location.href = 'http://localhost:5000/auth/github';
   }
 }

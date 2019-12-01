@@ -79,6 +79,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    console.log('this.signupForm', this.signupForm);
     if (this.signupForm.valid) this.userServive.registerUserAccount(this.signupForm.value).then(
       () => {
         if (this.redirect) {
@@ -88,7 +89,7 @@ export class SignupComponent implements OnInit {
         }
 
         // reload window to update db role
-        setTimeout(() => window.location.reload(), 200);
+        // setTimeout(() => window.location.reload(), 200);
       },
       () => {}
     );

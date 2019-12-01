@@ -1,21 +1,23 @@
 mutation updateAccount($userId: Int!, $profilePhoto: String, $notificationFrequency: Frequency, $pushNotification: Boolean, $emailNotification: Boolean) {
-  updateAccountById(input: {
-    id: $userId,
-    accountPatch: {
-      notificationFrequency: $notificationFrequency,
-      profilePhoto: $profilePhoto,
-      pushNotification: $pushNotification,
-      emailNotification: $emailNotification
-    }
-  }) {
-    account {
+  updateUser (
+    input: {
+      id: $userId,
+      patch: {
+        notificationFrequency: $notificationFrequency,
+        profilePhoto: $profilePhoto,
+        pushNotification: $pushNotification,
+        emailNotification: $emailNotification
+      }
+  	}
+  ) {
+    user {
       username,
       notificationFrequency,
       profilePhoto,
       pushNotification,
       emailNotification,
       id,
-      watchListsByAccountId {
+      watchLists {
         totalCount
       }
     }

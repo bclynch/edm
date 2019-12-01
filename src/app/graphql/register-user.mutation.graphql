@@ -1,9 +1,11 @@
-mutation registerUserAccount($username: String!, $email: String!, $password: String!) {
-  registerUserAccount(input:{
+mutation registerUser($username: String!, $email: String!, $password: String!) {
+  register(input:{
     username: $username,
     email: $email,
     password: $password
   }) {
-    clientMutationId
+    user {
+      username
+    }
   }
 }

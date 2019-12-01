@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SubscriptionLike } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
-import { AccountByUsernameGQL } from 'src/app/generated/graphql';
+import { UserByUsernameGQL } from 'src/app/generated/graphql';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,7 +17,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(
     private appService: AppService,
-    private accountByUsernameGQL: AccountByUsernameGQL,
+    private userByUsernameGQL: UserByUsernameGQL,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private router: Router
@@ -27,12 +27,12 @@ export class UserComponent implements OnInit, OnDestroy {
     this.initSubscription = this.appService.appInited.subscribe(
       (inited) =>  {
         if (inited) {
-          this.accountByUsernameGQL.fetch({
+          this.userByUsernameGQL.fetch({
             username,
-            accountId: this.userService.user ? this.userService.user.id : 0,
+            userId: this.userService.user ? this.userService.user.id : 0,
           }).subscribe(
             ({ data }) => {
-              this.user = data.accountByUsername;
+              this.user = data.userByUsername;
               console.log(this.user);
               if (!this.user) this.router.navigateByUrl('/');
             }

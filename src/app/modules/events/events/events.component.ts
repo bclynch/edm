@@ -124,7 +124,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         this.searchEventsByCityGQL.fetch({
           query: this.searchQueryControl.value,
           cityId: this.appService.locationsObj[this.selectedLocation],
-          accountId: this.userService.user ? this.userService.user.id : 0,
+          userId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
           recentGreaterThan: recentRange.min.toString(),
@@ -145,7 +145,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         this.searchEventsbyRegionGQL.fetch({
           query: this.searchQueryControl.value,
           regionName: this.appService.locationsObj[this.selectedLocation],
-          accountId: this.userService.user ? this.userService.user.id : 0,
+          userId: this.userService.user ? this.userService.user.id : 0,
           greaterThan: range.min.toString(),
           lessThan: range.max.toString(),
           recentGreaterThan: recentRange.min.toString(),

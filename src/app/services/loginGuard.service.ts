@@ -18,8 +18,8 @@ export class LoginGuardService implements CanActivate {
     // for now this is better than the user service method because it isn't async and waiting for server
     // its possible the token could be expired, but this is a solid bet
     // if there's a token they shouldn't go to login because they are alreay logged in
-    const token = this.cookieService.get('edm-token');
-    if (token) this.router.navigate(['/']);
+    // const token = this.cookieService.get('edm-token');
+    // if (token) this.router.navigate(['/']);
     return true;
   }
 }

@@ -37,10 +37,10 @@ export class EventComponent implements OnInit {
         if (inited) {
           this.eventByIdGQL.fetch({
             eventId: this.activatedRoute.snapshot.paramMap.get('eventId'),
-            accountId: this.userService.user ? this.userService.user.id : 0,
+            userId: this.userService.user ? this.userService.user.id : 0,
           }).subscribe(
-            (result) => {
-              this.event = result.data.eventById;
+            ({ data }) => {
+              this.event = data.event;
               this.appService.modPageMeta(`${this.event.name.trim()} Event Information - ${this.event.venueByVenue.name.split('-')[0].trim()}`, `Check out artist, venue, and ticket information for ${this.event.name.trim()} at ${this.event.venueByVenue.name.split('-')[0].trim()} on ${moment(+this.event.startDate).format('MMMM Do, YYYY')}`);
               this.disqusId = `event/${this.event.id}`;
               // generate add to calendar link

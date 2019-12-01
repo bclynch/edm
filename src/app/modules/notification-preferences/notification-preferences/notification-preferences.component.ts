@@ -49,14 +49,13 @@ export class NotificationPreferencesComponent implements OnInit {
           this.emailNotification = this.userService.user.emailNotification;
 
           this.watchedLocationByAccountGQL.fetch({
-            accountId: this.userService.user.id
+            userId: this.userService.user.id
           }).subscribe(
             ({ data }) => {
-              console.log(data.allWatchedToAccounts.nodes);
+              console.log(data.watchedToAccounts.nodes);
               // this.locations = data.allWatchedToAccounts.nodes;
-              this.locations = data.allWatchedToAccounts.nodes.map((location) => {
-                if (location.region) return { id: location.id, label: location.region, locationId: location.region };
-                return { id: location.id, label: location.cityByCityId.name, locationId: location.cityByCityId.id };
+              this.locations = data.watchedToAccounts.nodes.map(({ region, id, city }) => {
+                return region ? { id, label: region, locationId: region } : { id, label: city.name, locationId: city.id };
               });
             }
           );
@@ -106,7 +105,7 @@ export class NotificationPreferencesComponent implements OnInit {
       console.log(location);
       // save to account
       this.createWatchedToAccountGQL.mutate({
-        accountId: this.userService.user.id,
+        userId: this.userService.user.id,
         region: typeof locationId === 'string' ? locationId : null,
         cityId: typeof locationId === 'string' ? null : locationId
       })

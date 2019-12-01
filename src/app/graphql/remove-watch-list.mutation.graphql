@@ -1,5 +1,5 @@
 mutation removeWatchlist($watchListId: Int!) {
-  deleteWatchListById(
+  deleteWatchList (
     input: {
       id: $watchListId
     }

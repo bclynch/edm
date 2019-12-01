@@ -5,8 +5,8 @@
       <mat-form-field>
         <input
           matInput
-          placeholder="Email" 
-          formControlName="email"
+          placeholder="Username" 
+          formControlName="username"
         />
       </mat-form-field>
       <mat-form-field>
@@ -19,6 +19,7 @@
       </mat-form-field>
       <div class="linkWrapper"><a [routerLink]="['/password-reset']">Forgot your password?</a></div>
       <button mat-flat-button color="primary" type="submit">Login</button>
+      <button mat-flat-button color="primary" (click)="github($event)">Github</button>
       <div class="new">New to EDM Flare? 
         <a [routerLink]="['/signup']" [queryParams]="{ redirect: redirect }">
           <button mat-button color="primary" class="createNewBtn">Create a New Account</button>

@@ -1,8 +1,8 @@
-mutation createWatchList($accountId: Int!, $eventId: String!) {
+mutation createWatchList($userId: Int!, $eventId: String!) {
   createWatchList(
     input: {
       watchList: {
-        accountId: $accountId,
+        userId: $userId,
         eventId: $eventId
       }
     }

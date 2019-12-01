@@ -30,11 +30,11 @@ export class VenueComponent implements OnInit, OnDestroy {
         if (inited) {
           this.venueByNameGQL.fetch({
             name: venue,
-            accountId: this.userService.user ? this.userService.user.id : 0,
+            userId: this.userService.user ? this.userService.user.id : 0,
             currentDate: moment().startOf('day').valueOf()
           }).subscribe(
-            (result) => {
-              this.venue = result.data.venueByName;
+            ({ data }) => {
+              this.venue = data.venue;
               console.log(this.venue);
             }
           );

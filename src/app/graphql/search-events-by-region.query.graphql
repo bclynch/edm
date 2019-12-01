@@ -1,7 +1,7 @@
 query searchEventsByRegion(
     $query: String!,
     $regionName: String!,
-    $accountId: Int!,
+    $userId: Int!,
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
     $recentGreaterThan: BigInt!,
@@ -15,9 +15,6 @@ query searchEventsByRegion(
       startDate: {
         greaterThanOrEqualTo: $greaterThan,
         lessThanOrEqualTo: $lessThan
-      },
-      createdAt: {
-        greaterThanOrEqualTo: $recentGreaterThan,
       }
     },
     first: $batchSize,
@@ -36,17 +33,17 @@ query searchEventsByRegion(
         lat,
         lon
       }
-      artistToEventsByEventId(first: 1) {
+      artistToEvents(first: 1) {
         nodes {
-          artistByArtistId {
+          artist {
             photo
           }
         }
       },
-      watchListsByEventId(
+      watchLists(
         filter: {
-          accountId: {
-            equalTo: $accountId
+          userId: {
+            equalTo: $userId
           }
         }
       ) {

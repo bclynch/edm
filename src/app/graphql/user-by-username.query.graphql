@@ -1,11 +1,11 @@
-query accountByUsername($username: String!, $accountId: Int!) {
-  accountByUsername(username: $username) {
+query userByUsername($username: String!, $userId: Int!) {
+  userByUsername(username: $username) {
     username,
     profilePhoto,
-    watchListsByAccountId {
+    watchLists {
       totalCount,
       nodes {
-        eventByEventId {
+        event {
           id,
           name,
           startDate,
@@ -13,17 +13,17 @@ query accountByUsername($username: String!, $accountId: Int!) {
           ticketproviderid,
           venue,
           createdAt,
-          artistToEventsByEventId(first: 1) {
+          artistToEvents(first: 1) {
             nodes {
-              artistByArtistId {
+              artist {
                 photo
               }
             }
           },
-          watchListsByEventId(
+          watchLists (
             filter: {
-              accountId: {
-                equalTo: $accountId
+              userId: {
+                equalTo: $userId
               }
             }
           ) {
@@ -34,15 +34,15 @@ query accountByUsername($username: String!, $accountId: Int!) {
         }
       }
     },
-    followListsByAccountId {
+    followLists {
       totalCount,
       nodes {
         id,
-        artistByArtistId {
+        artist {
           name,
           photo
         },
-        venueByVenueId {
+        venue {
           name,
           photo
         }

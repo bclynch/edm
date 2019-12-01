@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { setContext } from 'apollo-link-context';
-import { CookieService } from 'ngx-cookie-service';
+import { ApolloLink } from 'apollo-link';
+import { onError } from 'apollo-link-error';
 import { ENV } from '../environments/environment';
-import { HttpHeaders } from '@angular/common/http';
-import decode from 'jwt-decode';
+
+declare global {
+  interface Window {
+    CSRF_TOKEN: any;
+  }
+}
 
 @NgModule({
   exports: [
@@ -19,34 +23,50 @@ import decode from 'jwt-decode';
 export class GraphQLModule {
   constructor(
     apollo: Apollo,
-    httpLink: HttpLink,
-    private cookieService: CookieService
+    httpLink: HttpLink
   ) {
+
     const http = httpLink.create({ uri: ENV.apolloBaseURL });
+    const cache = new InMemoryCache({
+      dataIdFromObject: o => o.id
+    });
 
-    let link, isExpired;
-    const token = this.cookieService.get('edm-token');
-    if (token) {
-      // if the token is expired then continue as anon and delete token
-      const { exp } = decode(this.cookieService.get('edm-token'));
-      if (Date.now() / 1000 > exp) {
-        isExpired = true;
-        this.cookieService.delete('edm-token');
+    const logoutOn401ErrorLink = onError(({ networkError }) => {
+      if (networkError) { // && networkError.status === 401
+        console.log('NETWORK ISSUE: ', networkError);
+        // Logout
       }
-    }
-    if (token && token !== 'null' && !isExpired) {
-      const middleware = setContext(() => ({
-        headers: new HttpHeaders().set('Authorization', token ? `Bearer ${token}` : null)
-      }));
+    });
+    const csrfMiddlewareLink = new ApolloLink((operation, forward) => {
+      if (typeof window.CSRF_TOKEN === 'string') {
+        operation.setContext({
+          headers: {
+            'X-Token': window.CSRF_TOKEN,
+          },
+        });
+      }
+      return forward(operation);
+    });
 
-      link = middleware.concat(http);
-    } else {
-      link = http;
-    }
+    const link = ApolloLink.from([
+      logoutOn401ErrorLink,
+      csrfMiddlewareLink,
+      http
+    ]);
+    const resolvers = {
+      Mutation: {
+        // eslint-disable-next-line no-shadow
+        updateNetworkStatus: (_, { isConnected }, { cache }) => {
+          cache.writeData({ data: { isConnected } });
+          return null;
+        },
+      },
+    };
 
     apollo.create({
       link,
-      cache: new InMemoryCache()
+      cache,
+      resolvers
     });
   }
 }

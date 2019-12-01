@@ -1,15 +1,15 @@
-query currentAccount {
-  currentAccount {
+query currentUser {
+  currentUser {
     username,
     notificationFrequency,
     pushNotification,
     emailNotification,
     profilePhoto,
     id,
-    watchListsByAccountId {
+    watchLists {
       totalCount
     },
-    pushSubscriptionsByAccountId {
+    pushSubscriptions {
       nodes {
         id
       }

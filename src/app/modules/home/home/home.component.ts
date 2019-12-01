@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.searchEventsByCityGQL.fetch({
               query: '',
               cityId: this.appService.locationsObj[this.selectedLocation],
-              accountId: this.userService.user ? this.userService.user.id : 0,
+              userId: this.userService.user ? this.userService.user.id : 0,
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.searchEventsByRegionGQL.fetch({
               query: '',
               regionName: this.appService.locationsObj[this.selectedLocation],
-              accountId: this.userService.user ? this.userService.user.id : 0,
+              userId: this.userService.user ? this.userService.user.id : 0,
               greaterThan: range.min.toString(),
               lessThan: range.max.toString(),
               recentGreaterThan: recentRange.min.toString(),

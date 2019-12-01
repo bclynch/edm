@@ -37,11 +37,11 @@ export class ArtistComponent implements OnInit, OnDestroy {
         if (inited) {
           this.artistByNameGQL.fetch({
             name: artist,
-            accountId: this.userService.user ? this.userService.user.id : 0,
+            userId: this.userService.user ? this.userService.user.id : 0,
             // currentDate: moment().startOf('day').valueOf()
           }).subscribe(
             ({ data }) => {
-              this.artist = data.artistByName;
+              this.artist = data.artist;
               // this is annoying, but cannot really use sql to get this correctly because junction table so front end filter / sort
               this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId).filter((e) => e.startDate > moment().startOf('day').valueOf()).sort((a, b) => (a.startDate - b.startDate));
               this.socialOptions = this.generateSocialOptions();
