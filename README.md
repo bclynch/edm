@@ -2,6 +2,19 @@
 
 ## Todos
 - Fix createdAt filter for search queries
+- Figure out how to logout
+- Fix search by region / city calls
+- Set up password forget
+- Set up password reset
+- Fix email to work with SES
+- Set up fb login
+- Set up google log in
+- Set up twitter log in
+- Fix local login
+
+
+
+
 - ~~Make tickets btn to just outbound page on event page (for now versus the eventbrite)~~
 - ~~Venue page is showing old events. Need to make sure only from today and on~~
 - ~~Artist page events not sorted + showing old~~

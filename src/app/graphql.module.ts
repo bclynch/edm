@@ -4,7 +4,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
+import { setContext } from 'apollo-link-context';
 import { ENV } from '../environments/environment';
+import { HttpHeaders } from '@angular/common/http';
 
 declare global {
   interface Window {
@@ -26,7 +28,17 @@ export class GraphQLModule {
     httpLink: HttpLink
   ) {
 
-    const http = httpLink.create({ uri: ENV.apolloBaseURL });
+    const http = httpLink.create({ uri: ENV.apolloBaseURL, withCredentials: true, method: 'POST' });
+    const middleware = setContext(() => ({
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': 'http://localhost:4200',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Methods': 'OPTIONS, GET, POST',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Credentials'
+      })
+    }));
+    const moddedHttp = middleware.concat(http);
     const cache = new InMemoryCache({
       dataIdFromObject: o => o.id
     });
@@ -51,7 +63,7 @@ export class GraphQLModule {
     const link = ApolloLink.from([
       logoutOn401ErrorLink,
       csrfMiddlewareLink,
-      http
+      moddedHttp
     ]);
     const resolvers = {
       Mutation: {

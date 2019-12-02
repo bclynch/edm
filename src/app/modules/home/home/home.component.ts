@@ -85,31 +85,31 @@ export class HomeComponent implements OnInit, OnDestroy {
           // fetch featured
           const range = this.utilService.calculateDateRange('any');
           const recentRange = this.utilService.calculateNewRange(null);
-          if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
-            this.searchEventsByCityGQL.fetch({
-              query: '',
-              cityId: this.appService.locationsObj[this.selectedLocation],
-              userId: this.userService.user ? this.userService.user.id : 0,
-              greaterThan: range.min.toString(),
-              lessThan: range.max.toString(),
-              recentGreaterThan: recentRange.min.toString(),
-              batchSize: 12
-            }).subscribe(
-              ({ data }) => this.featuredEvents = data.searchEventsByCity.nodes
-            );
-          } else {
-            this.searchEventsByRegionGQL.fetch({
-              query: '',
-              regionName: this.appService.locationsObj[this.selectedLocation],
-              userId: this.userService.user ? this.userService.user.id : 0,
-              greaterThan: range.min.toString(),
-              lessThan: range.max.toString(),
-              recentGreaterThan: recentRange.min.toString(),
-              batchSize: 12
-            }).subscribe(
-              ({ data }) => this.featuredEvents = data.searchEventsByRegion.nodes
-            );
-          }
+          // if (typeof this.appService.locationsObj[this.selectedLocation] === 'number') {
+          //   this.searchEventsByCityGQL.fetch({
+          //     query: '',
+          //     cityId: this.appService.locationsObj[this.selectedLocation],
+          //     userId: this.userService.user ? this.userService.user.id : 0,
+          //     greaterThan: range.min.toString(),
+          //     lessThan: range.max.toString(),
+          //     recentGreaterThan: recentRange.min.toString(),
+          //     batchSize: 12
+          //   }).subscribe(
+          //     ({ data }) => this.featuredEvents = data.searchEventsByCity.nodes
+          //   );
+          // } else {
+          //   this.searchEventsByRegionGQL.fetch({
+          //     query: '',
+          //     regionName: this.appService.locationsObj[this.selectedLocation],
+          //     userId: this.userService.user ? this.userService.user.id : 0,
+          //     greaterThan: range.min.toString(),
+          //     lessThan: range.max.toString(),
+          //     recentGreaterThan: recentRange.min.toString(),
+          //     batchSize: 12
+          //   }).subscribe(
+          //     ({ data }) => this.featuredEvents = data.searchEventsByRegion.nodes
+          //   );
+          // }
         }
       }
     );
