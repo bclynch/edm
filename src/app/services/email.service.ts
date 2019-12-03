@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ENV } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class EmailService {
@@ -19,7 +19,7 @@ export class EmailService {
         response => (response)
       )
       ).pipe(catchError(
-        error => (Observable.throw('Something went wrong'))
+        (error: HttpErrorResponse) => throwError(error.message || 'server error.')
     ));
   }
 
@@ -29,7 +29,7 @@ export class EmailService {
         response => (response)
       )
       ).pipe(catchError(
-        error => (Observable.throw('Something went wrong'))
+        (error: HttpErrorResponse) => throwError(error.message || 'server error.')
       ));
   }
 
@@ -39,7 +39,7 @@ export class EmailService {
         response => (response)
       )
       ).pipe(catchError(
-        error => (Observable.throw('Something went wrong'))
+        (error: HttpErrorResponse) => throwError(error.message || 'server error.')
       ));
   }
 }

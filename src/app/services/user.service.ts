@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { CookieService } from 'ngx-cookie-service';
 import { CurrentUserGQL, CreateFollowListGQL, RemoveFollowlistGQL, LoginUserGQL, RegisterUserGQL } from '../generated/graphql';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EmailService } from './email.service';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ENV } from '../../environments/environment';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -21,7 +24,8 @@ export class UserService {
     private createFollowListGQL: CreateFollowListGQL,
     private removeFollowlistGQL: RemoveFollowlistGQL,
     private snackBar: MatSnackBar,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private http: HttpClient
   ) {
     this.signedInSubject = new BehaviorSubject<boolean>(false);
     this.signedIn = this.signedInSubject;
@@ -63,11 +67,21 @@ export class UserService {
   }
 
   logoutUser() {
-    this.signedInSubject.next(false);
-    // reset apollo cache and refetch queries
-    this.apollo.getClient().resetStore();
-    // reload window to update db role
-    window.location.reload();
+    // console.log('${ENV.apiBaseURL}/logout', `${ENV.apiBaseURL}/logout`);
+    // const headerDict = {
+    //   'Access-Control-Allow-Origin': 'http://localhost:4200'
+    // };
+    // return this.http.get(`${ENV.apiBaseURL}/logout`, {
+    //   headers: new HttpHeaders(headerDict)
+    // })
+    //   .pipe(map(response => response))
+    //   .pipe(catchError((error: HttpErrorResponse) => throwError(error.message || 'server error.')
+    // ));
+    // this.signedInSubject.next(false);
+    // // reset apollo cache and refetch queries
+    // this.apollo.getClient().resetStore();
+    // // reload window to update db role
+    // window.location.reload();
   }
 
   registerUserAccount({ username, email, matchingPassword }) {

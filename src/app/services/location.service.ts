@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ENV } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 declare let ga: Function;
 
@@ -23,10 +23,7 @@ export class LocationService {
         response => (response)
       )
       ).pipe(catchError(
-        (error) => {
-          console.log(error);
-          return Observable.throw('Something went wrong');
-        }
+        (error: HttpErrorResponse) => throwError(error.message || 'server error.')
     ));
     // return this.mapsAPILoader.load().then(() => {
     //   console.log('Getting coord information...');

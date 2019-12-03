@@ -24,4 +24,9 @@ export class NavbarComponent {
   ) {
     this.userService.signedIn.subscribe((signedIn) => this.signedIn = signedIn);
   }
+
+  logout() {
+    console.log('LOGOUT USER');
+    // this.userService.logoutUser().subscribe((x) => console.log('x', x));
+  }
 }
