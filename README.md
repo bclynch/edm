@@ -3,7 +3,8 @@
 ## Todos
 - Fix createdAt filter for search queries
 - Figure out how to logout
-- Fix search by region / city calls
+- ~~Fix misc issues with refactored db~~
+- Next month util range is broken
 - Set up password forget
 - Set up password reset
 - Fix email to work with SES

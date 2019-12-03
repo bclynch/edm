@@ -18,7 +18,7 @@ export class EventCardComponent implements OnInit {
   @Input() image: string;
   @Input() ticketProviderId: number;
   @Input() size: 'half' | 'full' = 'full';
-  @Input() watchId;
+  @Input() watchId: number;
   @Input() new = false;
 
   faExternalLinkAlt = faExternalLinkAlt;
@@ -42,7 +42,7 @@ export class EventCardComponent implements OnInit {
   }
 
   removeWatch() {
-    this.eventService.removeWatch(this.watchId.id).then(
+    this.eventService.removeWatch(this.watchId).then(
       () => this.watchId = null
     );
   }

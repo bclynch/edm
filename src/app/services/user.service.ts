@@ -66,7 +66,6 @@ export class UserService {
     this.signedInSubject.next(false);
     // reset apollo cache and refetch queries
     this.apollo.getClient().resetStore();
-    this.cookieService.delete('edm-token');
     // reload window to update db role
     window.location.reload();
   }

@@ -66,10 +66,10 @@
           <div class="section">
             <h3 class="sectionHeader">Artists</h3>
             <a 
-              [routerLink]="['/artist/' + artist.artistByArtistId.name]"
-              *ngFor="let artist of event.artistToEventsByEventId.nodes; let i = index;" 
+              [routerLink]="['/artist/' + artist.artist.name]"
+              *ngFor="let artist of event.artistToEvents.nodes; let i = index;" 
               class="artist"  
-            >{{artist.artistByArtistId.name}}{{i + 1 < event.artistToEventsByEventId.nodes.length ? ',' : ''}}</a>
+            >{{artist.artist.name}}{{i + 1 < event.artistToEvents.nodes.length ? ',' : ''}}</a>
           </div>
           <div class="section">
             <h3 class="sectionHeader">Date And Time</h3>

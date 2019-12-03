@@ -60,7 +60,7 @@
           <div class="featureContent" [innerHTML]="feature.content"></div>
         </div>
       </div>
-      <div class="featuredContainer">
+      <div class="featuredContainer" *ngIf="featuredEvents.length">
         <h1>Featured Upcoming Shows</h1>
         <div class="featuredWrapper">
           <app-event-card-alt
@@ -72,8 +72,8 @@
             [id]="event.id"
             [externalUrl]="event.ticketproviderurl"
             [ticketProviderId]="event.ticketproviderid"
-            [image]="event.artistToEventsByEventId.nodes[0]?.artistByArtistId.photo"
-            [watchId]="event.watchListsByEventId.nodes[0]"
+            [image]="event.artistToEvents.nodes[0]?.artist.photo"
+            [watchId]="event.watchLists.nodes.length && event.watchLists.nodes[0].id"
           ></app-event-card-alt>
         </div>
         <div class="moreWrapper">

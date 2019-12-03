@@ -52,13 +52,13 @@ export class VenueComponent implements OnInit, OnDestroy {
 
   followVenue() {
     this.userService.follow(null, this.venue.name, this.venue.name).then(
-      (followId) => this.venue.followListsByVenueId.nodes = [{ id: followId }]
+      (followId) => this.venue.followLists.nodes = [{ id: followId }]
     );
   }
 
   unfollowVenue() {
-    this.userService.unfollow(this.venue.followListsByVenueId.nodes[0].id).then(
-      () => this.venue.followListsByVenueId.nodes = []
+    this.userService.unfollow(this.venue.followLists.nodes[0].id).then(
+      () => this.venue.followLists.nodes = []
     );
   }
 }

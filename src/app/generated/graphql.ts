@@ -436,7 +436,6 @@ export class SearchEventsByCityGQL extends Apollo.Query<
       $userId: Int!
       $greaterThan: BigInt!
       $lessThan: BigInt!
-      $recentGreaterThan: BigInt!
       $batchSize: Int
       $offset: Int
     ) {
@@ -496,7 +495,6 @@ export class SearchEventsByRegionGQL extends Apollo.Query<
       $userId: Int!
       $greaterThan: BigInt!
       $lessThan: BigInt!
-      $recentGreaterThan: BigInt!
       $batchSize: Int
       $offset: Int
     ) {
@@ -3323,7 +3321,6 @@ export namespace SearchEventsByCity {
     userId: number;
     greaterThan: BigInt;
     lessThan: BigInt;
-    recentGreaterThan: BigInt;
     batchSize?: Maybe<number>;
     offset?: Maybe<number>;
   };
@@ -3412,7 +3409,6 @@ export namespace SearchEventsByRegion {
     userId: number;
     greaterThan: BigInt;
     lessThan: BigInt;
-    recentGreaterThan: BigInt;
     batchSize?: Maybe<number>;
     offset?: Maybe<number>;
   };

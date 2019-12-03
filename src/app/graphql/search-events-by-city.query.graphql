@@ -4,7 +4,6 @@ query searchEventsByCity(
     $userId: Int!,
     $greaterThan: BigInt!,
     $lessThan: BigInt!,
-    $recentGreaterThan: BigInt!,
     $batchSize: Int,
     $offset: Int
   ) {

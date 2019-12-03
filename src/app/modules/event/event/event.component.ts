@@ -45,7 +45,7 @@ export class EventComponent implements OnInit {
               this.disqusId = `event/${this.event.id}`;
               // generate add to calendar link
               this.calendarLink = this.utilService.addToCalendar(this.event.name, `${ENV.siteBaseURL}/event/${this.event.id}`, this.event.venueByVenue.address, (new Date(+this.event.startDate)).toISOString().replace(/-|:|\.\d\d\d/g, ''));
-              this.watchId = this.event.watchListsByEventId.nodes[0] ? this.event.watchListsByEventId.nodes[0].id : null;
+              this.watchId = this.event.watchLists.nodes[0] ? this.event.watchLists.nodes[0].id : null;
             }
           );
         }

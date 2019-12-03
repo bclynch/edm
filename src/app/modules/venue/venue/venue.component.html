@@ -10,13 +10,13 @@
             mat-flat-button 
             (click)="followVenue()" 
             color="accent" 
-            *ngIf="!venue?.followListsByVenueId.nodes.length"
+            *ngIf="!venue?.followLists.nodes.length"
           >Follow</button>
           <button 
             mat-flat-button
             (click)="unfollowVenue()" 
             color="primary" 
-            *ngIf="venue?.followListsByVenueId.nodes.length"
+            *ngIf="venue?.followLists.nodes.length"
           >Following</button>
         </div>
       </div>
@@ -31,7 +31,7 @@
             [id]="event.id"
             [externalUrl]="event.ticketproviderurl"
             [ticketProviderId]="event.ticketproviderid"
-            [image]="event.artistToEventsByEventId.nodes.length && event.artistToEventsByEventId.nodes[0].artistByArtistId.photo"
+            [image]="event.artistToEvents.nodes.length && event.artistToEvents.nodes[0].artist.photo"
           ></app-event-card>
         </div>
       </div>

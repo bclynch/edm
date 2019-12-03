@@ -22,18 +22,18 @@
             mat-flat-button 
             (click)="followArtist()" 
             color="accent" 
-            *ngIf="!artist?.followListsByArtistId.nodes.length"
+            *ngIf="!artist?.followLists.nodes.length"
           >Follow</button>
           <button 
             mat-flat-button
             (click)="unfollowArtist()" 
             color="primary" 
-            *ngIf="artist?.followListsByArtistId.nodes.length"
+            *ngIf="artist?.followLists.nodes.length"
           >Following</button>
         </div>
-        <div class="genresContainer" *ngIf="artist?.genreToArtistsByArtistId.nodes.length">
+        <div class="genresContainer" *ngIf="artist?.genreToArtists.nodes.length">
           <div>Genres:</div>
-          <a *ngFor="let genre of artist.genreToArtistsByArtistId.nodes"><button mat-button>#{{genre.genreId}}</button></a>
+          <a *ngFor="let genre of artist.genreToArtists.nodes"><button mat-button>#{{genre.genreId}}</button></a>
         </div>
       </div>
       <div class="contentWrapper">
@@ -50,7 +50,7 @@
                 [externalUrl]="event.ticketproviderurl"
                 [ticketProviderId]="event.ticketproviderid"
                 [image]="artist.photo"
-                [watchId]="event.watchListsByEventId.nodes[0]"
+                [watchId]="event.watchLists.nodes.length && event.watchLists.nodes[0].id"
               ></app-event-card>
             </div>
           </div>

@@ -43,7 +43,7 @@ export class ArtistComponent implements OnInit, OnDestroy {
             ({ data }) => {
               this.artist = data.artist;
               // this is annoying, but cannot really use sql to get this correctly because junction table so front end filter / sort
-              this.events = this.artist.artistToEventsByArtistId.nodes.map((event) => event.eventByEventId).filter((e) => e.startDate > moment().startOf('day').valueOf()).sort((a, b) => (a.startDate - b.startDate));
+              this.events = this.artist.artistToEvents.nodes.map((event) => event.event).filter((e) => e.startDate > moment().startOf('day').valueOf()).sort((a, b) => (a.startDate - b.startDate));
               this.socialOptions = this.generateSocialOptions();
               // generate iframe url for soundcloud widget
               if (this.artist.soundcloudUsername) this.soundcloudUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://w.soundcloud.com/player/?url=https://soundcloud.com/${this.artist.soundcloudUsername}&amp;auto_play=false&amp;buying=false&amp;liking=false&amp;download=false&amp;sharing=false&amp;show_artwork=true&amp;show_comments=false&amp;show_playcount=false&amp;show_user=true&amp;hide_related=false&amp;visual=true&amp;start_track=0&amp;callback=true`);
@@ -75,13 +75,13 @@ export class ArtistComponent implements OnInit, OnDestroy {
 
   followArtist() {
     this.userService.follow(this.artist.name, null, this.artist.name).then(
-      (followId) => this.artist.followListsByArtistId.nodes = [{ id: followId }]
+      (followId) => this.artist.followLists.nodes = [{ id: followId }]
     );
   }
 
   unfollowArtist() {
-    this.userService.unfollow(this.artist.followListsByArtistId.nodes[0].id).then(
-      () => this.artist.followListsByArtistId.nodes = []
+    this.userService.unfollow(this.artist.followLists.nodes[0].id).then(
+      () => this.artist.followLists.nodes = []
     );
   }
 }
